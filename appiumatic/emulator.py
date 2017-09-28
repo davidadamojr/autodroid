@@ -5,7 +5,7 @@ import shutil
 import time
 
 import constants
-from exceptions import AdbNotFound, AdbResetFailed
+from appiumatic.exceptions import AdbNotFound
 
 logger = logging.getLogger(__name__)
 
@@ -68,7 +68,7 @@ def verify_emulator_started(sdk_path, boot_delay, tries):
     return True
 
 
-def start_avd(sdk_path, device_name, boot_delay=5, tries=5):
+def start_avd(sdk_path, device_name, boot_delay, tries=10):
     logger.info("Booting device: {}.".format(device_name))
     subprocess.Popen("{} {} {}".format(constants.BOOT_STANDARD_EMU_SCRIPT, sdk_path, device_name),
                                stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
@@ -86,10 +86,10 @@ def start_avd(sdk_path, device_name, boot_delay=5, tries=5):
 def kill_avd(sdk_path):
     logger.info("Terminating emulator.")
     adb_exec_path = os.path.join(sdk_path, constants.PLATFORM_TOOLS_DIR, "adb")
-    subprocess.check_call("{} {}".format(constants.KILL_STANDARD_EMU_SCRIPT, adb_exec_path), shell=True)
+    subprocess.call("{} {}".format(constants.KILL_STANDARD_EMU_SCRIPT, adb_exec_path), shell=True)
 
 
-def start_genymotion(sdk_path, genymotion_path, device_name, boot_delay=5, tries=5):
+def start_genymotion(sdk_path, genymotion_path, device_name, boot_delay, tries=5):
     logger.info("Booting device: {}".format(device_name))
     player_exec_path = os.path.join(genymotion_path, "player")
     subprocess.Popen("{} {} {}".format(constants.BOOT_GENYMOTION_EMU_SCRIPT, player_exec_path, device_name),
@@ -106,7 +106,7 @@ def start_genymotion(sdk_path, genymotion_path, device_name, boot_delay=5, tries
 
 
 def kill_genymotion():
-    subprocess.check_call(constants.KILL_GENYMOTION_EMU_SCRIPT, shell=True)
+    subprocess.call(constants.KILL_GENYMOTION_EMU_SCRIPT, shell=True)
     logger.info("Successfully terminated emulator.")
 
 
@@ -132,10 +132,10 @@ if __name__ == '__main__':
     constants.KILL_GENYMOTION_EMU_SCRIPT = "scripts/kill_genymotion_emulator.sh"
     constants.ADB_RESET_SCRIPT = "scripts/adb_reset.sh"
     reset_adb("/home/davidadamojr/Android/Sdk")
-    start_avd("/home/davidadamojr/Android/Sdk", "api19_0")
-    kill_avd("/home/davidadamojr/Android/Sdk")
-    # start_genymotion("/home/davidadamojr/Android/Sdk", "/home/davidadamojr/genymotion",
-    #                  "6c47e07d-1a4b-4272-8dd3-239b47837ef7", tries=10)
-    # kill_genymotion()
+    # start_avd("/home/davidadamojr/Android/Sdk", "api19_0")
+    # kill_avd("/home/davidadamojr/Android/Sdk")
+    start_genymotion("/home/davidadamojr/Android/Sdk", "/home/davidadamojr/genymotion",
+                     "3942e954-84c4-4766-8e4b-6901dfeebde8", tries=10)
+    kill_genymotion()
 
 
