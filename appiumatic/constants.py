@@ -8,3 +8,12 @@ BOOT_GENYMOTION_EMU_SCRIPT = "appiumatic/scripts/boot_genymotion_emulator.sh"
 KILL_STANDARD_EMU_SCRIPT = "appiumatic/scripts/kill_standard_emulator.sh"
 KILL_GENYMOTION_EMU_SCRIPT = "appiumatic/scripts/kill_genymotion_emulator.sh"
 START_APPIUM_SCRIPT = "appiumatic/scripts/start_appium.sh"
+
+# GUI actions
+CLICK = "click"
+LONG_CLICK = "long-click"
+CHECK = "check"
+UNCHECK = "uncheck"
+SCROLL_UP = "scroll-up"
+SCROLL_DOWN = "scroll-down"
+TEXT_ENTRY = "text-entry"

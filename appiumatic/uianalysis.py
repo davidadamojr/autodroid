@@ -1,16 +1,16 @@
-import xml.etree.ElementTree as etree
-from abstractions import create_partial_events, create_state, create_action
+import lxml.etree as etree
+import logging
+from abstraction import create_partial_events, create_state, create_action, create_ui_widget
+from hashing import generate_state_id
+from constants import CLICK, LONG_CLICK, CHECK, UNCHECK, SCROLL_UP, SCROLL_DOWN, TEXT_ENTRY
 
 __author__ = "David Adamo Jr."
 
-CLICK = "click"
-LONG_CLICK = "long-click"
-CHECK_UNCHECK = "*check"
-SCROLL_UP_DOWN = "scroll*"
+logger = logging.getLogger(__name__)
+
 
 def get_available_events(driver):
     page_source = driver.page_source
-
 
 
 def get_possible_actions(page_source):
@@ -18,17 +18,11 @@ def get_possible_actions(page_source):
     actionable_widgets = _get_actionable_widgets(page_source)
     for action_type, widgets in actionable_widgets.items():
         for widget in widgets:
-            actions = extract_actions(action_type, widget)
+            action = create_action(action_type, widget)
+            possible_actions.append(action)
 
-
-def extract_actions(action_type, widget):
-    widget_actions = []
-    if action_type == CLICK:
-        widget_action = create_action("click", widget)
-    elif action_type == LONG_CLICK:
-        widget_action = create_action("long-click", widget)
-    elif action_type == CHECK_UNCHECK:
-
+    logger.debug("Found %s possible actions.".format(len(possible_actions)))
+    return possible_actions
 
 
 def _get_actionable_widgets(page_source):
@@ -36,35 +30,67 @@ def _get_actionable_widgets(page_source):
     actionable_widgets = {
         CLICK: [],
         LONG_CLICK: [],
-        CHECK: []
+        CHECK: [],
         UNCHECK: [],
-        SCROLL_UP: []
-        SCROLL_DOWN: []
+        SCROLL_UP: [],
+        SCROLL_DOWN: [],
+        TEXT_ENTRY: []
     }
 
-    xml_element = etree.fromstring(page_source)
+    xml_element = etree.fromstring(page_source.encode())
     xml_tree = etree.ElementTree(xml_element)
+    for element in xml_tree.iter():
+        element_attributes = element.attrib
+        element_is_text_field = "EditText" in element_attributes
+        element_is_enabled = element_attributes.get("enabled", "") == "true"
+        actionable_widget = create_ui_widget(xml_tree, element)
+        if element_is_text_field and element_is_enabled:
+            actionable_widgets[TEXT_ENTRY].append(actionable_widget)
+        else:
+            if _element_is_clickable(element):
+                actionable_widgets[CLICK].append(actionable_widget)
+            if _element_is_long_clickable(element):
+                actionable_widgets[LONG_CLICK].append(actionable_widget)
+            if _element_is_checkable(element):
+                if _element_is_checked(element):
+                    actionable_widgets[UNCHECK].append(actionable_widget)
+                else:
+                    actionable_widgets[CHECK].append(actionable_widget)
+            if _element_is_scrollable(element):
+                actionable_widgets[SCROLL_UP].append(actionable_widget)
+                actionable_widgets[SCROLL_DOWN].append(actionable_widget)
 
-    # depth first traversal of elements
-    element_stack = [xml_tree.getroot()]
-    while element_stack:
-        current_element = element_stack.pop()
-        element_attributes = current_element.attrib
-        if element_attributes.get("clickable", "false") == "true":
-            actionable_widgets["click"].append(current_element)
-        if element_attributes.get("long-clickable", "false") == "true":
-            actionable_widgets["long-click"].append(current_element)
-        if element_attributes.get("checkable", "false") == "true":
-            actionable_widgets["check"].append(current_element)
-        if element_attributes.get("scrollable", "false") == "true":
-            actionable_widgets["scroll*"].append(current_element)
-        element_stack.extend(list(current_element))
+        logger.debug("Found actionable widgets: %s".format(actionable_widgets))
+        return actionable_widgets
 
-    return actionable_widgets
+
+def _element_is_clickable(element):
+    return element.attrib.get("clickable", "false") == "true"
+
+
+def _element_is_scrollable(element):
+    return element.attrib.get("scrollable", "false") == "true"
+
+
+def _element_is_long_clickable(element):
+    return element.attrib.get("long-clickable", "false") == "true"
+
+
+def _element_is_checkable(element):
+    return element.attrib.get("checkable", "false") == "true"
+
+
+def _element_is_checked(element):
+    return element.attrib.get("checked", "false") == "true"
 
 
 def get_current_state(driver):
     page_source = driver.page_source
     possible_actions = get_possible_actions(page_source)
     current_activity = driver.current_activity
+    state_id = generate_state_id(possible_actions)
+    current_state = create_state(current_activity, state_id)
+
+    logger.debug("Current state: %s".format(current_state))
+    return current_state
 

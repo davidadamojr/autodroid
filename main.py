@@ -78,20 +78,23 @@ start_appium()
 db_connection = sqlite3.connect("db/autodroid.db")
 database.create_tables(db_connection)
 
-if config.MONKEY_MODE:
-    if config.COMPLETION_CRITERION.lower() == "events":
-        monkey_builder = MonkeyBuilder(config.APK_PATH, config.EVENT_INTERVAL, db_connection)
-        monkey_builder.generate_monkey_test(config.APK_PATH, event_selection_strategy, completion_criterion, setup,
-                                            teardown)
+try:
+    if config.MONKEY_MODE:
+        if config.COMPLETION_CRITERION.lower() == "events":
+            monkey_builder = MonkeyBuilder(config.APK_PATH, config.EVENT_INTERVAL, db_connection)
+            monkey_builder.generate_monkey_test(config.APK_PATH, event_selection_strategy, completion_criterion, setup,
+                                                teardown)
+        else:
+            print("Monkey mode can only be used with the 'events' completion criterion.")
+            logger.debug("Invalid completion criterion for monkey mode.")
     else:
-        print("Monkey mode can only be used with the 'events' completion criterion.")
-        logger.debug("Invalid completion criterion for monkey mode.")
-else:
-    current_time = int(time.time())
+        current_time = int(time.time())
 
-    suite_builder = SuiteBuilder(config.APK_PATH, config.EVENT_INTERVAL, test_suite_dir, db_connection)
-    suite_builder.generate_test_suite(event_selection_strategy, termination_criterion, completion_criterion, setup,
-                                      teardown)
+        suite_builder = SuiteBuilder(config.APK_PATH, config.EVENT_INTERVAL, test_suite_dir, db_connection)
+        suite_builder.generate_test_suite(event_selection_strategy, termination_criterion, completion_criterion, setup,
+                                          teardown)
+except ConnectionRefusedError as conn_refused:
+    logger.fatal("Could not connect to appium server: %s".format(conn_refused))
 
 db_connection.close()
 stop_appium()

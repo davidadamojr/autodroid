@@ -13,7 +13,7 @@ def _get_driver(apk_path):
         "platformName": "Android",
         "deviceName": "Android Emulator",
         "app": apk_path,
-        "newCommandTimeout": 60,
+        "newCommandTimeout": 3600,
         "fullReset": True
     }
 
