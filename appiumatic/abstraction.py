@@ -1,29 +1,65 @@
+import logging
+
 __author__ = "David Adamo Jr."
+
+logger = logging.getLogger(__name__)
+
+def create_target(selector, selectorValue, description, type, state):
+    target = {
+        "selector": selector,
+        "selectorValue": selectorValue,
+        "description": description,
+        "type": type,
+        "state": state
+    }
+
+    return target
 
 
 def create_launch_event():
-    target = {
-        "selector": "system",
-        "selectorValue": "app",
-        "description": "launch",
-        "type": "system",
-        "state": "enabled"
-    }
-    action = {
-        "target": target,
-        "type": "launch",
-        "value": None
-    }
-    precondition = {
-        "activityName": None,
-        "stateId": None
-    }
-    partial_event = {
-        "actions": [action],
-        "precondition": precondition
-    }
+    target = create_target("system", "app", "launch", "launch", "enabled")
+    action = create_action("launch", target)
+    precondition = create_state(None, None)
+    partial_event = create_partial_event(precondition, [action])
 
     return partial_event
+
+
+def create_partial_event(precondition, actions):
+    partial_event = {
+        "precondition": precondition,
+        "actions": actions
+    }
+    return partial_event
+
+
+def create_partial_text_events(text_entry_actions, non_text_entry_actions):
+    # events = []
+    # if len(text_entry_actions) == 1:
+    pass
+
+
+def create_partial_events(current_state, possible_actions):
+    events = []
+    for action in possible_actions:
+        event = create_partial_event(current_state, [action])
+        events.append(event)
+
+    return events
+
+
+def create_back_event(precondition):
+    target = create_target("key_code", "4", "back", "nav", "enabled")
+    action = create_action("back", target)
+    back_event = create_partial_event(precondition, [action])
+    return back_event
+
+
+def create_home_event(precondition):
+    target = create_target("key_code", "3", "home", "nav", "enabled")
+    action = create_action("home", target)
+    home_event = create_partial_event(precondition, [action])
+    return home_event
 
 
 def create_action(action_type, widget):
@@ -105,13 +141,18 @@ def synthesize(partial_event, current_state):
 
 def create_state(current_activity, state_id):
     state = {
-        "currentActivity": current_activity,
+        "activityName": current_activity,
         "stateId": state_id
     }
 
     return state
 
 
-def create_partial_events():
-    pass
+def create_crash_state():
+    state= {
+        "activityName": "crash",
+        "stateId": "crash"
+    }
+
+    return state
 

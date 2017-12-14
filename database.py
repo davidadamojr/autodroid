@@ -1,5 +1,3 @@
-import sqlite3
-import time
 
 def create_tables(db_connection):
     cursor = db_connection.cursor()
@@ -13,12 +11,11 @@ def create_tables(db_connection):
     db_connection.commit()
 
 
-def add_test_suite(db_connection, test_suite_id):
-    creation_time = time.time()
+def add_test_suite(db_connection, test_suite_id, test_suite_start_time):
     duration = 0
     cursor = db_connection.cursor()
-    cursor.execute("INSERT INTO test_suites VALUES (?, ?, ?)", (test_suite_id, creation_time, duration))
+    cursor.execute("INSERT INTO test_suites VALUES (?, ?, ?)", (test_suite_id, test_suite_start_time, duration))
 
     db_connection.commit()
 
-    return test_suite_id, creation_time, duration
+    return test_suite_id, test_suite_start_time, duration

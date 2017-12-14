@@ -1,6 +1,7 @@
 import logging
 import database
-from appiumatic.uianalysis import get_available_events, get_current_state
+import time
+from appiumatic.ui_analysis import get_available_events, get_current_state
 from uuid import uuid4
 from appiumatic.execution import execute
 from appiumatic.abstraction import create_launch_event, synthesize
@@ -9,9 +10,11 @@ __author__ = "David Adamo Jr."
 
 logger = logging.getLogger(__name__)
 
+
 class TestBuilder:
     def __init__(self):
         self.connection_failures = 0
+
 
 class SuiteBuilder(TestBuilder):
     def __init__(self, apk_path, event_interval, test_suite_dir, db_connection):
@@ -24,7 +27,8 @@ class SuiteBuilder(TestBuilder):
     def generate_test_suite(self, event_selection_strategy, termination_criterion, completion_criterion, setup,
                             teardown):
         test_suite_id = uuid4().hex
-        database.add_test_suite(self.db_connection, test_suite_id)
+        test_suite_start_time = time.time()
+        database.add_test_suite(self.db_connection, test_suite_id, test_suite_start_time)
 
         test_suite_event_count = 0
 
@@ -40,6 +44,8 @@ class SuiteBuilder(TestBuilder):
                     raise ConnectionRefusedError
 
                 continue
+
+            test_case_start_time = time.time()
 
             launch_event = create_launch_event()
             current_state = get_current_state(driver) # error handling here
@@ -65,7 +71,13 @@ class SuiteBuilder(TestBuilder):
 
                 test_case_complete = termination_criterion(self.db_connection, event_count=test_case_event_count)
 
+            test_case_end_time = time.time()
+            test_case_duration = test_case_end_time - test_case_start_time
             teardown(test_case, driver, self.db_connection)
+
+            # write to file
+            # write logs
+            # write coverage
 
             test_suite_complete = completion_criterion()
 

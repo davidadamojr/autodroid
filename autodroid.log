@@ -1,0 +1,16 @@
+2017-09-24 11:05:01,305 - appiumatic - INFO - Appiumatic logger configuration complete!
+2017-09-24 11:05:04,314 - appiumatic.emulator - INFO - Booting device: 3942e954-84c4-4766-8e4b-6901dfeebde8
+2017-09-24 11:05:04,316 - appiumatic.emulator - INFO - Booting genyotion emulator: 3942e954-84c4-4766-8e4b-6901dfeebde8
+2017-09-24 11:05:04,321 - appiumatic.emulator - DEBUG - Check boot animation output: b''.
+2017-09-24 11:05:09,331 - appiumatic.emulator - DEBUG - Check boot animation output: b''.
+2017-09-24 11:05:14,351 - appiumatic.emulator - DEBUG - Check boot animation output: b'\r\n'.
+2017-09-24 11:05:19,370 - appiumatic.emulator - DEBUG - Check boot animation output: b'running\r\n'.
+2017-09-24 11:05:24,401 - appiumatic.emulator - DEBUG - Check boot animation output: b'stopped\r\n'.
+2017-09-24 11:05:24,402 - appiumatic.emulator - INFO - Successfully started emulator: 3942e954-84c4-4766-8e4b-6901dfeebde8
+2017-09-24 11:05:24,402 - __main__ - INFO - Starting appium...
+2017-09-24 11:05:39,421 - selenium.webdriver.remote.remote_connection - DEBUG - POST http://127.0.0.1:4723/wd/hub/session {"capabilities": {"alwaysMatch": {"platformName": "Android"}, "firstMatch": [{}]}, "desiredCapabilities": {"newCommandTimeout": 60, "deviceName": "Android Emulator", "fullReset": true, "platformName": "Android", "app": "apps/org.tomdroid-0.7.5.apk"}}
+2017-09-24 11:05:48,265 - selenium.webdriver.remote.remote_connection - DEBUG - Finished Request
+2017-09-24 11:05:48,266 - selenium.webdriver.remote.remote_connection - DEBUG - GET http://127.0.0.1:4723/wd/hub/session/c62f9633-f53d-4214-8caf-54a1ff239a40/source {"sessionId": "c62f9633-f53d-4214-8caf-54a1ff239a40"}
+2017-09-24 11:05:48,456 - selenium.webdriver.remote.remote_connection - DEBUG - Finished Request
+2017-09-24 11:05:48,456 - selenium.webdriver.remote.remote_connection - DEBUG - DELETE http://127.0.0.1:4723/wd/hub/session/c62f9633-f53d-4214-8caf-54a1ff239a40/window {"sessionId": "c62f9633-f53d-4214-8caf-54a1ff239a40"}
+2017-09-24 11:05:48,467 - selenium.webdriver.remote.remote_connection - DEBUG - Finished Request

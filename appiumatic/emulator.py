@@ -3,8 +3,8 @@ import logging
 import os
 import shutil
 import time
-
 import constants
+
 from appiumatic.exceptions import AdbNotFound
 
 logger = logging.getLogger(__name__)

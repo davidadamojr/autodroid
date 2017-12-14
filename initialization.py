@@ -41,11 +41,11 @@ def setup(user_specification):
 def completion_criterion(criterion, event_count, time_budget, test_suite_length):
     criterion = criterion.lower()
     if criterion == "time":
-        return completion.time_budget_exceeded
+        return partial(completion.time_budget_exceeded, time_budget=time_budget)
     elif criterion == "length":
-        return completion.number_of_test_cases_reached
+        return partial(completion.number_of_test_cases_reached, test_case_budget=test_suite_length)
     elif criterion == "events":
-        return completion.number_of_events_reached
+        return partial(completion.number_of_events_reached, event_budget=event_count)
 
     raise InvalidParameter("Invalid specification '{}' for completion criterion.".format(criterion))
 

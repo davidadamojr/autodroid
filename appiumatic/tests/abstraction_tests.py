@@ -14,7 +14,7 @@ class AbstractionTests(unittest.TestCase):
                     "selector": "system",
                     "selectorValue": "app",
                     "description": "launch",
-                    "type": "system",
+                    "type": "launch",
                     "state": "enabled"
                 },
                 "type": "launch",
@@ -186,4 +186,68 @@ class AbstractionTests(unittest.TestCase):
         actual_complete_event = abstraction.synthesize(partial_event, current_state)
         self.assertEqual(expected_complete_event, actual_complete_event)
 
+    def test_create_state(self):
+        expected_state = {
+            "activityName": "contactsActivity",
+            "stateId": "abcdef",
+        }
+        actual_state = abstraction.create_state("contactsActivity", "abcdef")
+        self.assertEqual(actual_state, expected_state)
 
+    def test_create_crash_state(self):
+        expected_state = {
+            "activityName": "crash",
+            "stateId": "crash"
+        }
+        actual_state = abstraction.create_crash_state()
+        self.assertEqual(actual_state, expected_state)
+
+    def test_create_target(self):
+        expected_target = {
+            "selector": "selector_type",
+            "selectorValue": "selector_value",
+            "description": "description",
+            "type": "type",
+            "state": "enabled"
+        }
+        actual_target = abstraction.create_target("selector_type", "selector_value", "description", "type", "enabled")
+        self.assertEqual(expected_target, actual_target)
+
+    def test_create_back_event(self):
+        precondition = abstraction.create_state("contactsActivity", "abcdef")
+        expected_event = {
+            "precondition": precondition,
+            "actions": [{
+                "target": {
+                    "selector": "key_code",
+                    "selectorValue": "4",
+                    "type": "nav",
+                    "description": "back",
+                    "state": "enabled"
+                },
+                "type": "back",
+                "value": None
+            }]
+        }
+        actual_event = abstraction.create_back_event(precondition)
+        self.maxDiff = None
+        self.assertEqual(expected_event, actual_event)
+
+    def test_create_home_event(self):
+        precondition = abstraction.create_state("contactsActivity", "abcdef")
+        expected_event = {
+            "precondition": precondition,
+            "actions": [{
+                "target": {
+                    "selector": "key_code",
+                    "selectorValue": "3",
+                    "type": "nav",
+                    "description": "home",
+                    "state": "enabled"
+                },
+                "type": "home",
+                "value": None
+            }]
+        }
+        actual_event = abstraction.create_home_event(precondition)
+        self.assertEqual(expected_event, actual_event)
