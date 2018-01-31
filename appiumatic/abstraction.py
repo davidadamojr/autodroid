@@ -1,8 +1,5 @@
 import logging
 
-__author__ = "David Adamo Jr."
-
-logger = logging.getLogger(__name__)
 
 def create_target(selector, selectorValue, description, type, state):
     target = {

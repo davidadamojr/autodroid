@@ -1,7 +1,5 @@
 from appium import webdriver
 
-__author__ = "David Adamo Jr."
-
 
 def standard(apk_path):
     driver = _get_driver(apk_path)

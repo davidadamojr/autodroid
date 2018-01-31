@@ -1,4 +1,3 @@
-import logging
 import logging.config
 import os
 import json
@@ -14,5 +13,4 @@ with open("logging.json") as logging_configuration_file:
 
 logging.config.dictConfig(config)
 
-logger = logging.getLogger(__name__)
-logger.info("Appiumatic logger configuration complete!")
+appiumaticLogger = logging.getLogger(__name__)

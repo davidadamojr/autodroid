@@ -64,7 +64,7 @@ class HashingTests(unittest.TestCase):
 
         hashes = []
         for i in range(10):
-            state_id = hashing.generate_state_id(possible_actions)
+            state_id = hashing.generate_state_hash(possible_actions)
             hashes.append(state_id)
         self.assertEqual(len(set(hashes)), 1)
 
@@ -127,7 +127,7 @@ class HashingTests(unittest.TestCase):
         hashes = []
         for i in range(10):
             random.shuffle(possible_actions)
-            state_id = hashing.generate_state_id(possible_actions)
+            state_id = hashing.generate_state_hash(possible_actions)
             hashes.append(state_id)
 
         self.assertEqual(len(set(hashes)), 1)

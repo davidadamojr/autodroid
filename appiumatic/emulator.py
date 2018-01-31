@@ -59,7 +59,7 @@ def verify_emulator_started(sdk_path, boot_delay, tries):
     boot_complete = check_boot_complete(sdk_path)
     while not boot_complete and try_count < tries:
         time.sleep(boot_delay)
-        try_count = try_count + 1
+        try_count += 1
         boot_complete = check_boot_complete(sdk_path)
 
     if not boot_complete and try_count == tries:

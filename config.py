@@ -12,20 +12,19 @@ VM_NAME = "3942e954-84c4-4766-8e4b-6901dfeebde8"
 
 # Autodroid settings
 USE_MENU_KEY = False
-MONKEY_MODE = False
+COLLECT_COVERAGE = True
+COLLECT_LOGS = True
 EVENT_INTERVAL = 2
-INITIAL_CONTEXT_STRATEGY = None
 TEST_SETUP = "Standard"
 EVENT_SELECTION_STRATEGY = "Random"
 TERMINATION_CRITERION = "Probabilistic"
 COMPLETION_CRITERION = "Time"
 TEST_TEARDOWN = "Standard"
 TEST_SUITE_LENGTH = 100 # only used if completion criterion is "Length"
-TIME_BUDGET = 60 # only used if completion criterion is "Time"
-EVENT_COUNT = 1000 # only used for monkey testing (i.e. MONKEY_MODE=True), and if completion criterion is "Events"
-EVENT_COMBINATION_STRENGTH = 2 # only used when event selection strategy is "nway"
+TIME_BUDGET = 1 # (in hours) only used if completion criterion is "Time"
 TERMINATION_PROBABILITY = 0.05 # only used when termination criterion is "probabilistic"
 TEST_CASE_LENGTH = 100 # only used if termination criterion is "length"
+OUTPUT_PATH = "/home/davidadamojr/git/autodroid/output"
 
 # Appium settings
 APPIUM_START_CMD = "appium"

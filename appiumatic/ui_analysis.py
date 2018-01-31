@@ -1,7 +1,7 @@
 import lxml.etree as etree
 import logging
 import abstraction
-from hashing import generate_state_id
+from hashing import generate_state_hash
 from constants import CLICK, LONG_CLICK, CHECK, UNCHECK, SCROLL_UP, SCROLL_DOWN, TEXT_ENTRY
 
 __author__ = "David Adamo Jr."
@@ -107,7 +107,7 @@ def get_current_state(driver):
         page_source = driver.page_source
         possible_actions = get_possible_actions(page_source)
         current_activity = driver.current_activity
-        state_id = generate_state_id(possible_actions)
+        state_id = generate_state_hash(possible_actions)
         current_state = abstraction.create_state(current_activity, state_id)
     except Exception as e:
         logger.error("Could not retrieve current state: %s".format(e))

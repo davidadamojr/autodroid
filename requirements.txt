@@ -1,1 +1,2 @@
-lxml
+lxml==4.0.0
+selenium==-3.6.0
