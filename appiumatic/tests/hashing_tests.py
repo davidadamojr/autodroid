@@ -42,7 +42,7 @@ class HashingTests(unittest.TestCase):
             {
                 "target": widgets[0],
                 "type": TEXT_ENTRY,
-                "value": None
+                "value": "Hello World!"
             }, {
                 "target": widgets[1],
                 "type": TEXT_ENTRY,
@@ -131,3 +131,316 @@ class HashingTests(unittest.TestCase):
             hashes.append(state_id)
 
         self.assertEqual(len(set(hashes)), 1)
+
+    def test_get_hash_event(self):
+        # Arrange
+        event = {
+            "actions": [{
+                "target": {
+                    "selector": "id",
+                    "selectorValue": "android:id/display_preferences",
+                    "description": "Display Preferences",
+                    "type": "TextView",
+                    "state": "enabled"
+                },
+                "type": "click",
+                "value": None
+            }],
+            "precondition": {
+                "activityName": "launchActivity",
+                "stateId": "abcdef"
+            }
+        }
+
+        # Act
+        hash_event = hashing._get_hash_event(event)
+
+        # Assert
+        self.assertNotIn("value", hash_event["actions"][0])
+
+    def test_event_hashing(self):
+        # Arrange
+        event = {
+            "actions": [{
+                "target": {
+                    "selector": "id",
+                    "selectorValue": "android:id/display_preferences",
+                    "description": "Display Preferences",
+                    "type": "TextView",
+                    "state": "enabled"
+                },
+                "type": "click",
+                "value": None
+            }],
+            "precondition": {
+                "activityName": "launchActivity",
+                "stateId": "abcdef"
+            }
+        }
+
+        # Act
+        event_hash = hashing.generate_event_hash(event)
+
+        # Assert
+        self.assertEqual(event_hash, "1c7d92889def3c42168491899e45bfb9a70ef790")
+
+    def test_event_hash_is_stable(self):
+        # Arrange
+        event = {
+            "actions": [{
+                "target": {
+                    "selector": "id",
+                    "selectorValue": "android:id/display_preferences",
+                    "description": "Display Preferences",
+                    "type": "TextView",
+                    "state": "enabled"
+                },
+                "type": "click",
+                "value": None
+            }],
+            "precondition": {
+                "activityName": "launchActivity",
+                "stateId": "abcdef"
+            }
+        }
+
+        # Act
+        hashes = []
+        for i in range(10):
+            event_hash = hashing.generate_event_hash(event)
+            hashes.append(event_hash)
+
+        # Assert
+        self.assertEqual(len(set(hashes)), 1)
+
+
+    def test_event_hashing_does_not_change_with_key_order(self):
+        # Arrange
+        event1 = {
+            "actions": [{
+                "target": {
+                    "selector": "id",
+                    "selectorValue": "android:id/display_preferences",
+                    "description": "Display Preferences",
+                    "type": "TextView",
+                    "state": "enabled"
+                },
+                "type": "click",
+                "value": None
+            }],
+            "precondition": {
+                "activityName": "launchActivity",
+                "stateId": "abcdef"
+            }
+        }
+
+        event2 = {
+            "precondition": {
+                "activityName": "launchActivity",
+                "stateId": "abcdef"
+            },
+            "actions": [{
+                "target": {
+                    "selector": "id",
+                    "selectorValue": "android:id/display_preferences",
+                    "description": "Display Preferences",
+                    "type": "TextView",
+                    "state": "enabled"
+                },
+                "type": "click",
+                "value": None
+            }]
+        }
+
+        # Act
+        event_hash1 = hashing.generate_event_hash(event1)
+        event_hash2 = hashing.generate_event_hash(event2)
+
+        # Assert
+        self.assertEqual(event_hash1, event_hash2)
+
+    def test_event_hash_is_same_regardless_of_value(self):
+        # Arrange
+        event1 = {
+            "actions": [{
+                "target": {
+                    "selector": "id",
+                    "selectorValue": "android:id/display_preferences",
+                    "description": "Display Preferences",
+                    "type": "EditText",
+                    "state": "enabled"
+                },
+                "type": "click",
+                "value": "Wunderland"
+            }],
+            "precondition": {
+                "activityName": "launchActivity",
+                "stateId": "abcdef"
+            }
+        }
+
+        event2 = {
+            "actions": [{
+                "target": {
+                    "selector": "id",
+                    "selectorValue": "android:id/display_preferences",
+                    "description": "Display Preferences",
+                    "type": "EditText",
+                    "state": "enabled"
+                },
+                "type": "click",
+                "value": "Jekyll"
+            }],
+            "precondition": {
+                "activityName": "launchActivity",
+                "stateId": "abcdef"
+            }
+        }
+
+        # Act
+        event_hash1 = hashing.generate_event_hash(event1)
+        event_hash2 = hashing.generate_event_hash(event2)
+
+        # Assert
+        self.assertEqual(event_hash1, event_hash2)
+
+
+    def test_that_disabled_and_enabled_events_have_different_hash(self):
+        # Arrange
+        enabled_event = {
+            "actions": [{
+                "target": {
+                    "selector": "id",
+                    "selectorValue": "android:id/display_preferences",
+                    "description": "Display Preferences",
+                    "type": "TextView",
+                    "state": "enabled"
+                },
+                "type": "click",
+                "value": None
+            }],
+            "precondition": {
+                "activityName": "launchActivity",
+                "stateId": "abcdef"
+            }
+        }
+
+        disabled_event = {
+            "precondition": {
+                "activityName": "launchActivity",
+                "stateId": "abcdef"
+            },
+            "actions": [{
+                "target": {
+                    "selector": "id",
+                    "selectorValue": "android:id/display_preferences",
+                    "description": "Display Preferences",
+                    "type": "TextView",
+                    "state": "disabled"
+                },
+                "type": "click",
+                "value": None
+            }]
+        }
+
+        # Act
+        enabled_event_hash = hashing.generate_event_hash(enabled_event)
+        disabled_event_hash = hashing.generate_event_hash(disabled_event)
+
+        # Assert
+        self.assertNotEqual(enabled_event_hash, disabled_event_hash)
+
+    def test_generate_test_case_hash(self):
+        # Arrange
+        event1 = {
+            "actions": [{
+                "target": {
+                    "selector": "id",
+                    "selectorValue": "android:id/display_preferences",
+                    "description": "Display Preferences",
+                    "type": "TextView",
+                    "state": "enabled"
+                },
+                "type": "click",
+                "value": None
+            }],
+            "precondition": {
+                "activityName": "launchActivity",
+                "stateId": "abcdef"
+            }
+        }
+
+        event2 = {
+            "precondition": {
+                "activityName": "launchActivity",
+                "stateId": "abcdef"
+            },
+            "actions": [{
+                "target": {
+                    "selector": "id",
+                    "selectorValue": "android:id/display_preferences",
+                    "description": "Display Preferences",
+                    "type": "TextView",
+                    "state": "disabled"
+                },
+                "type": "click",
+                "value": None
+            }]
+        }
+        test_case = [event1, event2]
+
+        # Act
+        test_case_hash = hashing.generate_test_case_hash(test_case)
+
+        # Assert
+        self.assertEqual(test_case_hash, "854ec40eabd6348cd96507a1339d9bd64919e747")
+
+    def test_generate_test_case_hash_with_different_order_of_events(self):
+        # Arrange
+        event1 = {
+            "actions": [{
+                "target": {
+                    "selector": "id",
+                    "selectorValue": "android:id/display_preferences",
+                    "description": "Display Preferences",
+                    "type": "TextView",
+                    "state": "enabled"
+                },
+                "type": "click",
+                "value": None
+            }],
+            "precondition": {
+                "activityName": "launchActivity",
+                "stateId": "abcdef"
+            }
+        }
+
+        event2 = {
+            "precondition": {
+                "activityName": "launchActivity",
+                "stateId": "abcdef"
+            },
+            "actions": [{
+                "target": {
+                    "selector": "id",
+                    "selectorValue": "android:id/display_preferences",
+                    "description": "Display Preferences",
+                    "type": "TextView",
+                    "state": "disabled"
+                },
+                "type": "click",
+                "value": None
+            }]
+        }
+        test_case1 = [event1, event2]
+        test_case2 = [event2, event1]
+
+        # Act
+        test_case_hash1 = hashing.generate_test_case_hash(test_case1)
+        test_case_hash2 = hashing.generate_test_case_hash(test_case2)
+
+        # Assert
+        self.assertNotEqual(test_case_hash1, test_case_hash2)
+
+
+

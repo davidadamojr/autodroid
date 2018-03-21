@@ -26,7 +26,10 @@ except InvalidParameter as ip:
     sys.exit(1)
 
 db_connection = sqlite3.connect("db/autodroid.db")
+logger.debug("Connection to database successful.")
+
 database.create_tables(db_connection)
+logger.debug("Table creation successful.")
 
 try:
     aut_info = {"apk_path": config.APK_PATH, "apk_package_name": config.APP_PACKAGE_NAME,

@@ -10,8 +10,8 @@ logger = logging.getLogger(__name__)
 
 
 def get_available_events(driver):
-    page_source = driver.page_source
     current_state = get_current_state(driver)
+    page_source = driver.page_source
     possible_actions = get_possible_actions(page_source)
     text_entry_actions, non_text_entry_actions = classify_actions(possible_actions)
     if text_entry_actions:
