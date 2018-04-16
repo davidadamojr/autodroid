@@ -18,7 +18,7 @@ def event_selection_strategy(strategy):
     raise InvalidParameter("Invalid specification '{}' for event selection strategy.".format(strategy))
 
 
-def teardown(strategy):
+def tear_down_strategy(strategy):
     strategy = strategy.lower()
     if strategy == "standard":
         return teardown.standard
@@ -26,7 +26,7 @@ def teardown(strategy):
     raise InvalidParameter("Invalid specification '{}' for test case tear down.")
 
 
-def setup(strategy):
+def setup_strategy(strategy):
     strategy = strategy.lower()
     if strategy == "standard":
         return setup.standard

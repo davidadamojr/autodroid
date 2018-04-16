@@ -3,9 +3,8 @@ import random
 from  framework.database import test_case_exists
 
 
-def probabilistic(db_connection, test_case_hash, probability=None, event_count=None, test_case_length=None,
-                  test_suite_id=None):
-    assert probability is not None and test_suite_id is not None
+def probabilistic(db_connection, probability=None, test_case_hash=None, test_suite_id=None, event_count=None,):
+    assert probability is not None and test_suite_id is not None and test_case_hash is not None
 
     logger = logging.getLogger(__name__)
     logger.info("Checking probabilistic test termination criterion...")
@@ -16,9 +15,9 @@ def probabilistic(db_connection, test_case_hash, probability=None, event_count=N
     return False
 
 
-def length(db_connection, test_case_hash, probability=None, event_count=None, test_case_length=None,
-           test_suite_id=None):
-    assert event_count is not None and test_case_length is not None and test_suite_id is not None
+def length(db_connection, test_case_length=None, test_case_hash=None, test_suite_id=None, event_count=None):
+    assert event_count is not None and test_case_length is not None and test_suite_id is not None and \
+        test_suite_id is not None
 
     logger = logging.getLogger(__name__)
     logger.info("Checking length test termination criterion...")

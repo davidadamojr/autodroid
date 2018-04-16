@@ -85,10 +85,9 @@ class DatabaseTests(unittest.TestCase):
         self.assertFalse(test_case_exists)
 
     def test_add_termination_event_when_not_existing(self):
-        #Arrange
+        # Arrange
         event_hash = "event_hash"
         test_suite_id = "test_suite_id"
-        reward = 1.0
 
         # Act
         database.add_termination_event(self.connection, test_suite_id, event_hash)
@@ -174,9 +173,51 @@ class DatabaseTests(unittest.TestCase):
         self.assertEqual(len(rows), 1)
         self.assertEqual(rows[0][0], 2)
 
+    def test_get_event_frequencies_when_all_events_exist(self):
+        # Arrange
+        event_hashes = ["event_hash_1", "event_hash_2"]
+        test_suite_id = "test_suite_id"
+        database.update_event_frequency(self.connection, test_suite_id, event_hashes[0])
+        database.update_event_frequency(self.connection, test_suite_id, event_hashes[1])
+
+        # Act
+        event_frequencies = database.get_event_frequencies(self.connection, event_hashes, test_suite_id)
+
+        # Assert
+        self.assertEqual(len(event_frequencies), len(event_hashes))
+        self.assertEqual(event_frequencies[event_hashes[0]], 1)
+        self.assertEqual(event_frequencies[event_hashes[1]], 1)
+
+    def test_get_event_frequencies_when_events_do_not_exist(self):
+        # Arrange
+        event_hashes = ["event_hash_1", "event_hash_2"]
+        test_suite_id = "test_suite_id"
+
+        # Act
+        event_frequencies = database.get_event_frequencies(self.connection, event_hashes, test_suite_id)
+
+        # Assert
+        self.assertEqual(len(event_frequencies), len(event_hashes))
+        self.assertEqual(event_frequencies[event_hashes[0]], 0)
+        self.assertEqual(event_frequencies[event_hashes[1]], 0)
+
+    def test_get_event_frequencies_when_only_some_events_exist(self):
+        # Arrange
+        event_hashes = ["event_hash_1", "event_hash_2", "event_hash_3"]
+        test_suite_id = "test_suite_id"
+        database.update_event_frequency(self.connection, test_suite_id, event_hashes[0])
+
+        # Act
+        event_frequencies = database.get_event_frequencies(self.connection, event_hashes, test_suite_id)
+
+        # Assert
+        self.assertEqual(len(event_frequencies), len(event_hashes))
+        self.assertEqual(event_frequencies[event_hashes[0]], 1)
+        self.assertEqual(event_frequencies[event_hashes[1]], 0)
+        self.assertEqual(event_frequencies[event_hashes[2]], 0)
+
     def tearDown(self):
         self.connection.close()
-        dbo_path = os.path.join("..", "..", "db", "autodroid.db")
-        db_path = "../../db/autodroid.db"
+        db_path = os.path.join("..", "..", "db", "autodroid.db")
         if os.path.isfile(db_path):
             os.remove(db_path)

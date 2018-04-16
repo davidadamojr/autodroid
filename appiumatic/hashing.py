@@ -57,8 +57,6 @@ def generate_test_case_hash(test_case):
     json_hash_source = json.dumps(hash_source, sort_keys=True)
     return hashlib.sha1(json_hash_source.encode("utf-8")).hexdigest()
 
-    return "test_case_hash"
-
 
 def generate_event_hash(event):
     # the order of the actions matters

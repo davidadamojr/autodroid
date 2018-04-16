@@ -98,4 +98,25 @@ def update_event_frequency(db_connection, test_suite_id, event_hash):
     return event_hash
 
 
+def get_event_frequencies(db_connection, event_hashes, test_suite_id):
+    cursor = db_connection.cursor()
+    placeholders = ','.join('?' for _ in event_hashes)
+    query = "SELECT event_hash, frequency FROM event_info " \
+            "WHERE event_hash IN ({}) AND test_suite_id=?".format(placeholders)
+    cursor.execute(query, list(event_hashes) + [test_suite_id])
+
+    event_frequencies = {}
+    rows = cursor.fetchall()
+    for row in rows:
+        event_hash = row[0]
+        event_frequency = row[1]
+        event_frequencies[event_hash] = event_frequency
+
+    for event_hash in event_hashes:
+        if event_hash not in event_frequencies:
+            event_frequencies[event_hash] = 0
+
+    return event_frequencies
+
+
 

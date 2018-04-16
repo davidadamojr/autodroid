@@ -4,3 +4,11 @@ class AdbNotFound(Exception):
 
 class InvalidParameter(Exception):
     pass
+
+
+class EventExecutionFailed(Exception):
+    pass
+
+
+class UnknownAction(Exception):
+    pass

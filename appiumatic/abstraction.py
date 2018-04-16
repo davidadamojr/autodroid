@@ -16,9 +16,21 @@ def create_target(selector, selector_value, description, target_type, state):
     return target
 
 
+def create_enter_target():
+    enter_target = {
+        "selector": "key_code",
+        "selectorValue": "66",
+        "description": "Return key",
+        "type": "keyboard",
+        "state": "enabled"
+    }
+
+    return enter_target
+
+
 def create_launch_event():
     target = create_target("system", "app", "launch", "launch", "enabled")
-    action = create_action("launch", target)
+    action = create_action(constants.LAUNCH, target)
     precondition = create_state(None, None)
     partial_event = create_partial_event(precondition, [action])
 
@@ -38,7 +50,7 @@ def create_partial_text_events(current_state, text_entry_actions, non_text_entry
         logger.debug("Only one text field in the current state. We may need to use the ENTER key since it may be a search field.")
 
         text_based_events = create_events_for_single_text_field(current_state,
-                                                                text_entry_actions, non_text_entry_actions)
+                                                                text_entry_actions[0], non_text_entry_actions)
     else:
         logger.debug("Multiple text fields in current state. Creating events for multiple text fields.")
 
@@ -54,25 +66,35 @@ def create_partial_text_events(current_state, text_entry_actions, non_text_entry
     return events
 
 
-def create_events_for_single_text_field(current_state, text_entry_actions, non_text_entry_actions):
-    text_based_events = []
-
-    enter_target = create_target("key_code", "66", "enter", "Return key", "keyboard", "enabled")
-    enter_key_action = create_action("enter", enter_target)
-
-    # create event with text entry and enter key
-    text_entry_action = text_entry_actions[0]
+def create_events_for_single_text_field(current_state, text_entry_action, non_text_entry_actions):
     text_entry_action["value"] = "[random string]"  # -- test this
-    text_entry_with_enter_event = create_partial_event(current_state, [text_entry_action, enter_key_action])
-    text_based_events.append(text_entry_with_enter_event)
 
+    text_entry_enter_key_event = pair_text_entry_with_enter_key(current_state, text_entry_action)
+    text_and_act_events = pair_text_entry_with_non_text_entry_actions(current_state, text_entry_action,
+                                                                      non_text_entry_actions)
+    text_and_act_events.append(text_entry_enter_key_event)
+
+    return text_and_act_events
+
+
+def pair_text_entry_with_enter_key(current_state, text_entry_action):
+    enter_target = create_enter_target()
+    enter_key_action = create_action(constants.ENTER_KEY, enter_target)
+
+    text_entry_enter_key_event = create_partial_event(current_state, [text_entry_action, enter_key_action])
+
+    return text_entry_enter_key_event
+
+
+def pair_text_entry_with_non_text_entry_actions(current_state, text_entry_action, non_text_entry_actions):
+    text_and_act_events = []
     for non_text_entry_action in non_text_entry_actions:
         action_pairs_with_text_entry = does_action_pair_with_text_entry(non_text_entry_action)
         if action_pairs_with_text_entry:
             text_and_act_event = create_partial_event(current_state, [text_entry_action, non_text_entry_action])
-            text_based_events.append(text_and_act_event)
+            text_and_act_events.append(text_and_act_event)
 
-    return text_based_events
+    return text_and_act_events
 
 
 def create_events_for_multiple_text_fields(current_state, text_entry_actions, non_text_entry_actions):
@@ -85,7 +107,7 @@ def create_events_for_multiple_text_fields(current_state, text_entry_actions, no
     for non_text_entry_action in non_text_entry_actions:
         action_pairs_with_text_entry = does_action_pair_with_text_entry(non_text_entry_action)
         if action_pairs_with_text_entry:
-            multiple_text_entry_event = create_partial_event(current_state, text_entry_actions + non_text_entry_action)
+            multiple_text_entry_event = create_partial_event(current_state, text_entry_actions + [non_text_entry_action])
             text_based_events.append(multiple_text_entry_event)
 
     return text_based_events
@@ -116,14 +138,14 @@ def create_partial_events(current_state, possible_actions):
 
 
 def create_back_event(precondition):
-    target = create_target("key_code", "4", "back", "nav", "enabled")
+    target = create_target("key_code", constants.BACK_KEY_CODE, "back", "nav", "enabled")
     action = create_action("back", target)
     back_event = create_partial_event(precondition, [action])
     return back_event
 
 
 def create_home_event(precondition):
-    target = create_target("key_code", "3", "home", "nav", "enabled")
+    target = create_target("key_code", constants.HOME_KEY_CODE, "home", "nav", "enabled")
     action = create_action("home", target)
     home_event = create_partial_event(precondition, [action])
     return home_event

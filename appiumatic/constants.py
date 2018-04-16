@@ -17,3 +17,16 @@ UNCHECK = "uncheck"
 SCROLL_UP = "scroll-up"
 SCROLL_DOWN = "scroll-down"
 TEXT_ENTRY = "text-entry"
+HOME_NAV = "home"
+BACK_NAV = "back"
+ENTER_KEY = "enter"
+LAUNCH = "launch"
+
+# selector types
+ID_SELECTOR = "id"
+XPATH_SELECTOR = "xpath"
+
+# key codes
+HOME_KEY_CODE = 3
+BACK_KEY_CODE = 4
+ENTER_KEY_CODE = 66

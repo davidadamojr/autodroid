@@ -213,7 +213,6 @@ class HashingTests(unittest.TestCase):
         # Assert
         self.assertEqual(len(set(hashes)), 1)
 
-
     def test_event_hashing_does_not_change_with_key_order(self):
         # Arrange
         event1 = {
@@ -303,7 +302,6 @@ class HashingTests(unittest.TestCase):
 
         # Assert
         self.assertEqual(event_hash1, event_hash2)
-
 
     def test_that_disabled_and_enabled_events_have_different_hash(self):
         # Arrange

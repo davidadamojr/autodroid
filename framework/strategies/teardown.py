@@ -1,6 +1,6 @@
 
 def standard(driver):
-    # clear
+    # clear logs
     # clear SD card
 
     # close AUT

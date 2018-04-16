@@ -4,6 +4,7 @@ from constants import CLICK, LONG_CLICK, CHECK, UNCHECK, SCROLL_UP, SCROLL_DOWN,
 
 
 class UIAnalysisTests(unittest.TestCase):
+    
     def test_can_identify_clickable_widgets(self):
         page_source = """<?xml version="1.0" encoding="UTF-8"?><hierarchy rotation="0"><android.widget.Button index="0" text="Display Preferences" class="android.widget.Button" package="org.tomdroid" content-desc="" checkable="false" checked="false" clickable="true" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[32,146][736,210]" resource-id="android:id/title1" instance="1"/>
                         <nest><android.widget.TextView index="0" text="Login" class="android.widget.TextView" package="org.tomdroid" content-desc="" checkable="false" checked="false" clickable="true" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[32,146][736,210]" resource-id="android:id/title2" instance="1"/>
