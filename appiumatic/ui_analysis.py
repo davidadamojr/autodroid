@@ -2,29 +2,35 @@ import lxml.etree as etree
 import logging
 import abstraction
 from hashing import generate_state_hash
-from constants import CLICK, LONG_CLICK, CHECK, UNCHECK, SCROLL_UP, SCROLL_DOWN, TEXT_ENTRY
+from constants import *
 
 __author__ = "David Adamo Jr."
 
 logger = logging.getLogger(__name__)
 
 
+# - write test for this function
 def get_available_events(driver):
     current_state = get_current_state(driver)
     page_source = driver.page_source
     possible_actions = get_possible_actions(page_source)
     text_entry_actions, non_text_entry_actions = classify_actions(possible_actions)
     if text_entry_actions:
-        abstraction.create_partial_text_events(current_state, text_entry_actions, non_text_entry_actions)
+        available_events = abstraction.create_partial_text_events(current_state, text_entry_actions, non_text_entry_actions)
     else:
-        abstraction.create_partial_events(current_state, possible_actions)
+        available_events = abstraction.create_partial_events(current_state, possible_actions)
+
+    available_events.append(abstraction.create_back_event(current_state))
+    available_events.append(abstraction.create_background_event(current_state))
+
+    return available_events
 
 
 def classify_actions(possible_actions):
     text_entry_actions = []
     non_text_entry_actions = []
     for action in possible_actions:
-        if action["type"] == TEXT_ENTRY:
+        if action["type"] == GUIAction.TEXT_ENTRY:
             text_entry_actions.append(action)
         else:
             non_text_entry_actions.append(action)
@@ -46,13 +52,15 @@ def get_possible_actions(page_source):
 
 def _get_actionable_widgets(page_source):
     actionable_widgets = {
-        CLICK: [],
-        LONG_CLICK: [],
-        CHECK: [],
-        UNCHECK: [],
-        SCROLL_UP: [],
-        SCROLL_DOWN: [],
-        TEXT_ENTRY: []
+        GUIAction.CLICK: [],
+        GUIAction.LONG_CLICK: [],
+        GUIAction.CHECK: [],
+        GUIAction.UNCHECK: [],
+        GUIAction.SWIPE_UP: [],
+        GUIAction.SWIPE_DOWN: [],
+        GUIAction.SWIPE_RIGHT: [],
+        GUIAction.SWIPE_LEFT: [],
+        GUIAction.TEXT_ENTRY: []
     }
 
     xml_element = etree.fromstring(page_source.encode())
@@ -63,20 +71,22 @@ def _get_actionable_widgets(page_source):
         element_is_enabled = element_attributes.get("enabled", "") == "true"
         actionable_widget = abstraction.create_ui_widget(xml_tree, element)
         if element_is_text_field and element_is_enabled:
-            actionable_widgets[TEXT_ENTRY].append(actionable_widget)
+            actionable_widgets[GUIAction.TEXT_ENTRY].append(actionable_widget)
         else:
             if _element_is_clickable(element):
-                actionable_widgets[CLICK].append(actionable_widget)
+                actionable_widgets[GUIAction.CLICK].append(actionable_widget)
             if _element_is_long_clickable(element):
-                actionable_widgets[LONG_CLICK].append(actionable_widget)
+                actionable_widgets[GUIAction.LONG_CLICK].append(actionable_widget)
             if _element_is_checkable(element):
                 if _element_is_checked(element):
-                    actionable_widgets[UNCHECK].append(actionable_widget)
+                    actionable_widgets[GUIAction.UNCHECK].append(actionable_widget)
                 else:
-                    actionable_widgets[CHECK].append(actionable_widget)
+                    actionable_widgets[GUIAction.CHECK].append(actionable_widget)
             if _element_is_scrollable(element):
-                actionable_widgets[SCROLL_UP].append(actionable_widget)
-                actionable_widgets[SCROLL_DOWN].append(actionable_widget)
+                actionable_widgets[GUIAction.SWIPE_UP].append(actionable_widget)
+                actionable_widgets[GUIAction.SWIPE_DOWN].append(actionable_widget)
+                actionable_widgets[GUIAction.SWIPE_RIGHT].append(actionable_widget)
+                actionable_widgets[GUIAction.SWIPE_LEFT].append(actionable_widget)
 
     logger.debug("Found actionable widgets: %s".format(actionable_widgets))
     return actionable_widgets

@@ -1,5 +1,5 @@
 import logging
-import constants
+from constants import *
 
 logger = logging.getLogger(__name__)
 
@@ -29,8 +29,8 @@ def create_enter_target():
 
 
 def create_launch_event():
-    target = create_target("system", "app", "launch", "launch", "enabled")
-    action = create_action(constants.LAUNCH, target)
+    target = create_target(SelectorType.SYSTEM, "app", "launch", TargetType.APP, TargetState.ENABLED)
+    action = create_action(SystemAction.LAUNCH, target)
     precondition = create_state(None, None)
     partial_event = create_partial_event(precondition, [action])
 
@@ -79,7 +79,7 @@ def create_events_for_single_text_field(current_state, text_entry_action, non_te
 
 def pair_text_entry_with_enter_key(current_state, text_entry_action):
     enter_target = create_enter_target()
-    enter_key_action = create_action(constants.ENTER_KEY, enter_target)
+    enter_key_action = create_action(GUIAction.ENTER_KEY, enter_target)
 
     text_entry_enter_key_event = create_partial_event(current_state, [text_entry_action, enter_key_action])
 
@@ -124,7 +124,7 @@ def create_single_action_events(current_state, non_text_entry_actions):
 
 def does_action_pair_with_text_entry(non_text_entry_action):
     invalid_targets = {"spinner", "checkbox", "edittext", "radiobutton", "togglebutton"}
-    return non_text_entry_action["type"] == constants.CLICK and \
+    return non_text_entry_action["type"] == GUIAction.CLICK and \
         non_text_entry_action["target"]["type"].lower() not in invalid_targets
 
 
@@ -138,17 +138,24 @@ def create_partial_events(current_state, possible_actions):
 
 
 def create_back_event(precondition):
-    target = create_target("key_code", constants.BACK_KEY_CODE, "back", "nav", "enabled")
-    action = create_action("back", target)
+    target = create_target("key_code", KeyCode.BACK, "back", TargetType.NAV, TargetState.ENABLED)
+    action = create_action(GUIAction.BACK_NAV, target)
     back_event = create_partial_event(precondition, [action])
     return back_event
 
 
 def create_home_event(precondition):
-    target = create_target("key_code", constants.HOME_KEY_CODE, "home", "nav", "enabled")
-    action = create_action("home", target)
+    target = create_target("key_code", KeyCode.HOME, "home", "nav", "enabled")
+    action = create_action(GUIAction.HOME_NAV, target)
     home_event = create_partial_event(precondition, [action])
     return home_event
+
+
+def create_background_event(precondition):
+    target = create_target(SelectorType.SYSTEM, "app", "run in background", TargetType.APP, TargetState.ENABLED)
+    action = create_action(SystemAction.RUN_IN_BACKGROUND, target)
+    background_event = create_partial_event(precondition, [action])
+    return background_event
 
 
 def create_action(action_type, widget):
@@ -178,16 +185,16 @@ def create_ui_widget(xml_tree, element):
 
 def _get_widget_state(element):
     element_attributes = element.attrib
-    if element_attributes.get("enabled", "") == "true":
-        return "enabled"
+    if element_attributes.get(TargetState.ENABLED, "") == "true":
+        return TargetState.ENABLED
 
-    return "disabled"
+    return TargetState.DISABLED
 
 
 def _get_widget_type(element):
     element_attributes = element.attrib
     class_value = element_attributes.get("class", "")
-    return class_value.split(".")[-1]
+    return class_value.split(".")[-1].lower()
 
 
 def _get_widget_selector(xml_tree, element):
