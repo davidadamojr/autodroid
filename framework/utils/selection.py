@@ -51,4 +51,3 @@ def make_weighted_selection(hash_to_events_map, event_weights, goal_weight):
 
     logger.error("Did not return proper weighted event. An error occurred.")
     return hash_to_events_map[event_hash]
-

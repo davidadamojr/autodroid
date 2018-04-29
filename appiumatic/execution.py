@@ -25,53 +25,52 @@ class Executor(object):
     def perform(self, action):
         target = action["target"]
         action_type = action["type"]
-        try:
-            # TODO: Refactor this - make action classes - may need event classes too - use polymorphism
-            # TODO: properly group constants using classes e.g. ActionType.LONG_CLICK
-            if action_type == GUIAction.TEXT_ENTRY:
-                fill_text(action, self.text_values)
-                text_value = action["value"]
-                self.type_text(target, text_value)
-            elif action_type == GUIAction.HOME_NAV:
-                logger.info("Pressing HOME navigation button.")
-                self.driver.press_keycode(KeyCode.HOME)
-            elif action_type == GUIAction.BACK_NAV:
-                logger.info("Pressing BACK navigation button.")
-                self.driver.press_keycode(KeyCode.BACK)
-            elif action_type == GUIAction.ENTER_KEY:
-                logger.info("Pressing RETURN key.")
-                self.driver.press_keycode(KeyCode.RETURN)
-            elif action_type == SystemAction.RUN_IN_BACKGROUND:
-                logger.info("Running app in background for 1 second.")
-                self.driver.background_app(1)
-            else:
-                selector = target["selector"]
-                selector_value = target["selector_value"]
-                if selector == SelectorType.ID:
-                    element = self.driver.find_element_by_id(selector_value)
-                else:
-                    element = self.driver.find_element_by_xpath(selector_value)
 
-                if action_type == GUIAction.LONG_CLICK:
-                    self.long_click(element)
-                elif action_type == GUIAction.SWIPE_UP:
-                    self.swipe_up()
-                elif action_type == GUIAction.SWIPE_DOWN:
-                    self.swipe_down()
-                elif action_type == GUIAction.SWIPE_RIGHT:
-                    self.swipe_right()
-                elif action_type == GUIAction.SWIPE_LEFT:
-                    self.swipe_left()
-                elif action_type == GUIAction.CLICK:
-                    element.click()
-                else:
-                    raise EventExecutionFailed("Unknown action type.")
-        except Exception as e:
-            raise EventExecutionFailed(e.message)
+        # TODO: Refactor this - make action classes - may need event classes too - use polymorphism
+        # TODO: properly group constants using classes e.g. ActionType.LONG_CLICK
+        if action_type == GUIAction.TEXT_ENTRY:
+            fill_text(action, self.text_values)
+            text_value = action["value"]
+            self.type_text(target, text_value)
+        elif action_type == GUIAction.HOME_NAV:
+            logger.info("Pressing HOME navigation button.")
+            self.driver.press_keycode(KeyCode.HOME)
+        elif action_type == GUIAction.BACK_NAV:
+            logger.info("Pressing BACK navigation button.")
+            self.driver.press_keycode(KeyCode.BACK)
+        elif action_type == GUIAction.ENTER_KEY:
+            logger.info("Pressing RETURN key.")
+            self.driver.press_keycode(KeyCode.RETURN)
+        elif action_type == SystemAction.RUN_IN_BACKGROUND:
+            logger.info("Running app in background for 1 second.")
+            self.driver.background_app(1)
+        else:
+            selector = target["selector"]
+            selector_value = target["selectorValue"]
+            if selector == SelectorType.ID:
+                element = self.driver.find_element_by_id(selector_value)
+            else:
+                element = self.driver.find_element_by_xpath(selector_value)
+
+            if action_type == GUIAction.LONG_CLICK:
+                self.long_click(element)
+            elif action_type == GUIAction.SWIPE_UP:
+                self.swipe_up()
+            elif action_type == GUIAction.SWIPE_DOWN:
+                self.swipe_down()
+            elif action_type == GUIAction.SWIPE_RIGHT:
+                self.swipe_right()
+            elif action_type == GUIAction.SWIPE_LEFT:
+                self.swipe_left()
+            elif action_type == GUIAction.CLICK or action_type == GUIAction.CHECK or \
+                    action_type == GUIAction.UNCHECK:
+                element.click()
+            else:
+                raise EventExecutionFailed("Unknown action type.")
 
     def type_text(self, target, text_value):
         selector = target["selector"]
-        selector_value = target["selector_value"]
+        selector_value = target["selectorValue"]
         logger.info("Filling in text field: {}".format(selector_value))
         if selector == SelectorType.ID:
             text_entry_element = self.driver.find_element_by_id(selector_value)
@@ -87,7 +86,7 @@ class Executor(object):
         action.long_press(element).perform()
 
     def swipe_up(self):
-        logger.info("Executing scroll up event.")
+        logger.info("Executing swipe up event.")
         screen_size = self.driver.get_window_size()
         start_y = int(screen_size["height"] * 0.80)
         end_y = int(screen_size["height"] * 0.20)
@@ -95,7 +94,7 @@ class Executor(object):
         self.driver.swipe(start_x, start_y, start_x, end_y, 200)
 
     def swipe_down(self):
-        logger.info("Executing scroll down event.")
+        logger.info("Executing swipe down event.")
         screen_size = self.driver.get_window_size()
         start_y = int(screen_size["height"] * 0.20)
         end_y = int(screen_size["height"] * 0.80)
@@ -103,7 +102,7 @@ class Executor(object):
         self.driver.swipe(start_x, start_y, start_x, end_y, 200)
 
     def swipe_right(self):
-        logger.info("Executing scroll down event.")
+        logger.info("Executing swipe right event.")
         screen_size = self.driver.get_window_size()
         start_x = int(screen_size["width"] * 0.20)
         end_x = int(screen_size["width"] * 0.80)
@@ -112,7 +111,7 @@ class Executor(object):
         self.driver.swipe(start_x, start_y, end_x, start_y, 200)
 
     def swipe_left(self):
-        logger.info("Executing scroll down event.")
+        logger.info("Executing swipe left event.")
         screen_size = self.driver.get_window_size()
         start_x = int(screen_size["width"] * 0.80)
         end_x = int(screen_size["width"] * 0.20)

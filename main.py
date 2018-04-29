@@ -45,7 +45,8 @@ def main():
             "apk_package_name": config.APP_PACKAGE_NAME,
             "coverage_path": config.COVERAGE_FILE_PATH,
             "event_interval": config.EVENT_INTERVAL,
-            "text_entry_values": text_values
+            "text_entry_values": text_values,
+            "adb_path": config.ADB_PATH
         }
         generation.construct_test_suite(db_connection, configuration, setup, event_selection_strategy,
                                         termination_criterion, completion_criterion, teardown)
@@ -55,5 +56,6 @@ def main():
         logger.fatal("Could not connect to appium server: {}.".format(conn_refused))
 
     db_connection.close()
+
 
 main()

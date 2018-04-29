@@ -1,0 +1,15 @@
+2018-04-25 05:18:12,152 - selenium.webdriver.remote.remote_connection - DEBUG - POST http://127.0.0.1:4723/wd/hub/session {"capabilities": {"firstMatch": [{}], "alwaysMatch": {"platformName": "Android"}}, "desiredCapabilities": {"deviceName": "Android", "app": "/home/davidadamojr/git/autodroid/apps/org.tomdroid-0.7.5.apk", "newCommandTimeout": 3600, "platformName": "Android"}}
+2018-04-25 05:18:19,854 - selenium.webdriver.remote.remote_connection - DEBUG - Finished Request
+2018-04-25 05:18:19,854 - selenium.webdriver.remote.remote_connection - DEBUG - POST http://127.0.0.1:4723/wd/hub/session/c106d6b4-ada2-4813-8c66-1aeb4e2dd283/element {"using": "id", "value": "android:id/button3", "sessionId": "c106d6b4-ada2-4813-8c66-1aeb4e2dd283"}
+2018-04-25 05:18:22,370 - selenium.webdriver.remote.remote_connection - DEBUG - Finished Request
+2018-04-25 05:18:22,370 - selenium.webdriver.remote.remote_connection - DEBUG - POST http://127.0.0.1:4723/wd/hub/session/c106d6b4-ada2-4813-8c66-1aeb4e2dd283/element/1/click {"id": "1", "sessionId": "c106d6b4-ada2-4813-8c66-1aeb4e2dd283"}
+2018-04-25 05:18:23,232 - selenium.webdriver.remote.remote_connection - DEBUG - Finished Request
+2018-04-25 05:18:23,232 - selenium.webdriver.remote.remote_connection - DEBUG - POST http://127.0.0.1:4723/wd/hub/session/c106d6b4-ada2-4813-8c66-1aeb4e2dd283/element {"using": "id", "value": "org.tomdroid:id/menuNew", "sessionId": "c106d6b4-ada2-4813-8c66-1aeb4e2dd283"}
+2018-04-25 05:18:23,749 - selenium.webdriver.remote.remote_connection - DEBUG - Finished Request
+2018-04-25 05:18:23,749 - selenium.webdriver.remote.remote_connection - DEBUG - POST http://127.0.0.1:4723/wd/hub/session/c106d6b4-ada2-4813-8c66-1aeb4e2dd283/element/2/click {"id": "2", "sessionId": "c106d6b4-ada2-4813-8c66-1aeb4e2dd283"}
+2018-04-25 05:18:24,040 - selenium.webdriver.remote.remote_connection - DEBUG - Finished Request
+2018-04-25 05:18:24,040 - execution - INFO - Pressing RETURN key.
+2018-04-25 05:18:24,040 - selenium.webdriver.remote.remote_connection - DEBUG - POST http://127.0.0.1:4723/wd/hub/session/c106d6b4-ada2-4813-8c66-1aeb4e2dd283/appium/device/press_keycode {"keycode": 66, "sessionId": "c106d6b4-ada2-4813-8c66-1aeb4e2dd283"}
+2018-04-25 05:18:26,162 - selenium.webdriver.remote.remote_connection - DEBUG - Finished Request
+2018-04-25 05:18:28,163 - selenium.webdriver.remote.remote_connection - DEBUG - DELETE http://127.0.0.1:4723/wd/hub/session/c106d6b4-ada2-4813-8c66-1aeb4e2dd283 {"sessionId": "c106d6b4-ada2-4813-8c66-1aeb4e2dd283"}
+2018-04-25 05:18:32,113 - selenium.webdriver.remote.remote_connection - DEBUG - Finished Request

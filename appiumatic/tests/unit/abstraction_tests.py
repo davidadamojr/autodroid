@@ -1,7 +1,7 @@
 import abstraction
-import constants
 import unittest
 import lxml.etree as etree
+from constants import *
 
 
 class AbstractionTests(unittest.TestCase):
@@ -11,13 +11,13 @@ class AbstractionTests(unittest.TestCase):
         expected_event = {
             "actions": [{
                 "target": {
-                    "selector": "system",
+                    "selector": SelectorType.SYSTEM,
                     "selectorValue": "app",
                     "description": "launch",
-                    "type": "launch",
-                    "state": "enabled"
+                    "type": TargetType.APP,
+                    "state": TargetState.ENABLED
                 },
-                "type": "launch",
+                "type": GUIAction.LAUNCH,
                 "value": None
             }],
             "precondition": {
@@ -28,7 +28,7 @@ class AbstractionTests(unittest.TestCase):
         self.assertEqual(launch_event, expected_event)
 
     def test_create_action(self):
-        action_type = constants.CLICK
+        action_type = GUIAction.CLICK
         widget = {
             "selector": "id",
             "selectorValue": "widget_id",
@@ -56,7 +56,7 @@ class AbstractionTests(unittest.TestCase):
             "selector": "id",
             "selectorValue": "android:id/title",
             "description": "Display Preferences",
-            "type": "TextView",
+            "type": TargetType.TEXT_VIEW,
             "state": "enabled"
         }
         actual_widget = abstraction.create_ui_widget(element_tree, target_element)
@@ -220,8 +220,8 @@ class AbstractionTests(unittest.TestCase):
             "actions": [{
                 "target": {
                     "selector": "key_code",
-                    "selectorValue": "4",
-                    "type": "nav",
+                    "selectorValue": KeyCode.BACK,
+                    "type": TargetType.NAV,
                     "description": "back",
                     "state": "enabled"
                 },
@@ -240,12 +240,12 @@ class AbstractionTests(unittest.TestCase):
             "actions": [{
                 "target": {
                     "selector": "key_code",
-                    "selectorValue": "3",
-                    "type": "nav",
+                    "selectorValue": KeyCode.HOME,
+                    "type": TargetType.NAV,
                     "description": "home",
-                    "state": "enabled"
+                    "state": TargetState.ENABLED
                 },
-                "type": "home",
+                "type": GUIAction.HOME_NAV,
                 "value": None
             }]
         }
@@ -260,11 +260,11 @@ class AbstractionTests(unittest.TestCase):
                 "target": {
                     "selector": "id",
                     "selectorValue": "delete_btn",
-                    "type": "button",
+                    "type": TargetType.BUTTON,
                     "description": "Delete",
-                    "state": "enabled"
+                    "state": TargetState.ENABLED
                 },
-                "type": "click",
+                "type": GUIAction.CLICK,
                 "value": None
             }
         ]

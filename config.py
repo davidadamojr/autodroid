@@ -1,5 +1,5 @@
 # Android settings
-SDK_PATH = "/home/davidadamojr/Android/Sdk"
+ADB_PATH = "/home/davidadamojr/Android/Sdk/platform-tools/adb"
 EMULATOR_BOOT_DELAY = 5
 
 # Standard emulator settings
@@ -11,6 +11,8 @@ GENYMOTION_PATH = "/home/davidadamojr/genymotion"
 VM_NAME = "3942e954-84c4-4766-8e4b-6901dfeebde8"
 
 # Autodroid settings
+OUTPUT_PATH = "/home/davidadamojr/git/autodroid/output"
+AUTODROID_PATH = "/home/davidadamojr/git/autodroid"
 USE_MENU_KEY = False
 COLLECT_COVERAGE = True
 COLLECT_LOGS = True
@@ -24,7 +26,6 @@ TEST_SUITE_LENGTH = 100  # only used if completion criterion is "Length"
 TIME_BUDGET = 1  # (in hours) only used if completion criterion is "Time"
 TERMINATION_PROBABILITY = 0.05  # only used when termination criterion is "probabilistic"
 TEST_CASE_LENGTH = 100  # only used if termination criterion is "length"
-OUTPUT_PATH = "/home/davidadamojr/git/autodroid/output"
 STRINGS_PATH = "strings.txt"
 
 # Appium settings

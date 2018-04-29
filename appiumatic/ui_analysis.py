@@ -4,8 +4,6 @@ import abstraction
 from hashing import generate_state_hash
 from constants import *
 
-__author__ = "David Adamo Jr."
-
 logger = logging.getLogger(__name__)
 
 

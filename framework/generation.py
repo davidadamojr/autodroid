@@ -38,6 +38,7 @@ def _create_output_directories(output_path, apk_package_name, test_suite_creatio
 
 
 def _write_test_case_to_file(path_to_test_cases, test_case, test_case_count, test_case_duration):
+    test_case_count = str(test_case_count).zfill(3)
     test_case_path = os.path.join(path_to_test_cases, "tc{}_{}.json".format(test_case_count, test_case_duration))
     test_case_data = {
         "events": test_case,
@@ -63,8 +64,6 @@ def remove_termination_events(db_connection, test_suite_id, events):
 # TODO: refactor into Generator class, reduce method sizes
 def construct_test_suite(db_connection, configuration, setup, event_selection_strategy, termination_criterion,
                          completion_criterion, teardown):
-    # TODO: elaborate error handling
-
     test_suite_id = uuid4().hex
     test_suite_creation_time = int(time.time())
 
@@ -81,13 +80,10 @@ def construct_test_suite(db_connection, configuration, setup, event_selection_st
         event_count = 0
         test_case = []
 
-        try:
-            apk_path = configuration["apk_path"]
-            logger.debug("Path to APK is {}".format(apk_path))
-            driver = setup(apk_path)
-        except ConnectionRefusedError as connection_refused:
-            logger.error("Could not connect to appium server: %s. Please check that the appium server is running.".format(connection_refused))
-            raise ConnectionRefusedError
+        apk_path = configuration["apk_path"]
+        adb_path = configuration["adb_path"]
+        logger.debug("Path to APK is {}".format(apk_path))
+        driver = setup(apk_path, adb_path)
 
         test_case_start_time = time.time()
         logger.debug("Generating test case {}. Start time is {}.".format(test_case_count+1, test_case_start_time))
@@ -126,17 +122,18 @@ def construct_test_suite(db_connection, configuration, setup, event_selection_st
 
         # always end test cases by clicking the home event, but do not add the event to the test case
         home_event = create_home_event(current_state)
-        executor.execute(home_event, driver)
+        executor.execute(home_event)
 
         end_time = time.time()
         test_case_duration = end_time - test_case_start_time
         test_suite_duration = end_time - test_suite_creation_time
         test_case_count += 1
 
-        add_test_case(db_connection, generate_test_case_hash(test_case), )
+        add_test_case(db_connection, generate_test_case_hash(test_case), test_suite_id, test_suite_creation_time,
+                      test_suite_duration)
 
         # write test case to file
-        test_case_path = _write_test_case_to_file(path_to_test_cases, test_case, test_case_count, test_case_duration)
+        test_case_path = _write_test_case_to_file(path_to_test_cases, test_case, test_case_count.zfill(3), test_case_duration)
         logger.debug("Test case {} written to {}.".format(test_case_count, test_case_path))
 
         # collect coverage

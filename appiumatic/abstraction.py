@@ -145,7 +145,7 @@ def create_back_event(precondition):
 
 
 def create_home_event(precondition):
-    target = create_target("key_code", KeyCode.HOME, "home", "nav", "enabled")
+    target = create_target("key_code", KeyCode.HOME, "home", TargetType.NAV, TargetState.ENABLED)
     action = create_action(GUIAction.HOME_NAV, target)
     home_event = create_partial_event(precondition, [action])
     return home_event
@@ -194,7 +194,7 @@ def _get_widget_state(element):
 def _get_widget_type(element):
     element_attributes = element.attrib
     class_value = element_attributes.get("class", "")
-    return class_value.split(".")[-1].lower()
+    return class_value.split(".")[-1]
 
 
 def _get_widget_selector(xml_tree, element):

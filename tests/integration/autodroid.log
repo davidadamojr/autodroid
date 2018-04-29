@@ -1,8 +1,3 @@
-2018-04-09 06:25:54,544 - framework.database - INFO - Successfully created database tables.
-2018-04-09 06:25:54,656 - framework.strategies.selection - INFO - Making min_frequency_deterministic selection from {}
-2018-04-09 06:25:55,502 - framework.database - INFO - Successfully created database tables.
-2018-04-09 06:25:55,685 - framework.strategies.selection - INFO - Making min_frequency_deterministic selection from {}
-2018-04-09 06:25:56,343 - framework.database - INFO - Successfully created database tables.
-2018-04-09 06:25:56,438 - framework.strategies.selection - INFO - Making min_frequency_random selection from 3 available events.
-2018-04-09 06:25:57,399 - framework.database - INFO - Successfully created database tables.
-2018-04-09 06:25:57,575 - framework.strategies.selection - INFO - Making min_frequency_random selection from 3 available events.
+2018-04-28 17:24:46,348 - framework.generation - DEBUG - Test cases are stored in /home/davidadamojr/git/autodroid/output/wonderful_apk_package_1234567890/testcases.
+2018-04-28 17:24:46,349 - framework.generation - DEBUG - Logs are stored in /home/davidadamojr/git/autodroid/output/wonderful_apk_package_1234567890/logs.
+2018-04-28 17:24:46,349 - framework.generation - DEBUG - Coverage files are stored in /home/davidadamojr/git/autodroid/output/wonderful_apk_package_1234567890/coverage.

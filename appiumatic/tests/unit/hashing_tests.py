@@ -1,7 +1,7 @@
 import hashing
 import unittest
 import random
-from constants import CLICK, LONG_CLICK, CHECK, UNCHECK, SCROLL_UP, SCROLL_DOWN, TEXT_ENTRY
+from constants import *
 
 
 class HashingTests(unittest.TestCase):
@@ -41,23 +41,23 @@ class HashingTests(unittest.TestCase):
         possible_actions = [
             {
                 "target": widgets[0],
-                "type": TEXT_ENTRY,
+                "type": GUIAction.TEXT_ENTRY,
                 "value": "Hello World!"
             }, {
                 "target": widgets[1],
-                "type": TEXT_ENTRY,
+                "type": GUIAction.TEXT_ENTRY,
                 "value": None
             }, {
                 "target": widgets[2],
-                "type": CLICK,
+                "type": GUIAction.CLICK,
                 "value": None
             }, {
                 "target": widgets[3],
-                "type": CHECK,
+                "type": GUIAction.CHECK,
                 "value": None
             }, {
                 "target": widgets[3],
-                "type": UNCHECK,
+                "type": GUIAction.UNCHECK,
                 "value": None
             }
         ]
@@ -103,23 +103,23 @@ class HashingTests(unittest.TestCase):
         possible_actions = [
             {
                 "target": widgets[0],
-                "type": TEXT_ENTRY,
+                "type": GUIAction.TEXT_ENTRY,
                 "value": None
             }, {
                 "target": widgets[1],
-                "type": TEXT_ENTRY,
+                "type": GUIAction.TEXT_ENTRY,
                 "value": None
             }, {
                 "target": widgets[2],
-                "type": CLICK,
+                "type": GUIAction.CLICK,
                 "value": None
             }, {
                 "target": widgets[3],
-                "type": CHECK,
+                "type": GUIAction.CHECK,
                 "value": None
             }, {
                 "target": widgets[3],
-                "type": UNCHECK,
+                "type": GUIAction.UNCHECK,
                 "value": None
             }
         ]

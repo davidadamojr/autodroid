@@ -1,14 +1,14 @@
 PLATFORM_TOOLS_DIR = "platform-tools"
 
 
-class ScriptPath:
-    ADB_RESET_SCRIPT = "appiumatic/scripts/adb_reset.sh"
-    CHECK_BOOT_ANIM_SCRIPT = "appiumatic/scripts/check_boot_anim.sh"
-    BOOT_STANDARD_EMU_SCRIPT = "appiumatic/scripts/boot_standard_emulator.sh"
-    BOOT_GENYMOTION_EMU_SCRIPT = "appiumatic/scripts/boot_genymotion_emulator.sh"
-    KILL_STANDARD_EMU_SCRIPT = "appiumatic/scripts/kill_standard_emulator.sh"
-    KILL_GENYMOTION_EMU_SCRIPT = "appiumatic/scripts/kill_genymotion_emulator.sh"
-    START_APPIUM_SCRIPT = "appiumatic/scripts/start_appium.sh"
+class Scripts:
+    ADB_RESET = "appiumatic/scripts/adb_reset.sh"
+    CHECK_BOOT_ANIM = "appiumatic/scripts/check_boot_anim.sh"
+    BOOT_STANDARD_EMU = "appiumatic/scripts/boot_standard_emulator.sh"
+    BOOT_GENYMOTION_EMU = "appiumatic/scripts/boot_genymotion_emulator.sh"
+    KILL_STANDARD_EMU = "appiumatic/scripts/kill_standard_emulator.sh"
+    KILL_GENYMOTION_EMU = "appiumatic/scripts/kill_genymotion_emulator.sh"
+    START_APPIUM = "appiumatic/scripts/start_appium.sh"
 
 
 class GUIAction:
@@ -24,6 +24,7 @@ class GUIAction:
     HOME_NAV = "home"
     BACK_NAV = "back"
     ENTER_KEY = "enter"
+    LAUNCH = "launch"
 
 
 class SystemAction:
@@ -32,9 +33,15 @@ class SystemAction:
 
 
 class TargetType:
-    APP = "app"
-    NAV = "nav"
-    SPINNER = "spinner"
+    APP = "App"
+    NAV = "Nav"
+    SPINNER = "Spinner"
+    EDIT_TEXT = "EditText"
+    TEXT_VIEW = "TextView"
+    BUTTON = "Button"
+    RADIO_BUTTON = "RadioButton"
+    CHECK_BOX = "CheckBox"
+    IMAGE_BUTTON = "ImageButton"
 
 
 class SelectorType:
