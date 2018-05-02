@@ -7,13 +7,15 @@ from appiumatic.exceptions import InvalidParameter
 def event_selection_strategy(strategy):
     strategy = strategy.lower()
     if strategy == "random":
-        return selection.random
+        return selection.uniform_random
     elif strategy == "min_frequency_random":
-        return selection.min_frequency
+        return selection.min_frequency_random
     elif strategy == "min_frequency_deterministic":
         return selection.min_frequency_deterministic
     elif strategy == "frequency_weighted":
         return selection.frequency_weighted
+    elif strategy == "normal_random":
+        return selection.gaussian_random
 
     raise InvalidParameter("Invalid specification '{}' for event selection strategy.".format(strategy))
 
@@ -47,8 +49,8 @@ def completion_criterion(criterion, time_budget, test_suite_length):
 def termination_criterion(criterion, probability, length):
     criterion = criterion.lower()
     if criterion == "probabilistic":
-        return partial(termination.probabilistic, probability=probability, test_case_length=length)
+        return partial(termination.probabilistic, probability=probability)
     elif criterion == "length":
-        return partial(termination.length, probability=probability, test_case_length=length)
+        return partial(termination.length, test_case_length=length)
 
     raise InvalidParameter("Invalid specification '{}' for termination criterion.".format(criterion))

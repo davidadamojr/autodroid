@@ -44,7 +44,7 @@ def get_possible_actions(page_source):
             action = abstraction.create_action(action_type, widget)
             possible_actions.append(action)
 
-    logger.debug("Found %s possible actions.".format(len(possible_actions)))
+    logger.debug("Found {} possible actions.".format(len(possible_actions)))
     return possible_actions
 
 
@@ -121,6 +121,6 @@ def get_current_state(driver):
         logger.error("Could not retrieve current state: %s".format(e))
         current_state = abstraction.create_crash_state()
 
-    logger.debug("Current state: %s".format(current_state))
+    logger.debug("Current state: {}".format(current_state))
     return current_state
 

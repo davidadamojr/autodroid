@@ -2,6 +2,7 @@ import os
 import logging
 import time
 import json
+from framework.utils.scripts import *
 from framework.database import add_test_case, add_test_suite, add_termination_event, is_termination_event
 from uuid import uuid4
 
@@ -72,7 +73,11 @@ def construct_test_suite(db_connection, configuration, setup, event_selection_st
     # create output directories
     apk_package_name = configuration["apk_package_name"]
     logger.debug("APK package name is {}".format(apk_package_name))
-    path_to_test_cases, path_to_logs, path_to_coverage = _create_output_directories(apk_package_name)
+    output_path = configuration["output_path"]
+    logger.debug("Output path is {}".format(output_path))
+    path_to_test_cases, path_to_logs, path_to_coverage = _create_output_directories(output_path,
+                                                                                    apk_package_name,
+                                                                                    test_suite_creation_time)
 
     test_case_count = 0
     test_suite_duration = 0
@@ -94,51 +99,66 @@ def construct_test_suite(db_connection, configuration, setup, event_selection_st
         test_case.append(complete_event)
         event_count += 1
 
-        executor = Executor(configuration["event_interval"], configuration["text_entry_values"])
+        executor = Executor(driver, configuration["event_interval"], configuration["text_entry_values"])
         logger.debug("Test case setup complete.")
 
-        while not termination_criterion(db_connection, test_case_hash=generate_test_case_hash(test_case),
-                                        event_count=event_count, test_suite_id=test_suite_id):
-            try:
+        try:
+            while not termination_criterion(db_connection, test_case_hash=generate_test_case_hash(test_case),
+                                            event_count=event_count, test_suite_id=test_suite_id):
+
                 partial_events = get_available_events(driver)
-                non_termination_events = remove_termination_events(partial_events)
+                non_termination_events = remove_termination_events(db_connection, test_suite_id, partial_events)
                 selected_event = event_selection_strategy(db_connection, non_termination_events, test_suite_id=test_suite_id)
-                executor.execute(selected_event, driver)
+                executor.execute(selected_event)
                 current_state = get_current_state(driver)
                 complete_event = synthesize(selected_event, current_state)
                 test_case.append(complete_event)
 
                 event_count += 1
-            except Exception as e:
-                print(e)
-                break  # end the test case
 
-            # end the test case if event explores beyond boundary of the application under test
-            current_package = driver.current_package
-            if current_package != apk_package_name:
-                event_hash = generate_event_hash(complete_event)
-                add_termination_event(db_connection, event_hash, test_suite_id)
-                break
+                # end the test case if event explores beyond boundary of the application under test
+                current_package = driver.current_package
+                if current_package != apk_package_name:
+                    event_hash = generate_event_hash(complete_event)
+                    add_termination_event(db_connection, event_hash, test_suite_id)
+                    break
+        except Exception as e:
+            print(e)
+            continue  # start a new test case
 
         # always end test cases by clicking the home event, but do not add the event to the test case
         home_event = create_home_event(current_state)
         executor.execute(home_event)
 
+        # try:
+        # collect coverage
+        coverage_file_path = configuration["coverage_file_path"] + "/coverage.ec"
+        coverage_file_name = "coverage{}.ec".format(str(test_case_count+1).zfill(3))
+        coverage_broadcast = configuration["coverage_broadcast"]
+        get_coverage(adb_path, coverage_file_path, path_to_coverage, coverage_file_name, coverage_broadcast)
+
+        # write logs
+        log_file_name = "log{}.ec".format(str(test_case_count+1).zfill(3))
+        log_file_path = os.path.join(path_to_logs, log_file_name)
+        apk_package_name = configuration["apk_package_name"]
+        app_process_id = get_process_id(adb_path, apk_package_name)
+        get_logs(adb_path, log_file_path, app_process_id)
+        # except subprocess.CalledProcessError as cp_error:
+        #     print(cp_error)
+        #     continue  # start a new test case
+
         end_time = time.time()
         test_case_duration = end_time - test_case_start_time
         test_suite_duration = end_time - test_suite_creation_time
-        test_case_count += 1
 
         add_test_case(db_connection, generate_test_case_hash(test_case), test_suite_id, test_suite_creation_time,
                       test_suite_duration)
 
+        test_case_count += 1
+
         # write test case to file
-        test_case_path = _write_test_case_to_file(path_to_test_cases, test_case, test_case_count.zfill(3), test_case_duration)
+        test_case_path = _write_test_case_to_file(path_to_test_cases, test_case, test_case_count, test_case_duration)
         logger.debug("Test case {} written to {}.".format(test_case_count, test_case_path))
-
-        # collect coverage
-
-        # write logs
 
         logger.debug("Beginning test case teardown.")
         teardown(driver)

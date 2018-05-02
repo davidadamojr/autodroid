@@ -6,7 +6,7 @@ ADB_PATH=$1
 LOG_FILE_PATH=$2
 PROCESS_ID=$3
 
-if [ "$PROCESSID" = "-1" ]
+if [ "$PROCESSID" = "" ]
 then
     $ADB_PATH logcat -d *:W > $LOG_FILE_PATH
 else

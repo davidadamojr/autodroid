@@ -4,13 +4,12 @@ from framework.utils import selection
 import framework.database as database
 from appiumatic.hashing import generate_event_hash
 
-
+# TODO: create eventselector class to maintain random chooser state
 logger = logging.getLogger(__name__)
 
 
 def uniform_random(db_connection, events, test_suite_id=None):
     assert events is not None
-    random.seed(42)
 
     selected_event = random.choice(events)
 
@@ -19,7 +18,6 @@ def uniform_random(db_connection, events, test_suite_id=None):
 
 def min_frequency_random(db_connection, events, test_suite_id=None):
     assert events is not None and test_suite_id is not None
-    random.seed(42)
 
     logger.info("Making min_frequency_random selection from {} available events.".format(len(events)))
 

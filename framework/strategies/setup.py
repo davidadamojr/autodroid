@@ -1,10 +1,10 @@
 from appium import webdriver
-from framework.utils.scripts import clear_sdcard_data
+from framework.utils.scripts import clear_sdcard_data, clear_logs
 
 
 def standard(apk_path, adb_path):
     clear_sdcard_data(adb_path)
-
+    clear_logs(adb_path)
     driver = _get_driver(apk_path)
     return driver
 

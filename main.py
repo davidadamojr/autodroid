@@ -13,6 +13,7 @@ logger = logging.getLogger(__name__)
 def retrieve_text_values(strings_path):
     with open(strings_path) as strings_file:
         text_field_strings = strings_file.readlines()
+        text_field_strings = [text.replace("\n", "") for text in text_field_strings]
 
     return text_field_strings
 
@@ -46,14 +47,19 @@ def main():
             "coverage_path": config.COVERAGE_FILE_PATH,
             "event_interval": config.EVENT_INTERVAL,
             "text_entry_values": text_values,
-            "adb_path": config.ADB_PATH
+            "adb_path": config.ADB_PATH,
+            "coverage_file_path": config.COVERAGE_FILE_PATH,
+            "coverage_broadcast": config.COVERAGE_BROADCAST,
+            "output_path": config.OUTPUT_PATH
         }
         generation.construct_test_suite(db_connection, configuration, setup, event_selection_strategy,
                                         termination_criterion, completion_criterion, teardown)
-    except IOError as file_read_failed:
-        logger.fatal("Could not read strings file: {}".format(file_read_failed))
+    except IOError as io_error:
+        logger.fatal(io_error)
     except ConnectionRefusedError as conn_refused:
         logger.fatal("Could not connect to appium server: {}.".format(conn_refused))
+    except Exception as e:
+        logger.fatal("A fatal error occurred: {}".format(e))
 
     db_connection.close()
 
