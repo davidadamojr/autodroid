@@ -29,7 +29,7 @@ def get_process_id(adb_path, package_name):
 def get_coverage(adb_path, device_path, coverage_path, coverage_name, broadcast):
     get_coverage_cmd = "{} {} {} {} {} {}".format(Script.GET_COVERAGE, adb_path, device_path, coverage_path,
                                                      coverage_name, broadcast)
-    subprocess.check_call(get_coverage_cmd, shell=True)
+    subprocess.call(get_coverage_cmd, shell=True)
     logger.info("Successfully retrieved coverage file: {}.".format(coverage_name))
 
 

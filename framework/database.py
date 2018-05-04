@@ -68,6 +68,7 @@ def add_termination_event(db_connection, test_suite_id, event_hash):
 
     rows = cursor.fetchall()
     if len(rows) == 0:
+        logger.debug("Marking event {} as termination event.".format(event_hash))
         insert_query = "INSERT INTO event_info VALUES (?, ?, ?, ?, ?)"
         cursor.execute(insert_query, (event_hash, test_suite_id, 1, 1, 0))
     else:

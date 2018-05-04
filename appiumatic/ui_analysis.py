@@ -86,7 +86,7 @@ def _get_actionable_widgets(page_source):
                 actionable_widgets[GUIAction.SWIPE_RIGHT].append(actionable_widget)
                 actionable_widgets[GUIAction.SWIPE_LEFT].append(actionable_widget)
 
-    logger.debug("Found actionable widgets: %s".format(actionable_widgets))
+    logger.debug("Found actionable widgets: {}".format(actionable_widgets))
     return actionable_widgets
 
 

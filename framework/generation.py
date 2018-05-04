@@ -3,7 +3,7 @@ import logging
 import time
 import json
 from framework.utils.scripts import *
-from framework.database import add_test_case, add_test_suite, add_termination_event, is_termination_event
+from framework.database import *
 from uuid import uuid4
 
 from appiumatic.abstraction import create_launch_event, create_home_event, synthesize
@@ -56,8 +56,11 @@ def remove_termination_events(db_connection, test_suite_id, events):
     non_termination_events = []
     for event in events:
         event_hash = generate_event_hash(event)
-        if not is_termination_event(db_connection, test_suite_id, event_hash):
-            non_termination_events.append(event)
+        if is_termination_event(db_connection, test_suite_id, event_hash):
+            logger.debug("Removing termination event {}".format(event_hash))
+            continue
+
+        non_termination_events.append(event)
 
     return non_termination_events
 
@@ -112,6 +115,8 @@ def construct_test_suite(db_connection, configuration, setup, event_selection_st
                 executor.execute(selected_event)
                 current_state = get_current_state(driver)
                 complete_event = synthesize(selected_event, current_state)
+                event_hash = generate_event_hash(complete_event)
+                update_event_frequency(db_connection, test_suite_id, event_hash)
                 test_case.append(complete_event)
 
                 event_count += 1
@@ -119,7 +124,6 @@ def construct_test_suite(db_connection, configuration, setup, event_selection_st
                 # end the test case if event explores beyond boundary of the application under test
                 current_package = driver.current_package
                 if current_package != apk_package_name:
-                    event_hash = generate_event_hash(complete_event)
                     add_termination_event(db_connection, event_hash, test_suite_id)
                     break
         except Exception as e:
@@ -138,7 +142,7 @@ def construct_test_suite(db_connection, configuration, setup, event_selection_st
         get_coverage(adb_path, coverage_file_path, path_to_coverage, coverage_file_name, coverage_broadcast)
 
         # write logs
-        log_file_name = "log{}.ec".format(str(test_case_count+1).zfill(3))
+        log_file_name = "log{}.txt".format(str(test_case_count+1).zfill(3))
         log_file_path = os.path.join(path_to_logs, log_file_name)
         apk_package_name = configuration["apk_package_name"]
         app_process_id = get_process_id(adb_path, apk_package_name)
@@ -148,8 +152,8 @@ def construct_test_suite(db_connection, configuration, setup, event_selection_st
         #     continue  # start a new test case
 
         end_time = time.time()
-        test_case_duration = end_time - test_case_start_time
-        test_suite_duration = end_time - test_suite_creation_time
+        test_case_duration = int(end_time - test_case_start_time)
+        test_suite_duration = int(end_time - test_suite_creation_time)
 
         add_test_case(db_connection, generate_test_case_hash(test_case), test_suite_id, test_suite_creation_time,
                       test_suite_duration)
@@ -161,7 +165,7 @@ def construct_test_suite(db_connection, configuration, setup, event_selection_st
         logger.debug("Test case {} written to {}.".format(test_case_count, test_case_path))
 
         logger.debug("Beginning test case teardown.")
-        teardown(driver)
+        teardown(driver, adb_path)
 
 
 
