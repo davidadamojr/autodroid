@@ -80,8 +80,8 @@ class GenerationTests(unittest.TestCase):
         test_case_duration = 15000
 
         # Act
-        test_case_path = generation._write_test_case_to_file(path_to_test_cases, test_case, test_case_count,
-                                                             test_case_duration)
+        test_case_path = generation.write_test_case_to_file(path_to_test_cases, test_case, test_case_count,
+                                                            test_case_duration)
 
         # Assert
         self.assertTrue(os.path.exists(test_case_path))

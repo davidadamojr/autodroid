@@ -3,7 +3,7 @@ import logging
 import sys
 import config
 from framework import database
-from framework import generation
+from framework.generation import Generator
 from framework import initialization
 from appiumatic.exceptions import InvalidParameter
 
@@ -52,8 +52,9 @@ def main():
             "coverage_broadcast": config.COVERAGE_BROADCAST,
             "output_path": config.OUTPUT_PATH
         }
-        generation.construct_test_suite(db_connection, configuration, setup, event_selection_strategy,
-                                        termination_criterion, completion_criterion, teardown)
+        generator = Generator(db_connection, configuration)
+        generator.construct_test_suite(setup, event_selection_strategy, termination_criterion, completion_criterion,
+                                       teardown)
     except IOError as io_error:
         logger.fatal(io_error)
     except ConnectionRefusedError as conn_refused:
