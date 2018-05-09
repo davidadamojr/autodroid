@@ -1,5 +1,4 @@
 from functools import partial
-
 from framework.strategies import selection, completion, setup, teardown, termination
 from appiumatic.exceptions import InvalidParameter
 
