@@ -48,9 +48,9 @@ def generate_state_hash(actions):
     return hashlib.sha1(json_hash_source.encode("utf-8")).hexdigest()
 
 
-def generate_test_case_hash(test_case):
+def generate_test_case_hash(events):
     hash_source = []
-    for event in test_case:
+    for event in events:
         hash_event = _get_hash_event(event)
         hash_source.append(hash_event)
 

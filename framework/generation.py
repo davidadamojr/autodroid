@@ -15,7 +15,7 @@ logger = logging.getLogger(__name__)
 
 
 def write_test_case_to_file(path_to_test_cases, events, test_case_count, test_case_duration):
-    test_case_count = str(test_case_count).zfill(3)
+    test_case_count = str(test_case_count+1).zfill(3)
     test_case_path = os.path.join(path_to_test_cases, "tc{}_{}.json".format(test_case_count, test_case_duration))
     test_case_data = {
         "events": events,
@@ -98,7 +98,7 @@ class Generator:
         OutputPaths = collections.namedtuple("OutputPaths", ["test_cases", "logs", "coverage"])
         return OutputPaths(path_to_test_cases, path_to_logs, path_to_coverage)
 
-    def initialize_test_case(self, setup_strategy, test_case):
+    def initialize_test_case(self, setup_strategy):
         apk_path = self.configuration["apk_path"]
         adb_path = self.configuration["adb_path"]
         logger.debug("Path to APK is {}".format(apk_path))
@@ -108,11 +108,11 @@ class Generator:
         launch_event = create_launch_event()
         start_state = get_current_state(driver)  # error handling here
         complete_event = synthesize(launch_event, start_state)
-        test_case = [complete_event]
+        events = [complete_event]
         logger.debug("Test case initialization complete.")
 
         TestCase = collections.namedtuple("TestCase", ["driver", "events", "start_time", "start_state"])
-        return TestCase(driver, test_case, start_time, start_state)
+        return TestCase(driver, events, start_time, start_state)
 
     def process_next_event(self, executor, test_suite_id, event_selection_strategy):
         driver = executor.driver
@@ -130,13 +130,13 @@ class Generator:
 
     def get_coverage(self, coverage_path, test_case_count):
         coverage_file_path = self.configuration["coverage_file_path"] + "/coverage.ec"
-        coverage_file_name = "coverage{}.ec".format(str(test_case_count + 1).zfill(3))
+        coverage_file_name = "coverage{}.ec".format(str(test_case_count+1).zfill(3))
         coverage_broadcast = self.configuration["coverage_broadcast"]
         scripts.get_coverage(self.configuration["adb_path"], coverage_file_path, coverage_path, coverage_file_name,
                              coverage_broadcast)
 
     def get_logs(self, logs_path, test_case_count):
-        log_file_name = "log{}.txt".format(str(test_case_count + 1).zfill(3))
+        log_file_name = "log{}.txt".format(str(test_case_count+1).zfill(3))
         log_file_path = os.path.join(logs_path, log_file_name)
         apk_package_name = self.configuration["apk_package_name"]
         app_process_id = scripts.get_process_id(self.configuration["adb_path"], apk_package_name)
@@ -149,7 +149,7 @@ class Generator:
                                         event_count=event_count, test_suite_id=test_suite.id):
             next_event = self.process_next_event(executor, test_suite.id, event_selection_strategy)
             current_state = next_event.resulting_state
-            test_case.events.append(next_event)
+            test_case.events.append(next_event.event)
             event_count += 1
 
             # end the test case if event explores beyond boundary of the application under test
@@ -184,9 +184,9 @@ class Generator:
             home_event = create_home_event(final_state)
             executor.execute(home_event)
 
-            self.get_coverage(output_paths.coverage, test_case_count+1)
-            self.get_logs(output_paths.logs, test_case_count+1)
-            self.finalize_test_case(test_case, test_suite, output_paths.test_cases, test_case_count+1)
+            self.get_coverage(output_paths.coverage, test_case_count)
+            self.get_logs(output_paths.logs, test_case_count)
+            self.finalize_test_case(test_case, test_suite, output_paths.test_cases, test_case_count)
             test_case_count += 1
 
             logger.debug("Beginning test case teardown.")

@@ -10,6 +10,6 @@ BROADCAST=$5
 
 $ADB_PATH shell am broadcast -a $BROADCAST && \
 sleep 2 && \
-adb pull $DEVICE_PATH $COVERAGE_PATH && \
+$ADB_PATH pull $DEVICE_PATH $COVERAGE_PATH && \
 mv $COVERAGE_PATH'/coverage.ec' $COVERAGE_PATH'/'$COVERAGE_NAME && \
-adb shell rm $DEVICE_PATH
+$ADB_PATH shell rm $DEVICE_PATH
