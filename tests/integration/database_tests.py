@@ -98,6 +98,8 @@ class DatabaseTests(unittest.TestCase):
         rows = cursor.fetchall()
         print(rows)
         self.assertEqual(len(rows), 1)
+        self.assertEqual(rows[0][0], event_hash)
+        self.assertEqual(rows[0][1], test_suite_id)
         self.assertEqual(rows[0][3], 1)
 
     def test_add_termination_event_when_existing(self):

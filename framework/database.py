@@ -61,20 +61,21 @@ def is_termination_event(db_connection, test_suite_id, event_hash):
     return True
 
 
-def add_termination_event(db_connection, test_suite_id, event_hash):
+def add_termination_event(db_connection, event_hash, test_suite_id):
     cursor = db_connection.cursor()
     exists_query = "SELECT event_hash, frequency FROM event_info WHERE event_hash=? AND test_suite_id=?"
     cursor.execute(exists_query, (event_hash, test_suite_id))
 
     rows = cursor.fetchall()
-    if len(rows) == 0:
+    if rows:
+        logger.warning(
+            "Event {} already existed in database before getting marked as termination event.".format(event_hash))
+        update_query = "UPDATE event_info SET termination=1, reward=0"
+        cursor.execute(update_query)
+    else:
         logger.debug("Marking event {} as termination event.".format(event_hash))
         insert_query = "INSERT INTO event_info VALUES (?, ?, ?, ?, ?)"
         cursor.execute(insert_query, (event_hash, test_suite_id, 1, 1, 0))
-    else:
-        logger.warning("Event {} already existed in database before getting marked as termination event.".format(event_hash))
-        update_query = "UPDATE event_info SET termination=1"
-        cursor.execute(update_query)
 
     db_connection.commit()
 
@@ -87,12 +88,12 @@ def update_event_frequency(db_connection, test_suite_id, event_hash):
     cursor.execute(event_query, (event_hash, test_suite_id))
 
     rows = cursor.fetchall()
-    if len(rows) == 0:
-        insert_query = "INSERT INTO event_info VALUES (?, ?, ?, ?, ?)"
-        cursor.execute(insert_query, (event_hash, test_suite_id, 1, 0, 1.0))
-    else:
+    if rows:
         update_query = "UPDATE event_info SET frequency=frequency+1"
         cursor.execute(update_query)
+    else:
+        insert_query = "INSERT INTO event_info VALUES (?, ?, ?, ?, ?)"
+        cursor.execute(insert_query, (event_hash, test_suite_id, 1, 0, 1.0))
 
     db_connection.commit()
 

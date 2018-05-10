@@ -6,7 +6,7 @@ import framework.utils.scripts as scripts
 from framework.database import *
 from uuid import uuid4
 
-from appiumatic.abstraction import create_launch_event, create_home_event, synthesize
+from appiumatic.abstraction import create_launch_event, create_home_event, create_back_event, synthesize
 from appiumatic.execution import Executor
 from appiumatic.ui_analysis import get_available_events, get_current_state
 from appiumatic.hashing import generate_test_case_hash, generate_event_hash
@@ -118,7 +118,14 @@ class Generator:
         driver = executor.driver
         partial_events = get_available_events(driver)
         non_termination_events = self.remove_termination_events(test_suite_id, partial_events)
-        selected_event = event_selection_strategy(self.db_connection, non_termination_events, test_suite_id=test_suite_id)
+        if non_termination_events:
+            selected_event = event_selection_strategy(self.db_connection, non_termination_events,
+                                                      test_suite_id=test_suite_id)
+        else:
+            logger.warning("No events available for selection. All events in the current state are "
+                           "marked as termination events.")
+            current_state = partial_events[0]["precondition"]
+            selected_event = create_back_event(current_state)
         executor.execute(selected_event)
         resulting_state = get_current_state(driver)
         complete_event = synthesize(selected_event, resulting_state)
@@ -156,6 +163,7 @@ class Generator:
             current_package = test_case.driver.current_package
             if current_package != self.configuration["apk_package_name"]:
                 add_termination_event(self.db_connection, next_event.event_hash, test_suite.id)
+                logger.debug("Identified termination event: {}".format(next_event.event))
                 break
 
         return current_state
@@ -168,10 +176,10 @@ class Generator:
         test_suite_duration = 0
         test_case_count = 0
         while not completion_criterion(test_duration=test_suite_duration, test_case_count=test_case_count):
-            test_case = self.initialize_test_case(setup_strategy)
-            logger.debug("Generating test case {}. Start time is {}.".format(test_case_count + 1, test_case.start_time))
-
             try:
+                test_case = self.initialize_test_case(setup_strategy)
+                logger.debug(
+                    "Generating test case {}. Start time is {}.".format(test_case_count + 1, test_case.start_time))
                 executor = Executor(test_case.driver, self.configuration["event_interval"],
                                     self.configuration["text_entry_values"])
                 final_state = self.generate_events(executor, test_case, test_suite, event_selection_strategy,
@@ -194,6 +202,8 @@ class Generator:
 
             test_suite_end_time = time.time()
             test_suite_duration = int(test_suite_end_time - test_suite.creation_time)
+
+        print("Test suite generation took {} seconds.".format(test_suite_duration))
 
     def finalize_test_case(self, test_case, test_suite, path_to_test_cases, test_case_count):
         end_time = time.time()
