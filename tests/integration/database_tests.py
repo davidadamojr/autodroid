@@ -9,7 +9,7 @@ from framework import database
 
 class DatabaseTests(unittest.TestCase):
     def setUp(self):
-        self.connection = sqlite3.connect("../../db/autodroid.db")
+        self.connection = sqlite3.connect("autodroid.db")
         database.create_tables(self.connection)
 
         cursor = self.connection.cursor()
@@ -90,7 +90,7 @@ class DatabaseTests(unittest.TestCase):
         test_suite_id = "test_suite_id"
 
         # Act
-        database.add_termination_event(self.connection, test_suite_id, event_hash)
+        database.add_termination_event(self.connection, event_hash, test_suite_id)
 
         # Assert
         cursor = self.connection.cursor()
@@ -106,10 +106,10 @@ class DatabaseTests(unittest.TestCase):
         # Arrange
         event_hash = "event_hash"
         test_suite_id = "test_suite_id"
-        database.add_termination_event(self.connection, test_suite_id, event_hash)
+        database.add_termination_event(self.connection, event_hash, test_suite_id)
 
         # Act
-        database.add_termination_event(self.connection, test_suite_id, event_hash)
+        database.add_termination_event(self.connection, event_hash, test_suite_id)
 
         # Assert
         cursor = self.connection.cursor()
@@ -126,7 +126,7 @@ class DatabaseTests(unittest.TestCase):
         database.add_termination_event(self.connection, test_suite_id, event_hash)
 
         # Act
-        is_termination_event = database.is_termination_event(self.connection, test_suite_id, event_hash)
+        is_termination_event = database.is_termination_event(self.connection, event_hash, test_suite_id)
 
         # Assert
         self.assertTrue(is_termination_event)
@@ -220,6 +220,6 @@ class DatabaseTests(unittest.TestCase):
 
     def tearDown(self):
         self.connection.close()
-        db_path = os.path.join("..", "..", "db", "autodroid.db")
+        db_path = "autodroid.db"
         if os.path.isfile(db_path):
             os.remove(db_path)

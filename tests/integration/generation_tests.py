@@ -5,7 +5,8 @@ import config
 import json
 import sqlite3
 
-from framework import generation
+import framework.generation as generation
+from framework.generation import Generator
 from framework import database
 from appiumatic import abstraction
 from appiumatic import hashing
@@ -40,7 +41,7 @@ def remove_db_file(db_path):
 class GenerationTests(unittest.TestCase):
     def setUp(self):
         self.output_path = config.OUTPUT_PATH
-        self.db_path = os.path.join("..", "..", "db", "autodroid.db")
+        self.db_path = "autodroid.db"
         remove_output_files(self.output_path)
         remove_db_file(self.db_path)
 
@@ -48,14 +49,20 @@ class GenerationTests(unittest.TestCase):
 
     def test_create_output_directories(self):
         # Arrange
-        apk_package_name = "special_android_app"
+        configuration = {
+            "apk_package_name": "special_android_app",
+            "output_path": self.output_path
+        }
+        generator = Generator(None, configuration)
         test_suite_creation_time = 1234567890
+        apk_package_name = configuration["apk_package_name"]
 
         # Act
         output_path = config.OUTPUT_PATH
-        path_to_test_cases, path_to_logs, path_to_coverage = generation._create_output_directories(output_path,
-                                                                                                   apk_package_name,
-                                                                                                   test_suite_creation_time)
+        paths = generator.create_output_directories(test_suite_creation_time)
+        path_to_test_cases = paths.test_cases
+        path_to_logs = paths.logs
+        path_to_coverage = paths.coverage
 
         # Assert
         self.assertEqual(path_to_test_cases, os.path.join(output_path, "{}_{}".format(apk_package_name, str(test_suite_creation_time)), "testcases"))
@@ -70,17 +77,19 @@ class GenerationTests(unittest.TestCase):
         event_1 = abstraction.create_launch_event()
         state = abstraction.create_state("blaActivity", "state_id")
         event_2 = abstraction.create_back_event(state)
-        test_case = [abstraction.synthesize(event_1, state), abstraction.synthesize(event_2, state)]
-        apk_package_name = "wonderful_apk_package"
+        events = [abstraction.synthesize(event_1, state), abstraction.synthesize(event_2, state)]
         test_suite_creation_time = 1234567890
-        path_to_test_cases, _, _ = generation._create_output_directories(config.OUTPUT_PATH,
-                                                                        apk_package_name,
-                                                                        test_suite_creation_time)
+        configuration = {
+            "apk_package_name": "wonderful_apk_package",
+            "output_path": self.output_path
+        }
+        generator = Generator(None, configuration)
+        path_to_test_cases, _, _ = generator.create_output_directories(test_suite_creation_time)
         test_case_count = 1
         test_case_duration = 15000
 
         # Act
-        test_case_path = generation.write_test_case_to_file(path_to_test_cases, test_case, test_case_count,
+        test_case_path = generation.write_test_case_to_file(path_to_test_cases, events, test_case_count,
                                                             test_case_duration)
 
         # Assert
@@ -152,10 +161,11 @@ class GenerationTests(unittest.TestCase):
         available_events = [event1, event2, event3]
         event1_hash = hashing.generate_event_hash(event1)
 
-        database.add_termination_event(db_connection, test_suite_id, event1_hash)
+        database.add_termination_event(db_connection, event1_hash, test_suite_id)
+        generator = Generator(db_connection, {})
 
         # Act
-        non_termination_events = generation.remove_termination_events(db_connection, test_suite_id, available_events)
+        non_termination_events = generator.remove_termination_events(test_suite_id, available_events)
         db_connection.close()
 
         # Assert

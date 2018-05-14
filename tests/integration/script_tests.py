@@ -4,7 +4,7 @@ import config
 from framework.utils.scripts import *
 
 
-"""These tests require a running emulator the Moneybalance app"""
+"""These tests require a running emulator and the Moneybalance app"""
 
 APP_PACKAGE = "ivl.android.moneybalance"
 

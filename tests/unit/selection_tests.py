@@ -2,7 +2,7 @@ import unittest
 from framework.utils import selection
 
 
-class SelectionTests(unittest.TestCase):
+class SelectionUnitTests(unittest.TestCase):
 
     def test_get_frequency_weights(self):
         # Arrange
