@@ -1,7 +1,7 @@
 import unittest
 import sqlite3
 import os
-from framework import database
+from framework.database import Database
 from framework.strategies.selection import min_frequency_random, min_frequency_deterministic
 from appiumatic import abstraction, hashing
 
@@ -61,10 +61,11 @@ def setup_events():
 class SelectionTests(unittest.TestCase):
 
     def setUp(self):
-        self.connection = sqlite3.connect("../../db/autodroid.db")
-        database.create_tables(self.connection)
+        connection = sqlite3.connect("autodroid.db")
+        self.database = Database(connection)
+        self.database.create_tables()
 
-        cursor = self.connection.cursor()
+        cursor = self.database.cursor()
         cursor.execute(
             "SELECT name FROM sqlite_master WHERE type='table' AND (name='test_suites' OR name='stats' OR name='test_cases'" +
             " OR name='event_info')")
@@ -78,11 +79,11 @@ class SelectionTests(unittest.TestCase):
         event_hash_3 = hashing.generate_event_hash(self.available_events[2])
         test_suite_id = "test_suite_id"
 
-        database.update_event_frequency(self.connection, test_suite_id, event_hash_2)
-        database.update_event_frequency(self.connection, test_suite_id, event_hash_3)
+        self.database.update_event_frequency(test_suite_id, event_hash_2)
+        self.database.update_event_frequency(test_suite_id, event_hash_3)
 
         # Act
-        selected_event = min_frequency_random(self.connection, self.available_events, test_suite_id=test_suite_id)
+        selected_event = min_frequency_random(self.database, self.available_events, test_suite_id=test_suite_id)
 
         # Assert
         expected_selected_event = self.available_events[0]
@@ -93,10 +94,10 @@ class SelectionTests(unittest.TestCase):
         event_hash_2 = hashing.generate_event_hash(self.available_events[1])
         test_suite_id = "test_suite_id"
 
-        database.update_event_frequency(self.connection, test_suite_id, event_hash_2)
+        self.database.update_event_frequency(test_suite_id, event_hash_2)
 
         # Act
-        selected_event = min_frequency_random(self.connection, self.available_events, test_suite_id=test_suite_id)
+        selected_event = min_frequency_random(self.database, self.available_events, test_suite_id=test_suite_id)
 
         # Assert
         expected_selected_events = [self.available_events[0], self.available_events[2]]
@@ -108,11 +109,11 @@ class SelectionTests(unittest.TestCase):
         event_hash_3 = hashing.generate_event_hash(self.available_events[2])
         test_suite_id = "test_suite_id"
 
-        database.update_event_frequency(self.connection, test_suite_id, event_hash_2)
-        database.update_event_frequency(self.connection, test_suite_id, event_hash_3)
+        self.database.update_event_frequency(test_suite_id, event_hash_2)
+        self.database.update_event_frequency(test_suite_id, event_hash_3)
 
         # Act
-        selected_event = min_frequency_deterministic(self.connection, self.available_events, test_suite_id=test_suite_id)
+        selected_event = min_frequency_deterministic(self.database, self.available_events, test_suite_id=test_suite_id)
 
         # Assert
         expected_selected_event = self.available_events[0]
@@ -123,17 +124,17 @@ class SelectionTests(unittest.TestCase):
         event_hash_2 = hashing.generate_event_hash(self.available_events[1])
         test_suite_id = "test_suite_id"
 
-        database.update_event_frequency(self.connection, test_suite_id, event_hash_2)
+        self.database.update_event_frequency(test_suite_id, event_hash_2)
 
         # Act
-        selected_event = min_frequency_deterministic(self.connection, self.available_events, test_suite_id=test_suite_id)
+        selected_event = min_frequency_deterministic(self.database, self.available_events, test_suite_id=test_suite_id)
 
         # Assert
         expected_selected_event = self.available_events[0]
         self.assertEqual(selected_event, expected_selected_event)
 
     def tearDown(self):
-        self.connection.close()
-        db_path = os.path.join("..", "..", "db", "autodroid.db")
+        self.database.close()
+        db_path = os.path.join("autodroid.db")
         if os.path.isfile(db_path):
             os.remove(db_path)

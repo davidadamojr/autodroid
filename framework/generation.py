@@ -56,15 +56,15 @@ def create_coverage_path(output_path):
 
 
 class Generator:
-    def __init__(self, db_connection, configuration):
-        self.db_connection = db_connection
+    def __init__(self, database, configuration):
+        self.database = database
         self.configuration = configuration
 
     def initialize_test_suite(self):
         test_suite_id = uuid4().hex
         test_suite_creation_time = int(time.time())
 
-        add_test_suite(self.db_connection, test_suite_id, test_suite_creation_time)
+        self.database.add_test_suite(test_suite_id, test_suite_creation_time)
 
         TestSuite = collections.namedtuple("TestSuite", ["id", "creation_time"])
         return TestSuite(test_suite_id, test_suite_creation_time)
@@ -73,7 +73,7 @@ class Generator:
         non_termination_events = []
         for event in events:
             event_hash = generate_event_hash(event)
-            if is_termination_event(self.db_connection, test_suite_id, event_hash):
+            if self.database.is_termination_event(test_suite_id, event_hash):
                 logger.debug("Removing termination event {}".format(event_hash))
                 continue
 
@@ -119,7 +119,7 @@ class Generator:
         partial_events = get_available_events(driver)
         non_termination_events = self.remove_termination_events(test_suite_id, partial_events)
         if non_termination_events:
-            selected_event = event_selection_strategy(self.db_connection, non_termination_events,
+            selected_event = event_selection_strategy(self.database, non_termination_events,
                                                       test_suite_id=test_suite_id)
         else:
             logger.warning("No events available for selection. All events in the current state are "
@@ -130,7 +130,7 @@ class Generator:
         resulting_state = get_current_state(driver)
         complete_event = synthesize(selected_event, resulting_state)
         event_hash = generate_event_hash(complete_event)
-        update_event_frequency(self.db_connection, test_suite_id, event_hash)
+        self.database.update_event_frequency(test_suite_id, event_hash)
 
         NextEvent = collections.namedtuple("NextEvent", ["event", "event_hash", "resulting_state"])
         return NextEvent(complete_event, event_hash, resulting_state)

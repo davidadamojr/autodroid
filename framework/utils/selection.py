@@ -1,15 +1,14 @@
 import random
 import logging
 from appiumatic.hashing import generate_event_hash
-from framework import database
 
 logger = logging.getLogger(__name__)
 
 
-def get_min_frequency_events(db_connection, events, test_suite_id=None):
+def get_min_frequency_events(database, events, test_suite_id=None):
     hash_to_events_map = {generate_event_hash(event): event for event in events}
     event_hashes = hash_to_events_map.keys()
-    event_frequencies = database.get_event_frequencies(db_connection, event_hashes, test_suite_id)
+    event_frequencies = database.get_event_frequencies(event_hashes, test_suite_id)
 
     min_frequency = float("inf")
     min_frequency_events = []

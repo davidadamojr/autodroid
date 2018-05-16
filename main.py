@@ -2,7 +2,7 @@ import sqlite3
 import logging
 import sys
 import config
-from framework import database
+from framework.database import Database
 from framework.generation import Generator
 from framework import initialization
 from appiumatic.exceptions import InvalidParameter
@@ -35,9 +35,8 @@ def main():
 
     db_connection = sqlite3.connect("db/autodroid.db")
     logger.debug("Connection to database successful.")
-
-    database.create_tables(db_connection)
-    logger.debug("Table creation successful.")
+    database = Database(db_connection)
+    database.create_tables()
 
     try:
         text_values = retrieve_text_values(config.STRINGS_PATH)
@@ -52,7 +51,7 @@ def main():
             "coverage_broadcast": config.COVERAGE_BROADCAST,
             "output_path": config.OUTPUT_PATH
         }
-        generator = Generator(db_connection, configuration)
+        generator = Generator(database, configuration)
         generator.construct_test_suite(setup, event_selection_strategy, termination_criterion, completion_criterion,
                                        teardown)
     except IOError as io_error:

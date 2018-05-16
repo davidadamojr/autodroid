@@ -7,7 +7,7 @@ import sqlite3
 
 import framework.generation as generation
 from framework.generation import Generator
-from framework import database
+from framework.database import Database
 from appiumatic import abstraction
 from appiumatic import hashing
 
@@ -154,19 +154,20 @@ class GenerationTests(unittest.TestCase):
         }
 
         db_connection = sqlite3.connect(self.db_path)
-        database.create_tables(db_connection)
+        database = Database(db_connection)
+        database.create_tables()
 
         test_suite_id = "test_suite_id"
 
         available_events = [event1, event2, event3]
         event1_hash = hashing.generate_event_hash(event1)
 
-        database.add_termination_event(db_connection, event1_hash, test_suite_id)
-        generator = Generator(db_connection, {})
+        database.add_termination_event(event1_hash, test_suite_id)
+        generator = Generator(database, {})
 
         # Act
         non_termination_events = generator.remove_termination_events(test_suite_id, available_events)
-        db_connection.close()
+        database.close()
 
         # Assert
         self.assertEqual(len(non_termination_events), 2)
