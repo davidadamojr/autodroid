@@ -152,7 +152,7 @@ class Generator:
     def generate_events(self, executor, test_case, test_suite, event_selection_strategy, termination_criterion):
         event_count = len(test_case.events)
         current_state = test_case.start_state
-        while not termination_criterion(self.db_connection, test_case_hash=generate_test_case_hash(test_case.events),
+        while not termination_criterion(self.database, test_case_hash=generate_test_case_hash(test_case.events),
                                         event_count=event_count, test_suite_id=test_suite.id):
             next_event = self.process_next_event(executor, test_suite.id, event_selection_strategy)
             current_state = next_event.resulting_state
@@ -162,7 +162,7 @@ class Generator:
             # end the test case if event explores beyond boundary of the application under test
             current_package = test_case.driver.current_package
             if current_package != self.configuration["apk_package_name"]:
-                add_termination_event(self.db_connection, next_event.event_hash, test_suite.id)
+                self.database.add_termination_event(next_event.event_hash, test_suite.id)
                 logger.debug("Identified termination event: {}".format(next_event.event))
                 break
 
@@ -208,8 +208,8 @@ class Generator:
     def finalize_test_case(self, test_case, test_suite, path_to_test_cases, test_case_count):
         end_time = time.time()
         test_case_duration = int(end_time - test_case.start_time)
-        add_test_case(self.db_connection, generate_test_case_hash(test_case.events), test_suite.id, end_time,
-                      test_case_duration)
+        self.database.add_test_case(generate_test_case_hash(test_case.events), test_suite.id, end_time,
+                                    test_case_duration)
         test_case_path = write_test_case_to_file(path_to_test_cases, test_case.events, test_case_count,
                                                  test_case_duration)
         logger.debug("Test case {} written to {}.".format(test_case_count, test_case_path))

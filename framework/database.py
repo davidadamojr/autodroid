@@ -73,8 +73,8 @@ class Database:
         if rows:
             logger.warning(
                 "Event {} already existed in database before getting marked as termination event.".format(event_hash))
-            update_query = "UPDATE event_info SET termination=1, reward=0"
-            cursor.execute(update_query)
+            update_query = "UPDATE event_info SET termination=1, reward=0 WHERE event_hash=? AND test_suite_id=?"
+            cursor.execute(update_query, (event_hash, test_suite_id))
         else:
             logger.debug("Marking event {} as termination event.".format(event_hash))
             insert_query = "INSERT INTO event_info VALUES (?, ?, ?, ?, ?)"
@@ -85,14 +85,15 @@ class Database:
         return event_hash
 
     def update_event_frequency(self, test_suite_id, event_hash):
+        logger.debug("Updating event frequency for {}.".format(event_hash))
         cursor = self.db_connection.cursor()
         event_query = "SELECT frequency FROM event_info WHERE event_hash=? AND test_suite_id=?"
         cursor.execute(event_query, (event_hash, test_suite_id))
 
         rows = cursor.fetchall()
         if rows:
-            update_query = "UPDATE event_info SET frequency=frequency+1"
-            cursor.execute(update_query)
+            update_query = "UPDATE event_info SET frequency=frequency+1 WHERE event_hash=? AND test_suite_id=?"
+            cursor.execute(update_query, (event_hash, test_suite_id))
         else:
             insert_query = "INSERT INTO event_info VALUES (?, ?, ?, ?, ?)"
             cursor.execute(insert_query, (event_hash, test_suite_id, 1, 0, 1.0))
