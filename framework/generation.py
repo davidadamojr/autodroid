@@ -3,13 +3,13 @@ import json
 import collections
 import os
 import framework.utils.scripts as scripts
-from framework.database import *
 from uuid import uuid4
-
-from appiumatic.abstraction import create_launch_event, create_home_event, create_back_event, synthesize
+from selenium.common.exceptions import WebDriverException
+from appiumatic.abstraction import create_launch_event, create_home_event, create_back_event, synthesize, make_event_serializable
 from appiumatic.execution import Executor
 from appiumatic.ui_analysis import get_available_events, get_current_state
 from appiumatic.hashing import generate_test_case_hash, generate_event_hash
+from framework.database import *
 
 logger = logging.getLogger(__name__)
 
@@ -17,8 +17,9 @@ logger = logging.getLogger(__name__)
 def write_test_case_to_file(path_to_test_cases, events, test_case_count, test_case_duration):
     test_case_count = str(test_case_count+1).zfill(3)
     test_case_path = os.path.join(path_to_test_cases, "tc{}_{}.json".format(test_case_count, test_case_duration))
+    serializable_events = [make_event_serializable(event) for event in events]
     test_case_data = {
-        "events": events,
+        "events": serializable_events,
         "length": len(events)
     }
 
@@ -130,6 +131,7 @@ class Generator:
         resulting_state = get_current_state(driver)
         complete_event = synthesize(selected_event, resulting_state)
         event_hash = generate_event_hash(complete_event)
+        # event_with_actions_as_dict = make_event_serializable(complete_event)
         self.database.update_event_frequency(test_suite_id, event_hash)
 
         NextEvent = collections.namedtuple("NextEvent", ["event", "event_hash", "resulting_state"])
@@ -184,7 +186,7 @@ class Generator:
                                     self.configuration["text_entry_values"])
                 final_state = self.generate_events(executor, test_case, test_suite, event_selection_strategy,
                                                    termination_criterion)
-            except Exception as e:
+            except WebDriverException as e:
                 print(e)
                 continue  # start a new test case
 

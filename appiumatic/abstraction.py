@@ -1,5 +1,7 @@
 import logging
-from constants import *
+from appiumatic import actions
+from appiumatic.constants import *
+
 
 logger = logging.getLogger(__name__)
 
@@ -30,7 +32,7 @@ def create_enter_target():
 
 def create_launch_event():
     target = create_target(SelectorType.SYSTEM, "app", "launch", TargetType.APP, TargetState.ENABLED)
-    action = create_action(SystemAction.LAUNCH, target)
+    action = create_action(SystemActionTypes.LAUNCH, target)
     precondition = create_state(None, None)
     partial_event = create_partial_event(precondition, [action])
 
@@ -67,7 +69,7 @@ def create_partial_text_events(current_state, text_entry_actions, non_text_entry
 
 
 def create_events_for_single_text_field(current_state, text_entry_action, non_text_entry_actions):
-    text_entry_action["value"] = "[random string]"  # -- test this
+    text_entry_action.value = "[random string]"  # -- test this
 
     text_entry_enter_key_event = pair_text_entry_with_enter_key(current_state, text_entry_action)
     text_and_act_events = pair_text_entry_with_non_text_entry_actions(current_state, text_entry_action,
@@ -79,7 +81,7 @@ def create_events_for_single_text_field(current_state, text_entry_action, non_te
 
 def pair_text_entry_with_enter_key(current_state, text_entry_action):
     enter_target = create_enter_target()
-    enter_key_action = create_action(GUIAction.ENTER_KEY, enter_target)
+    enter_key_action = create_action(GUIActionTypes.ENTER_KEY, enter_target)
 
     text_entry_enter_key_event = create_partial_event(current_state, [text_entry_action, enter_key_action])
 
@@ -101,7 +103,7 @@ def create_events_for_multiple_text_fields(current_state, text_entry_actions, no
     text_based_events = []
     text_based_actions = []
     for text_entry_action in text_entry_actions:
-        text_entry_action["value"] = "[random string]"
+        text_entry_action.value = "[random string]"
         text_based_actions.append(text_entry_action)
 
     for non_text_entry_action in non_text_entry_actions:
@@ -124,8 +126,8 @@ def create_single_action_events(current_state, non_text_entry_actions):
 
 def does_action_pair_with_text_entry(non_text_entry_action):
     invalid_targets = {"spinner", "checkbox", "edittext", "radiobutton", "togglebutton"}
-    return non_text_entry_action["type"] == GUIAction.CLICK and \
-        non_text_entry_action["target"]["type"].lower() not in invalid_targets
+    return non_text_entry_action.action_type == GUIActionTypes.CLICK and \
+        non_text_entry_action.target["type"].lower() not in invalid_targets
 
 
 def create_partial_events(current_state, possible_actions):
@@ -139,31 +141,45 @@ def create_partial_events(current_state, possible_actions):
 
 def create_back_event(precondition):
     target = create_target("key_code", KeyCode.BACK, "back", TargetType.NAV, TargetState.ENABLED)
-    action = create_action(GUIAction.BACK_NAV, target)
+    action = create_action(GUIActionTypes.BACK_NAV, target)
     back_event = create_partial_event(precondition, [action])
     return back_event
 
 
 def create_home_event(precondition):
     target = create_target("key_code", KeyCode.HOME, "home", TargetType.NAV, TargetState.ENABLED)
-    action = create_action(GUIAction.HOME_NAV, target)
+    action = create_action(GUIActionTypes.HOME_NAV, target)
     home_event = create_partial_event(precondition, [action])
     return home_event
 
 
 def create_background_event(precondition):
     target = create_target(SelectorType.SYSTEM, "app", "run in background", TargetType.APP, TargetState.ENABLED)
-    action = create_action(SystemAction.RUN_IN_BACKGROUND, target)
+    action = create_action(SystemActionTypes.RUN_IN_BACKGROUND, target)
     background_event = create_partial_event(precondition, [action])
     return background_event
 
 
 def create_action(action_type, widget):
-    action = {
-        "target": widget,
-        "type": action_type,
-        "value": None
+    action_types = {
+        GUIActionTypes.CLICK: actions.Click,
+        GUIActionTypes.LONG_CLICK: actions.LongClick,
+        GUIActionTypes.BACK_NAV: actions.Back,
+        GUIActionTypes.HOME_NAV: actions.Home,
+        GUIActionTypes.LAUNCH: actions.LaunchApp,
+        GUIActionTypes.CHECK: actions.Click,
+        GUIActionTypes.UNCHECK: actions.Click,
+        GUIActionTypes.ENTER_KEY: actions.ReturnKey,
+        GUIActionTypes.SWIPE_DOWN: actions.SwipeDown,
+        GUIActionTypes.SWIPE_LEFT: actions.SwipeLeft,
+        GUIActionTypes.SWIPE_RIGHT: actions.SwipeRight,
+        GUIActionTypes.SWIPE_UP: actions.SwipeUp,
+        GUIActionTypes.TEXT_ENTRY: actions.TextEntry,
+        SystemActionTypes.RUN_IN_BACKGROUND: actions.RunInBackground,
+        SystemActionTypes.LAUNCH: actions.LaunchApp
     }
+    action_class = action_types[action_type]
+    action = action_class(widget, action_type, None)
     return action
 
 
@@ -251,4 +267,15 @@ def create_crash_state():
     }
 
     return state
+
+
+def make_event_serializable(event):
+    non_serializable_actions = event["actions"]
+    actions_as_dicts = []
+    for action in non_serializable_actions:
+        actions_as_dicts.append(action.to_dict())
+
+    event["actions"] = actions_as_dicts
+
+    return event
 

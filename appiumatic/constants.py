@@ -11,7 +11,7 @@ class Scripts:
     START_APPIUM = "appiumatic/scripts/start_appium.sh"
 
 
-class GUIAction:
+class GUIActionTypes:
     CLICK = "click"
     LONG_CLICK = "long-click"
     CHECK = "check"
@@ -27,7 +27,7 @@ class GUIAction:
     LAUNCH = "launch"
 
 
-class SystemAction:
+class SystemActionTypes:
     LAUNCH = "launch"
     RUN_IN_BACKGROUND = "run-in-background"
 

@@ -44,7 +44,7 @@ class ExecutionTests(unittest.TestCase):
             "precondition": precondition,
             "actions": [{
                 "target": enter_key_target,
-                "type": GUIAction.ENTER_KEY,
+                "type": GUIActionTypes.ENTER_KEY,
                 "value": None
             }]
         }
@@ -71,7 +71,7 @@ class ExecutionTests(unittest.TestCase):
             "actions": [
                 {
                     "target": long_click_target,
-                    "type": GUIAction.LONG_CLICK,
+                    "type": GUIActionTypes.LONG_CLICK,
                     "value": None
                 }
             ]
@@ -90,7 +90,7 @@ class ExecutionTests(unittest.TestCase):
             "actions": [
                 {
                     "target": swipe_up_target,
-                    "type": GUIAction.SWIPE_UP,
+                    "type": GUIActionTypes.SWIPE_UP,
                     "value": None
                 }
             ]
@@ -110,7 +110,7 @@ class ExecutionTests(unittest.TestCase):
             "actions": [
                 {
                     "target": swipe_down_target,
-                    "type": GUIAction.SWIPE_DOWN,
+                    "type": GUIActionTypes.SWIPE_DOWN,
                     "value": None
                 }
             ]
@@ -130,7 +130,7 @@ class ExecutionTests(unittest.TestCase):
             "actions": [
                 {
                     "target": swipe_right_target,
-                    "type": GUIAction.SWIPE_RIGHT,
+                    "type": GUIActionTypes.SWIPE_RIGHT,
                     "value": None
                 }
             ]
@@ -150,7 +150,7 @@ class ExecutionTests(unittest.TestCase):
             "actions": [
                 {
                     "target": swipe_left_target,
-                    "type": GUIAction.SWIPE_LEFT,
+                    "type": GUIActionTypes.SWIPE_LEFT,
                     "value": None
                 }
             ]
@@ -170,7 +170,7 @@ class ExecutionTests(unittest.TestCase):
             "actions": [
                 {
                     "target": click_target,
-                    "type": GUIAction.CLICK,
+                    "type": GUIActionTypes.CLICK,
                     "value": None
                 }
             ]
@@ -187,12 +187,12 @@ class ExecutionTests(unittest.TestCase):
                                                       TargetState.ENABLED)
         text_entry_action = {
             "target": text_field_target,
-            "type": GUIAction.TEXT_ENTRY,
+            "type": GUIActionTypes.TEXT_ENTRY,
             "value": "[random string]"
         }
         enter_key_action = {
             "target": abstraction.create_enter_target(),
-            "type": GUIAction.ENTER_KEY,
+            "type": GUIActionTypes.ENTER_KEY,
             "value": None
         }
         text_entry_event = {
@@ -219,17 +219,17 @@ class ExecutionTests(unittest.TestCase):
 
         text_entry_action_1 = {
             "target": text_field_target_1,
-            "type": GUIAction.TEXT_ENTRY,
+            "type": GUIActionTypes.TEXT_ENTRY,
             "value": "[random string]"
         }
         text_entry_action_2 = {
             "target": text_field_target_2,
-            "type": GUIAction.TEXT_ENTRY,
+            "type": GUIActionTypes.TEXT_ENTRY,
             "value": "[random string]"
         }
         non_text_action = {
             "target": non_text_target,
-            "type": GUIAction.CLICK,
+            "type": GUIActionTypes.CLICK,
             "value": None
         }
 

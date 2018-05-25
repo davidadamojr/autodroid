@@ -1,4 +1,5 @@
 import hashing
+import actions
 import unittest
 import random
 from constants import *
@@ -39,27 +40,11 @@ class HashingTests(unittest.TestCase):
         ]
 
         possible_actions = [
-            {
-                "target": widgets[0],
-                "type": GUIAction.TEXT_ENTRY,
-                "value": "Hello World!"
-            }, {
-                "target": widgets[1],
-                "type": GUIAction.TEXT_ENTRY,
-                "value": None
-            }, {
-                "target": widgets[2],
-                "type": GUIAction.CLICK,
-                "value": None
-            }, {
-                "target": widgets[3],
-                "type": GUIAction.CHECK,
-                "value": None
-            }, {
-                "target": widgets[3],
-                "type": GUIAction.UNCHECK,
-                "value": None
-            }
+            actions.TextEntry(widgets[0], GUIActionTypes.TEXT_ENTRY, "Hello World!"),
+            actions.TextEntry(widgets[1], GUIActionTypes.TEXT_ENTRY, None),
+            actions.Click(widgets[2], GUIActionTypes.CLICK, None),
+            actions.Click(widgets[3], GUIActionTypes.CHECK, None),
+            actions.Click(widgets[3], GUIActionTypes.UNCHECK, None)
         ]
 
         hashes = []
@@ -101,27 +86,11 @@ class HashingTests(unittest.TestCase):
         ]
 
         possible_actions = [
-            {
-                "target": widgets[0],
-                "type": GUIAction.TEXT_ENTRY,
-                "value": None
-            }, {
-                "target": widgets[1],
-                "type": GUIAction.TEXT_ENTRY,
-                "value": None
-            }, {
-                "target": widgets[2],
-                "type": GUIAction.CLICK,
-                "value": None
-            }, {
-                "target": widgets[3],
-                "type": GUIAction.CHECK,
-                "value": None
-            }, {
-                "target": widgets[3],
-                "type": GUIAction.UNCHECK,
-                "value": None
-            }
+            actions.TextEntry(widgets[0], GUIActionTypes.TEXT_ENTRY, "Hello World!"),
+            actions.TextEntry(widgets[1], GUIActionTypes.TEXT_ENTRY, None),
+            actions.Click(widgets[2], GUIActionTypes.CLICK, None),
+            actions.Click(widgets[3], GUIActionTypes.CHECK, None),
+            actions.Click(widgets[3], GUIActionTypes.UNCHECK, None)
         ]
 
         hashes = []
@@ -134,18 +103,15 @@ class HashingTests(unittest.TestCase):
 
     def test_get_hash_event(self):
         # Arrange
+        target = {
+            "selector": "id",
+            "selectorValue": "android:id/display_preferences",
+            "description": "Display Preferences",
+            "type": "TextView",
+            "state": "enabled"
+        }
         event = {
-            "actions": [{
-                "target": {
-                    "selector": "id",
-                    "selectorValue": "android:id/display_preferences",
-                    "description": "Display Preferences",
-                    "type": "TextView",
-                    "state": "enabled"
-                },
-                "type": "click",
-                "value": None
-            }],
+            "actions": [actions.Click(target, GUIActionTypes.CLICK, None)],
             "precondition": {
                 "activityName": "launchActivity",
                 "stateId": "abcdef"
@@ -160,18 +126,15 @@ class HashingTests(unittest.TestCase):
 
     def test_event_hashing(self):
         # Arrange
+        target = {
+            "selector": "id",
+            "selectorValue": "android:id/display_preferences",
+            "description": "Display Preferences",
+            "type": "TextView",
+            "state": "enabled"
+        }
         event = {
-            "actions": [{
-                "target": {
-                    "selector": "id",
-                    "selectorValue": "android:id/display_preferences",
-                    "description": "Display Preferences",
-                    "type": "TextView",
-                    "state": "enabled"
-                },
-                "type": "click",
-                "value": None
-            }],
+            "actions": [actions.Click(target, GUIActionTypes.CLICK, None)],
             "precondition": {
                 "activityName": "launchActivity",
                 "stateId": "abcdef"
@@ -186,18 +149,15 @@ class HashingTests(unittest.TestCase):
 
     def test_event_hash_is_stable(self):
         # Arrange
+        target = {
+            "selector": "id",
+            "selectorValue": "android:id/display_preferences",
+            "description": "Display Preferences",
+            "type": "TextView",
+            "state": "enabled"
+        }
         event = {
-            "actions": [{
-                "target": {
-                    "selector": "id",
-                    "selectorValue": "android:id/display_preferences",
-                    "description": "Display Preferences",
-                    "type": "TextView",
-                    "state": "enabled"
-                },
-                "type": "click",
-                "value": None
-            }],
+            "actions": [actions.Click(target, GUIActionTypes.CLICK, None)],
             "precondition": {
                 "activityName": "launchActivity",
                 "stateId": "abcdef"
@@ -215,81 +175,73 @@ class HashingTests(unittest.TestCase):
 
     def test_event_hashing_does_not_change_with_key_order(self):
         # Arrange
-        event1 = {
-            "actions": [{
-                "target": {
-                    "selector": "id",
-                    "selectorValue": "android:id/display_preferences",
-                    "description": "Display Preferences",
-                    "type": "TextView",
-                    "state": "enabled"
-                },
-                "type": "click",
-                "value": None
-            }],
+        target_1 = {
+            "selector": "id",
+            "selectorValue": "android:id/display_preferences",
+            "description": "Display Preferences",
+            "type": "TextView",
+            "state": "enabled"
+        }
+        action_1 = actions.Click(target_1, GUIActionTypes.CLICK, None)
+        event_1 = {
+            "actions": [action_1],
             "precondition": {
                 "activityName": "launchActivity",
                 "stateId": "abcdef"
             }
         }
 
-        event2 = {
+        target_2 = {
+            "selector": "id",
+            "selectorValue": "android:id/display_preferences",
+            "description": "Display Preferences",
+            "type": "TextView",
+            "state": "enabled"
+        }
+        action_2 = actions.Click(target_2, GUIActionTypes.CLICK, None)
+        event_2 = {
             "precondition": {
                 "activityName": "launchActivity",
                 "stateId": "abcdef"
             },
-            "actions": [{
-                "target": {
-                    "selector": "id",
-                    "selectorValue": "android:id/display_preferences",
-                    "description": "Display Preferences",
-                    "type": "TextView",
-                    "state": "enabled"
-                },
-                "type": "click",
-                "value": None
-            }]
+            "actions": [action_2]
         }
 
         # Act
-        event_hash1 = hashing.generate_event_hash(event1)
-        event_hash2 = hashing.generate_event_hash(event2)
+        event_hash1 = hashing.generate_event_hash(event_1)
+        event_hash2 = hashing.generate_event_hash(event_2)
 
         # Assert
         self.assertEqual(event_hash1, event_hash2)
 
     def test_event_hash_is_same_regardless_of_value(self):
         # Arrange
-        event1 = {
-            "actions": [{
-                "target": {
-                    "selector": "id",
-                    "selectorValue": "android:id/display_preferences",
-                    "description": "Display Preferences",
-                    "type": "EditText",
-                    "state": "enabled"
-                },
-                "type": "click",
-                "value": "Wunderland"
-            }],
+        target_1 = {
+            "selector": "id",
+            "selectorValue": "android:id/display_preferences",
+            "description": "Display Preferences",
+            "type": "EditText",
+            "state": "enabled"
+        }
+        action_1 = actions.Click(target_1, GUIActionTypes.CLICK, "Wunderland")
+        event_1 = {
+            "actions": [action_1],
             "precondition": {
                 "activityName": "launchActivity",
                 "stateId": "abcdef"
             }
         }
 
-        event2 = {
-            "actions": [{
-                "target": {
-                    "selector": "id",
-                    "selectorValue": "android:id/display_preferences",
-                    "description": "Display Preferences",
-                    "type": "EditText",
-                    "state": "enabled"
-                },
-                "type": "click",
-                "value": "Jekyll"
-            }],
+        target_2 = {
+            "selector": "id",
+            "selectorValue": "android:id/display_preferences",
+            "description": "Display Preferences",
+            "type": "EditText",
+            "state": "enabled"
+        }
+        action_2 = actions.Click(target_2, GUIActionTypes.CLICK, "Jekyll")
+        event_2 = {
+            "actions": [action_2],
             "precondition": {
                 "activityName": "launchActivity",
                 "stateId": "abcdef"
@@ -297,48 +249,44 @@ class HashingTests(unittest.TestCase):
         }
 
         # Act
-        event_hash1 = hashing.generate_event_hash(event1)
-        event_hash2 = hashing.generate_event_hash(event2)
+        event_hash1 = hashing.generate_event_hash(event_1)
+        event_hash2 = hashing.generate_event_hash(event_2)
 
         # Assert
         self.assertEqual(event_hash1, event_hash2)
 
     def test_that_disabled_and_enabled_events_have_different_hash(self):
         # Arrange
+        enabled_target = {
+            "selector": "id",
+            "selectorValue": "android:id/display_preferences",
+            "description": "Display Preferences",
+            "type": "TextView",
+            "state": "enabled"
+        }
+        enabled_action = actions.Click(enabled_target, GUIActionTypes.CLICK, None)
         enabled_event = {
-            "actions": [{
-                "target": {
-                    "selector": "id",
-                    "selectorValue": "android:id/display_preferences",
-                    "description": "Display Preferences",
-                    "type": "TextView",
-                    "state": "enabled"
-                },
-                "type": "click",
-                "value": None
-            }],
+            "actions": [enabled_action],
             "precondition": {
                 "activityName": "launchActivity",
                 "stateId": "abcdef"
             }
         }
 
+        disabled_target = {
+            "selector": "id",
+            "selectorValue": "android:id/display_preferences",
+            "description": "Display Preferences",
+            "type": "TextView",
+            "state": "disabled"
+        }
+        disabled_action = actions.Click(disabled_target, GUIActionTypes.CLICK, None)
         disabled_event = {
             "precondition": {
                 "activityName": "launchActivity",
                 "stateId": "abcdef"
             },
-            "actions": [{
-                "target": {
-                    "selector": "id",
-                    "selectorValue": "android:id/display_preferences",
-                    "description": "Display Preferences",
-                    "type": "TextView",
-                    "state": "disabled"
-                },
-                "type": "click",
-                "value": None
-            }]
+            "actions": [disabled_action]
         }
 
         # Act
@@ -350,42 +298,38 @@ class HashingTests(unittest.TestCase):
 
     def test_generate_test_case_hash(self):
         # Arrange
-        event1 = {
-            "actions": [{
-                "target": {
-                    "selector": "id",
-                    "selectorValue": "android:id/display_preferences",
-                    "description": "Display Preferences",
-                    "type": "TextView",
-                    "state": "enabled"
-                },
-                "type": "click",
-                "value": None
-            }],
+        target_1 = {
+            "selector": "id",
+            "selectorValue": "android:id/display_preferences",
+            "description": "Display Preferences",
+            "type": "TextView",
+            "state": "enabled"
+        }
+        action_1 = actions.Click(target_1, GUIActionTypes.CLICK, None)
+        event_1 = {
+            "actions": [action_1],
             "precondition": {
                 "activityName": "launchActivity",
                 "stateId": "abcdef"
             }
         }
 
-        event2 = {
+        target_2 = {
+            "selector": "id",
+            "selectorValue": "android:id/display_preferences",
+            "description": "Display Preferences",
+            "type": "TextView",
+            "state": "disabled"
+        }
+        action_2 = actions.Click(target_2, GUIActionTypes.CLICK, None)
+        event_2 = {
             "precondition": {
                 "activityName": "launchActivity",
                 "stateId": "abcdef"
             },
-            "actions": [{
-                "target": {
-                    "selector": "id",
-                    "selectorValue": "android:id/display_preferences",
-                    "description": "Display Preferences",
-                    "type": "TextView",
-                    "state": "disabled"
-                },
-                "type": "click",
-                "value": None
-            }]
+            "actions": [action_2]
         }
-        test_case = [event1, event2]
+        test_case = [event_1, event_2]
 
         # Act
         test_case_hash = hashing.generate_test_case_hash(test_case)
@@ -395,43 +339,39 @@ class HashingTests(unittest.TestCase):
 
     def test_generate_test_case_hash_with_different_order_of_events(self):
         # Arrange
-        event1 = {
-            "actions": [{
-                "target": {
-                    "selector": "id",
-                    "selectorValue": "android:id/display_preferences",
-                    "description": "Display Preferences",
-                    "type": "TextView",
-                    "state": "enabled"
-                },
-                "type": "click",
-                "value": None
-            }],
+        target_1 = {
+            "selector": "id",
+            "selectorValue": "android:id/display_preferences",
+            "description": "Display Preferences",
+            "type": "TextView",
+            "state": "enabled"
+        }
+        action_1 = actions.Click(target_1, GUIActionTypes.CLICK, None)
+        event_1 = {
+            "actions": [action_1],
             "precondition": {
                 "activityName": "launchActivity",
                 "stateId": "abcdef"
             }
         }
 
-        event2 = {
+        target_2 = {
+            "selector": "id",
+            "selectorValue": "android:id/display_preferences",
+            "description": "Display Preferences",
+            "type": "TextView",
+            "state": "disabled"
+        }
+        action_2 = actions.Click(target_2, GUIActionTypes.CLICK, None)
+        event_2 = {
             "precondition": {
                 "activityName": "launchActivity",
                 "stateId": "abcdef"
             },
-            "actions": [{
-                "target": {
-                    "selector": "id",
-                    "selectorValue": "android:id/display_preferences",
-                    "description": "Display Preferences",
-                    "type": "TextView",
-                    "state": "disabled"
-                },
-                "type": "click",
-                "value": None
-            }]
+            "actions": [action_2]
         }
-        test_case1 = [event1, event2]
-        test_case2 = [event2, event1]
+        test_case1 = [event_1, event_2]
+        test_case2 = [event_2, event_1]
 
         # Act
         test_case_hash1 = hashing.generate_test_case_hash(test_case1)

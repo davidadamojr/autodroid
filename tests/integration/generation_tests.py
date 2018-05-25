@@ -4,12 +4,14 @@ import unittest
 import config
 import json
 import sqlite3
+import actions
 
 import framework.generation as generation
 from framework.generation import Generator
 from framework.database import Database
 from appiumatic import abstraction
 from appiumatic import hashing
+from appiumatic.constants import GUIActionTypes
 
 
 def remove_output_files(output_path):
@@ -101,52 +103,48 @@ class GenerationTests(unittest.TestCase):
 
     def test_remove_termination_events(self):
         # Arrange
+        target_1 = {
+            "selector": "id",
+            "selectorValue": "android:id/display_preferences",
+            "description": "Display Preferences",
+            "type": "TextView",
+            "state": "enabled"
+        }
+        action_1 = actions.Click(target_1, GUIActionTypes.CLICK, None)
         event1 = {
-            "actions": [{
-                "target": {
-                    "selector": "id",
-                    "selectorValue": "android:id/display_preferences",
-                    "description": "Display Preferences",
-                    "type": "TextView",
-                    "state": "enabled"
-                },
-                "type": "click",
-                "value": None
-            }],
+            "actions": [action_1],
             "precondition": {
                 "activityName": "launchActivity",
                 "stateId": "abcdef"
             }
         }
+
+        target_2 = {
+            "selector": "id",
+            "selectorValue": "android:id/add_contact",
+            "description": "Add contact",
+            "type": "Button",
+            "state": "enabled"
+        }
+        action_2 = actions.Click(target_2, GUIActionTypes.CLICK, None)
         event2 = {
-            "actions": [{
-                "target": {
-                    "selector": "id",
-                    "selectorValue": "android:id/add_contact",
-                    "description": "Add contact",
-                    "type": "Button",
-                    "state": "enabled"
-                },
-                "type": "click",
-                "value": None
-            }],
+            "actions": [action_2],
             "precondition": {
                 "activityName": "contactActivity",
                 "stateId": "a1b1c1"
             }
         }
+
+        target_3 = {
+            "selector": "id",
+            "selectorValue": "android:id/contact_name",
+            "description": "Contact Name",
+            "type": "EditText",
+            "state": "disabled"
+        }
+        action_3 = actions.Click(target_3, GUIActionTypes.CLICK, None)
         event3 = {
-            "actions": [{
-                "target": {
-                    "selector": "id",
-                    "selectorValue": "android:id/contact_name",
-                    "description": "Contact Name",
-                    "type": "EditText",
-                    "state": "disabled"
-                },
-                "type": "click",
-                "value": None
-            }],
+            "actions": [action_3],
             "precondition": {
                 "activityName": "launchActivity",
                 "stateId": "abcdef"

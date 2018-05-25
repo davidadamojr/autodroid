@@ -3,44 +3,39 @@ import sqlite3
 import os
 from framework.database import Database
 from framework.strategies.selection import min_frequency_random, min_frequency_deterministic
-from appiumatic import abstraction, hashing
+from appiumatic import abstraction, hashing, actions
+from appiumatic.constants import GUIActionTypes
 
 
 def setup_events():
     current_state = abstraction.create_state("contactsActivity", "abcdef")
-    action_1 = {
-        "target": {
-            "selector": "id",
-            "selectorValue": "ok_btn",
-            "type": "button",
-            "description": "OK",
-            "state": "enabled"
-        },
-        "type": "click",
-        "value": None
+    target_1 = {
+        "selector": "id",
+        "selectorValue": "ok_btn",
+        "type": "button",
+        "description": "OK",
+        "state": "enabled"
     }
-    action_2 = {
-        "target": {
-            "selector": "id",
-            "selectorValue": "cancel_btn",
-            "type": "button",
-            "description": "Cancel",
-            "state": "enabled"
-        },
-        "type": "click",
-        "value": None
+    action_1 = actions.Click(target_1, GUIActionTypes.CLICK, None)
+
+    target_2 = {
+        "selector": "id",
+        "selectorValue": "cancel_btn",
+        "type": "button",
+        "description": "Cancel",
+        "state": "enabled"
     }
-    action_3 = {
-        "target": {
-            "selector": "id",
-            "selectorValue": "gender_radio_btn",
-            "type": "radiobutton",
-            "description": "Gender",
-            "state": "enabled"
-        },
-        "type": "click",
-        "value": None
+    action_2 = actions.Click(target_2, GUIActionTypes.CLICK, None)
+
+    target_3 = {
+        "selector": "id",
+        "selectorValue": "gender_radio_btn",
+        "type": "radiobutton",
+        "description": "Gender",
+        "state": "enabled"
     }
+    action_3 = actions.Click(target_3, GUIActionTypes.CLICK, None)
+
     event_1 = {
         "precondition": current_state,
         "actions": [action_1]
