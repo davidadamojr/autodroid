@@ -106,7 +106,7 @@ class LongClick(Action):
     def execute(self, driver):
         logger.info("Executing long-click event.")
         element = self.find_element(driver)
-        action = TouchAction(self.driver)
+        action = TouchAction(driver)
         action.long_press(element).perform()
 
 
