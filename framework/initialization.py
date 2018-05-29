@@ -13,7 +13,7 @@ def event_selection_strategy(strategy):
         return selection.min_frequency_deterministic
     elif strategy == "frequency_weighted":
         return selection.frequency_weighted
-    elif strategy == "normal_random":
+    elif strategy == "gaussian_random":
         return selection.gaussian_random
 
     raise InvalidParameter("Invalid specification '{}' for event selection strategy.".format(strategy))
@@ -38,7 +38,8 @@ def setup_strategy(strategy):
 def completion_criterion(criterion, time_budget, test_suite_length):
     criterion = criterion.lower()
     if criterion == "time":
-        return partial(completion.time_budget_exceeded, time_budget=time_budget)
+        completion_func = partial(completion.time_budget_exceeded, time_budget=time_budget)
+        return completion_func
     elif criterion == "length":
         return partial(completion.number_of_test_cases_reached, test_case_budget=test_suite_length)
 

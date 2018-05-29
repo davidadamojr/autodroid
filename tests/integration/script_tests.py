@@ -8,6 +8,7 @@ from framework.utils.scripts import *
 
 APP_PACKAGE = "org.tomdroid"
 
+
 class ScriptTests(unittest.TestCase):
 
     def test_clear_sdcard_data(self):

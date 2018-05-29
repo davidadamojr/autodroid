@@ -107,7 +107,7 @@ class Generator:
 
         start_time = time.time()
         launch_event = create_launch_event()
-        start_state = get_current_state(driver)  # error handling here
+        start_state = get_current_state(driver)
         complete_event = synthesize(launch_event, start_state)
         events = [complete_event]
         logger.debug("Test case initialization complete.")
