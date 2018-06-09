@@ -46,7 +46,7 @@ class UIAnalysisTests(unittest.TestCase):
         expected_available_events = [
             {
                 "precondition": current_state,
-                "actions": [actions.Click(expected_target, GUIActionTypes.CLICK, None)]
+                "actions": [actions.Click(expected_target, GUIActionType.CLICK, None)]
             },
             abstraction.create_back_event(current_state),
             abstraction.create_background_event(current_state)
@@ -72,16 +72,16 @@ class UIAnalysisTests(unittest.TestCase):
             "state": "enabled"
         }]
         actual_actionable_widgets = ui_analysis._get_actionable_widgets(page_source)
-        self.assertEqual(len(actual_actionable_widgets[GUIActionTypes.CLICK]), 2)
-        self.assertEqual(clickable_widgets, actual_actionable_widgets[GUIActionTypes.CLICK])
-        self.assertEqual(len(actual_actionable_widgets[GUIActionTypes.LONG_CLICK]), 0)
-        self.assertEqual(len(actual_actionable_widgets[GUIActionTypes.CHECK]), 0)
-        self.assertEqual(len(actual_actionable_widgets[GUIActionTypes.UNCHECK]), 0)
-        self.assertEqual(len(actual_actionable_widgets[GUIActionTypes.SWIPE_UP]), 0)
-        self.assertEqual(len(actual_actionable_widgets[GUIActionTypes.SWIPE_DOWN]), 0)
-        self.assertEqual(len(actual_actionable_widgets[GUIActionTypes.SWIPE_RIGHT]), 0)
-        self.assertEqual(len(actual_actionable_widgets[GUIActionTypes.SWIPE_LEFT]), 0)
-        self.assertEqual(len(actual_actionable_widgets[GUIActionTypes.TEXT_ENTRY]), 0)
+        self.assertEqual(len(actual_actionable_widgets[GUIActionType.CLICK]), 2)
+        self.assertEqual(clickable_widgets, actual_actionable_widgets[GUIActionType.CLICK])
+        self.assertEqual(len(actual_actionable_widgets[GUIActionType.LONG_CLICK]), 0)
+        self.assertEqual(len(actual_actionable_widgets[GUIActionType.CHECK]), 0)
+        self.assertEqual(len(actual_actionable_widgets[GUIActionType.UNCHECK]), 0)
+        self.assertEqual(len(actual_actionable_widgets[GUIActionType.SWIPE_UP]), 0)
+        self.assertEqual(len(actual_actionable_widgets[GUIActionType.SWIPE_DOWN]), 0)
+        self.assertEqual(len(actual_actionable_widgets[GUIActionType.SWIPE_RIGHT]), 0)
+        self.assertEqual(len(actual_actionable_widgets[GUIActionType.SWIPE_LEFT]), 0)
+        self.assertEqual(len(actual_actionable_widgets[GUIActionType.TEXT_ENTRY]), 0)
 
     def test_can_identify_long_clickable_widgets(self):
         page_source = """<?xml version="1.0" encoding="UTF-8"?><hierarchy rotation="0"><android.widget.Button index="0" text="Display Preferences" class="android.widget.Button" package="org.tomdroid" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="true" password="false" selected="false" bounds="[32,146][736,210]" resource-id="android:id/title1" instance="1"/>
@@ -102,16 +102,16 @@ class UIAnalysisTests(unittest.TestCase):
             "state": "enabled"
         }]
         actual_actionable_widgets = ui_analysis._get_actionable_widgets(page_source)
-        self.assertEqual(len(actual_actionable_widgets[GUIActionTypes.LONG_CLICK]), 2)
-        self.assertEqual(long_clickable_widgets, actual_actionable_widgets[GUIActionTypes.LONG_CLICK])
-        self.assertEqual(len(actual_actionable_widgets[GUIActionTypes.CLICK]), 0)
-        self.assertEqual(len(actual_actionable_widgets[GUIActionTypes.CHECK]), 0)
-        self.assertEqual(len(actual_actionable_widgets[GUIActionTypes.UNCHECK]), 0)
-        self.assertEqual(len(actual_actionable_widgets[GUIActionTypes.SWIPE_UP]), 0)
-        self.assertEqual(len(actual_actionable_widgets[GUIActionTypes.SWIPE_DOWN]), 0)
-        self.assertEqual(len(actual_actionable_widgets[GUIActionTypes.SWIPE_RIGHT]), 0)
-        self.assertEqual(len(actual_actionable_widgets[GUIActionTypes.SWIPE_LEFT]), 0)
-        self.assertEqual(len(actual_actionable_widgets[GUIActionTypes.TEXT_ENTRY]), 0)
+        self.assertEqual(len(actual_actionable_widgets[GUIActionType.LONG_CLICK]), 2)
+        self.assertEqual(long_clickable_widgets, actual_actionable_widgets[GUIActionType.LONG_CLICK])
+        self.assertEqual(len(actual_actionable_widgets[GUIActionType.CLICK]), 0)
+        self.assertEqual(len(actual_actionable_widgets[GUIActionType.CHECK]), 0)
+        self.assertEqual(len(actual_actionable_widgets[GUIActionType.UNCHECK]), 0)
+        self.assertEqual(len(actual_actionable_widgets[GUIActionType.SWIPE_UP]), 0)
+        self.assertEqual(len(actual_actionable_widgets[GUIActionType.SWIPE_DOWN]), 0)
+        self.assertEqual(len(actual_actionable_widgets[GUIActionType.SWIPE_RIGHT]), 0)
+        self.assertEqual(len(actual_actionable_widgets[GUIActionType.SWIPE_LEFT]), 0)
+        self.assertEqual(len(actual_actionable_widgets[GUIActionType.TEXT_ENTRY]), 0)
 
     def test_can_identify_checkable_and_uncheckable_widgets(self):
         page_source = """<?xml version="1.0" encoding="UTF-8"?><hierarchy rotation="0"><android.widget.Button index="0" text="Display Preferences" class="android.widget.Button" package="org.tomdroid" content-desc="" checkable="true" checked="true" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[32,146][736,210]" resource-id="android:id/title1" instance="1"/>
@@ -133,15 +133,15 @@ class UIAnalysisTests(unittest.TestCase):
             "state": "enabled"
         }]
         actual_actionable_widgets = ui_analysis._get_actionable_widgets(page_source)
-        self.assertEqual(len(actual_actionable_widgets[GUIActionTypes.UNCHECK]), 1)
-        self.assertEqual(len(actual_actionable_widgets[GUIActionTypes.CHECK]), 1)
-        self.assertEqual(checkable_widgets, actual_actionable_widgets[GUIActionTypes.CHECK])
-        self.assertEqual(uncheckable_widgets, actual_actionable_widgets[GUIActionTypes.UNCHECK])
-        self.assertEqual(len(actual_actionable_widgets[GUIActionTypes.CLICK]), 0)
-        self.assertEqual(len(actual_actionable_widgets[GUIActionTypes.LONG_CLICK]), 0)
-        self.assertEqual(len(actual_actionable_widgets[GUIActionTypes.SWIPE_UP]), 0)
-        self.assertEqual(len(actual_actionable_widgets[GUIActionTypes.SWIPE_DOWN]), 0)
-        self.assertEqual(len(actual_actionable_widgets[GUIActionTypes.TEXT_ENTRY]), 0)
+        self.assertEqual(len(actual_actionable_widgets[GUIActionType.UNCHECK]), 1)
+        self.assertEqual(len(actual_actionable_widgets[GUIActionType.CHECK]), 1)
+        self.assertEqual(checkable_widgets, actual_actionable_widgets[GUIActionType.CHECK])
+        self.assertEqual(uncheckable_widgets, actual_actionable_widgets[GUIActionType.UNCHECK])
+        self.assertEqual(len(actual_actionable_widgets[GUIActionType.CLICK]), 0)
+        self.assertEqual(len(actual_actionable_widgets[GUIActionType.LONG_CLICK]), 0)
+        self.assertEqual(len(actual_actionable_widgets[GUIActionType.SWIPE_UP]), 0)
+        self.assertEqual(len(actual_actionable_widgets[GUIActionType.SWIPE_DOWN]), 0)
+        self.assertEqual(len(actual_actionable_widgets[GUIActionType.TEXT_ENTRY]), 0)
 
     def test_can_identify_scrollable_widgets(self):
         page_source = """<?xml version="1.0" encoding="UTF-8"?><hierarchy rotation="0"><android.widget.Button index="0" text="Display Preferences" class="android.widget.Button" package="org.tomdroid" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="true" long-clickable="false" password="false" selected="false" bounds="[32,146][736,210]" resource-id="android:id/title1" instance="1"/>
@@ -162,19 +162,19 @@ class UIAnalysisTests(unittest.TestCase):
             "state": "enabled"
         }]
         actual_actionable_widgets = ui_analysis._get_actionable_widgets(page_source)
-        self.assertEqual(len(actual_actionable_widgets[GUIActionTypes.SWIPE_DOWN]), 2)
-        self.assertEqual(len(actual_actionable_widgets[GUIActionTypes.SWIPE_UP]), 2)
-        self.assertEqual(len(actual_actionable_widgets[GUIActionTypes.SWIPE_RIGHT]), 2)
-        self.assertEqual(len(actual_actionable_widgets[GUIActionTypes.SWIPE_LEFT]), 2)
-        self.assertEqual(actual_actionable_widgets[GUIActionTypes.SWIPE_DOWN], scrollable_widgets)
-        self.assertEqual(actual_actionable_widgets[GUIActionTypes.SWIPE_UP], scrollable_widgets)
-        self.assertEqual(actual_actionable_widgets[GUIActionTypes.SWIPE_LEFT], scrollable_widgets)
-        self.assertEqual(actual_actionable_widgets[GUIActionTypes.SWIPE_RIGHT], scrollable_widgets)
-        self.assertEqual(len(actual_actionable_widgets[GUIActionTypes.CHECK]), 0)
-        self.assertEqual(len(actual_actionable_widgets[GUIActionTypes.UNCHECK]), 0)
-        self.assertEqual(len(actual_actionable_widgets[GUIActionTypes.CLICK]), 0)
-        self.assertEqual(len(actual_actionable_widgets[GUIActionTypes.LONG_CLICK]), 0)
-        self.assertEqual(len(actual_actionable_widgets[GUIActionTypes.TEXT_ENTRY]), 0)
+        self.assertEqual(len(actual_actionable_widgets[GUIActionType.SWIPE_DOWN]), 2)
+        self.assertEqual(len(actual_actionable_widgets[GUIActionType.SWIPE_UP]), 2)
+        self.assertEqual(len(actual_actionable_widgets[GUIActionType.SWIPE_RIGHT]), 2)
+        self.assertEqual(len(actual_actionable_widgets[GUIActionType.SWIPE_LEFT]), 2)
+        self.assertEqual(actual_actionable_widgets[GUIActionType.SWIPE_DOWN], scrollable_widgets)
+        self.assertEqual(actual_actionable_widgets[GUIActionType.SWIPE_UP], scrollable_widgets)
+        self.assertEqual(actual_actionable_widgets[GUIActionType.SWIPE_LEFT], scrollable_widgets)
+        self.assertEqual(actual_actionable_widgets[GUIActionType.SWIPE_RIGHT], scrollable_widgets)
+        self.assertEqual(len(actual_actionable_widgets[GUIActionType.CHECK]), 0)
+        self.assertEqual(len(actual_actionable_widgets[GUIActionType.UNCHECK]), 0)
+        self.assertEqual(len(actual_actionable_widgets[GUIActionType.CLICK]), 0)
+        self.assertEqual(len(actual_actionable_widgets[GUIActionType.LONG_CLICK]), 0)
+        self.assertEqual(len(actual_actionable_widgets[GUIActionType.TEXT_ENTRY]), 0)
 
     def test_can_identify_enabled_text_input_widgets(self):
         page_source = """<?xml version="1.0" encoding="UTF-8"?><hierarchy rotation="0"><android.widget.EditText index="0" text="" class="android.widget.EditText" package="org.tomdroid" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[32,146][736,210]" resource-id="android:id/title1" instance="1"/>
@@ -195,16 +195,16 @@ class UIAnalysisTests(unittest.TestCase):
             "state": "enabled"
         }]
         actual_actionable_widgets = ui_analysis._get_actionable_widgets(page_source)
-        self.assertEqual(len(actual_actionable_widgets[GUIActionTypes.TEXT_ENTRY]), 2)
-        self.assertEqual(actual_actionable_widgets[GUIActionTypes.TEXT_ENTRY], text_entry_widgets)
-        self.assertEqual(len(actual_actionable_widgets[GUIActionTypes.SWIPE_DOWN]), 0)
-        self.assertEqual(len(actual_actionable_widgets[GUIActionTypes.SWIPE_UP]), 0)
-        self.assertEqual(len(actual_actionable_widgets[GUIActionTypes.SWIPE_RIGHT]), 0)
-        self.assertEqual(len(actual_actionable_widgets[GUIActionTypes.SWIPE_LEFT]), 0)
-        self.assertEqual(len(actual_actionable_widgets[GUIActionTypes.CHECK]), 0)
-        self.assertEqual(len(actual_actionable_widgets[GUIActionTypes.UNCHECK]), 0)
-        self.assertEqual(len(actual_actionable_widgets[GUIActionTypes.CLICK]), 0)
-        self.assertEqual(len(actual_actionable_widgets[GUIActionTypes.LONG_CLICK]), 0)
+        self.assertEqual(len(actual_actionable_widgets[GUIActionType.TEXT_ENTRY]), 2)
+        self.assertEqual(actual_actionable_widgets[GUIActionType.TEXT_ENTRY], text_entry_widgets)
+        self.assertEqual(len(actual_actionable_widgets[GUIActionType.SWIPE_DOWN]), 0)
+        self.assertEqual(len(actual_actionable_widgets[GUIActionType.SWIPE_UP]), 0)
+        self.assertEqual(len(actual_actionable_widgets[GUIActionType.SWIPE_RIGHT]), 0)
+        self.assertEqual(len(actual_actionable_widgets[GUIActionType.SWIPE_LEFT]), 0)
+        self.assertEqual(len(actual_actionable_widgets[GUIActionType.CHECK]), 0)
+        self.assertEqual(len(actual_actionable_widgets[GUIActionType.UNCHECK]), 0)
+        self.assertEqual(len(actual_actionable_widgets[GUIActionType.CLICK]), 0)
+        self.assertEqual(len(actual_actionable_widgets[GUIActionType.LONG_CLICK]), 0)
 
     def test_can_identify_all_actionable_widget_types(self):
         page_source = """<?xml version="1.0" encoding="UTF-8"?><hierarchy rotation="0"><android.widget.EditText index="0" text="" class="android.widget.EditText" package="org.tomdroid" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[32,146][736,210]" resource-id="android:id/title1" instance="1"/>
@@ -257,15 +257,15 @@ class UIAnalysisTests(unittest.TestCase):
         }]
 
         actual_actionable_widgets = ui_analysis._get_actionable_widgets(page_source)
-        self.assertEqual(actual_actionable_widgets[GUIActionTypes.CLICK], clickable_widgets)
-        self.assertEqual(actual_actionable_widgets[GUIActionTypes.LONG_CLICK], long_clickable_widgets)
-        self.assertEqual(actual_actionable_widgets[GUIActionTypes.CHECK], checkable_widgets)
-        self.assertEqual(actual_actionable_widgets[GUIActionTypes.UNCHECK], uncheckable_widgets)
-        self.assertEqual(actual_actionable_widgets[GUIActionTypes.TEXT_ENTRY], text_entry_widgets)
-        self.assertEqual(actual_actionable_widgets[GUIActionTypes.SWIPE_UP], scrollable_widgets)
-        self.assertEqual(actual_actionable_widgets[GUIActionTypes.SWIPE_DOWN], scrollable_widgets)
-        self.assertEqual(actual_actionable_widgets[GUIActionTypes.SWIPE_RIGHT], scrollable_widgets)
-        self.assertEqual(actual_actionable_widgets[GUIActionTypes.SWIPE_LEFT], scrollable_widgets)
+        self.assertEqual(actual_actionable_widgets[GUIActionType.CLICK], clickable_widgets)
+        self.assertEqual(actual_actionable_widgets[GUIActionType.LONG_CLICK], long_clickable_widgets)
+        self.assertEqual(actual_actionable_widgets[GUIActionType.CHECK], checkable_widgets)
+        self.assertEqual(actual_actionable_widgets[GUIActionType.UNCHECK], uncheckable_widgets)
+        self.assertEqual(actual_actionable_widgets[GUIActionType.TEXT_ENTRY], text_entry_widgets)
+        self.assertEqual(actual_actionable_widgets[GUIActionType.SWIPE_UP], scrollable_widgets)
+        self.assertEqual(actual_actionable_widgets[GUIActionType.SWIPE_DOWN], scrollable_widgets)
+        self.assertEqual(actual_actionable_widgets[GUIActionType.SWIPE_RIGHT], scrollable_widgets)
+        self.assertEqual(actual_actionable_widgets[GUIActionType.SWIPE_LEFT], scrollable_widgets)
 
     def test_get_click_actions(self):
         page_source = """<?xml version="1.0" encoding="UTF-8"?><hierarchy rotation="0"><android.widget.Button index="0" text="Display Preferences" class="android.widget.Button" package="org.tomdroid" content-desc="" checkable="false" checked="false" clickable="true" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[32,146][736,210]" resource-id="android:id/title1" instance="1"/>
@@ -287,8 +287,8 @@ class UIAnalysisTests(unittest.TestCase):
         }]
 
         expected_actions = [
-            actions.Click(clickable_widgets[0], GUIActionTypes.CLICK, None),
-            actions.Click(clickable_widgets[1], GUIActionTypes.CLICK, None)
+            actions.Click(clickable_widgets[0], GUIActionType.CLICK, None),
+            actions.Click(clickable_widgets[1], GUIActionType.CLICK, None)
         ]
         actual_actions = ui_analysis.get_possible_actions(page_source)
         self.assertEqual(actual_actions, expected_actions)
@@ -313,8 +313,8 @@ class UIAnalysisTests(unittest.TestCase):
         }]
 
         expected_actions = [
-            actions.LongClick(long_clickable_widgets[0], GUIActionTypes.LONG_CLICK, None),
-            actions.LongClick(long_clickable_widgets[1], GUIActionTypes.LONG_CLICK, None)
+            actions.LongClick(long_clickable_widgets[0], GUIActionType.LONG_CLICK, None),
+            actions.LongClick(long_clickable_widgets[1], GUIActionType.LONG_CLICK, None)
         ]
 
         actual_actions = ui_analysis.get_possible_actions(page_source)
@@ -341,14 +341,14 @@ class UIAnalysisTests(unittest.TestCase):
         }]
 
         expected_actions = [
-            actions.SwipeDown(scrollable_widgets[0], GUIActionTypes.SWIPE_DOWN, None),
-            actions.SwipeUp(scrollable_widgets[0], GUIActionTypes.SWIPE_UP, None),
-            actions.SwipeRight(scrollable_widgets[0], GUIActionTypes.SWIPE_RIGHT, None),
-            actions.SwipeLeft(scrollable_widgets[0], GUIActionTypes.SWIPE_LEFT, None),
-            actions.SwipeDown(scrollable_widgets[1], GUIActionTypes.SWIPE_DOWN, None),
-            actions.SwipeUp(scrollable_widgets[1], GUIActionTypes.SWIPE_UP, None),
-            actions.SwipeRight(scrollable_widgets[1], GUIActionTypes.SWIPE_RIGHT, None),
-            actions.SwipeLeft(scrollable_widgets[1], GUIActionTypes.SWIPE_LEFT, None)
+            actions.SwipeDown(scrollable_widgets[0], GUIActionType.SWIPE_DOWN, None),
+            actions.SwipeUp(scrollable_widgets[0], GUIActionType.SWIPE_UP, None),
+            actions.SwipeRight(scrollable_widgets[0], GUIActionType.SWIPE_RIGHT, None),
+            actions.SwipeLeft(scrollable_widgets[0], GUIActionType.SWIPE_LEFT, None),
+            actions.SwipeDown(scrollable_widgets[1], GUIActionType.SWIPE_DOWN, None),
+            actions.SwipeUp(scrollable_widgets[1], GUIActionType.SWIPE_UP, None),
+            actions.SwipeRight(scrollable_widgets[1], GUIActionType.SWIPE_RIGHT, None),
+            actions.SwipeLeft(scrollable_widgets[1], GUIActionType.SWIPE_LEFT, None)
         ]
         actual_actions = ui_analysis.get_possible_actions(page_source)
         self.assertIn(expected_actions[0], actual_actions)
@@ -381,8 +381,8 @@ class UIAnalysisTests(unittest.TestCase):
         }]
 
         expected_actions = [
-            actions.Click(uncheckable_widgets[0], GUIActionTypes.UNCHECK, None),
-            actions.Click(checkable_widgets[0], GUIActionTypes.CHECK, None)
+            actions.Click(uncheckable_widgets[0], GUIActionType.UNCHECK, None),
+            actions.Click(checkable_widgets[0], GUIActionType.CHECK, None)
         ]
         actual_actions = ui_analysis.get_possible_actions(page_source)
         self.assertIn(expected_actions[0], actual_actions)
@@ -407,8 +407,8 @@ class UIAnalysisTests(unittest.TestCase):
             "state": "enabled"
         }]
         expected_actions = [
-            actions.TextEntry(text_entry_widgets[0], GUIActionTypes.TEXT_ENTRY, None),
-            actions.TextEntry(text_entry_widgets[1], GUIActionTypes.TEXT_ENTRY, None)
+            actions.TextEntry(text_entry_widgets[0], GUIActionType.TEXT_ENTRY, None),
+            actions.TextEntry(text_entry_widgets[1], GUIActionType.TEXT_ENTRY, None)
         ]
         actual_actions = ui_analysis.get_possible_actions(page_source)
         self.assertIn(expected_actions[0], actual_actions)
@@ -450,24 +450,24 @@ class UIAnalysisTests(unittest.TestCase):
         }]
 
         possible_actions = [
-            actions.TextEntry(text_entry_widgets[0], GUIActionTypes.TEXT_ENTRY, None),
-            actions.TextEntry(text_entry_widgets[1], GUIActionTypes.TEXT_ENTRY, None),
-            actions.Click(non_text_entry_widgets[0], GUIActionTypes.CLICK, None),
-            actions.Click(non_text_entry_widgets[1], GUIActionTypes.CLICK, None),
-            actions.Click(non_text_entry_widgets[2], GUIActionTypes.CHECK, None),
-            actions.Click(non_text_entry_widgets[2], GUIActionTypes.UNCHECK, None)
+            actions.TextEntry(text_entry_widgets[0], GUIActionType.TEXT_ENTRY, None),
+            actions.TextEntry(text_entry_widgets[1], GUIActionType.TEXT_ENTRY, None),
+            actions.Click(non_text_entry_widgets[0], GUIActionType.CLICK, None),
+            actions.Click(non_text_entry_widgets[1], GUIActionType.CLICK, None),
+            actions.Click(non_text_entry_widgets[2], GUIActionType.CHECK, None),
+            actions.Click(non_text_entry_widgets[2], GUIActionType.UNCHECK, None)
         ]
 
         expected_text_entry_actions = [
-            actions.TextEntry(text_entry_widgets[0], GUIActionTypes.TEXT_ENTRY, None),
-            actions.TextEntry(text_entry_widgets[1], GUIActionTypes.TEXT_ENTRY, None)
+            actions.TextEntry(text_entry_widgets[0], GUIActionType.TEXT_ENTRY, None),
+            actions.TextEntry(text_entry_widgets[1], GUIActionType.TEXT_ENTRY, None)
         ]
 
         expected_non_text_entry_actions = [
-            actions.Click(non_text_entry_widgets[0], GUIActionTypes.CLICK, None),
-            actions.Click(non_text_entry_widgets[1], GUIActionTypes.CLICK, None),
-            actions.Click(non_text_entry_widgets[2], GUIActionTypes.CHECK, None),
-            actions.Click(non_text_entry_widgets[2], GUIActionTypes.UNCHECK, None)
+            actions.Click(non_text_entry_widgets[0], GUIActionType.CLICK, None),
+            actions.Click(non_text_entry_widgets[1], GUIActionType.CLICK, None),
+            actions.Click(non_text_entry_widgets[2], GUIActionType.CHECK, None),
+            actions.Click(non_text_entry_widgets[2], GUIActionType.UNCHECK, None)
         ]
         text_entry_actions, non_text_entry_actions = ui_analysis.classify_actions(possible_actions)
         self.assertEqual(text_entry_actions, expected_text_entry_actions)

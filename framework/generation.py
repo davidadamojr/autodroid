@@ -6,7 +6,6 @@ import framework.utils.scripts as scripts
 from uuid import uuid4
 from selenium.common.exceptions import WebDriverException
 from appiumatic.abstraction import create_launch_event, create_home_event, create_back_event, synthesize, make_event_serializable
-from appiumatic.execution import Executor
 from appiumatic.ui_analysis import get_available_events, get_current_state
 from appiumatic.hashing import generate_test_case_hash, generate_event_hash
 from framework.database import *
@@ -132,7 +131,6 @@ class Generator:
         complete_event = synthesize(selected_event, resulting_state)
         event_hash = generate_event_hash(complete_event)
         # event_with_actions_as_dict = make_event_serializable(complete_event)
-        self.database.update_event_frequency(test_suite_id, event_hash)
 
         NextEvent = collections.namedtuple("NextEvent", ["event", "event_hash", "resulting_state"])
         return NextEvent(complete_event, event_hash, resulting_state)
@@ -157,6 +155,8 @@ class Generator:
         while not termination_criterion(self.database, test_case_hash=generate_test_case_hash(test_case.events),
                                         event_count=event_count, test_suite_id=test_suite.id):
             next_event = self.process_next_event(executor, test_suite.id, event_selection_strategy)
+            self.update_knowledge_base(test_suite, next_event, test_case)
+
             current_state = next_event.resulting_state
             test_case.events.append(next_event.event)
             event_count += 1
@@ -170,8 +170,11 @@ class Generator:
 
         return current_state
 
+    def update_knowledge_base(self, test_suite, next_event, test_case):
+        self.database.update_event_frequency(test_suite.id, next_event.event_hash)
+
     def construct_test_suite(self, setup_strategy, event_selection_strategy, termination_criterion, completion_criterion,
-                             teardown_strategy):
+                             teardown_strategy, executor_factory):
         test_suite = self.initialize_test_suite()
         output_paths = self.create_output_directories(test_suite.creation_time)
 
@@ -182,8 +185,8 @@ class Generator:
                 test_case = self.initialize_test_case(setup_strategy)
                 logger.debug(
                     "Generating test case {}. Start time is {}.".format(test_case_count + 1, test_case.start_time))
-                executor = Executor(test_case.driver, self.configuration["event_interval"],
-                                    self.configuration["text_entry_values"])
+                executor = executor_factory(test_case.driver, self.configuration["event_interval"],
+                                            self.configuration["text_entry_values"])
                 final_state = self.generate_events(executor, test_case, test_suite, event_selection_strategy,
                                                    termination_criterion)
             except WebDriverException as e:

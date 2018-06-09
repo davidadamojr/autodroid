@@ -40,11 +40,11 @@ class HashingTests(unittest.TestCase):
         ]
 
         possible_actions = [
-            actions.TextEntry(widgets[0], GUIActionTypes.TEXT_ENTRY, "Hello World!"),
-            actions.TextEntry(widgets[1], GUIActionTypes.TEXT_ENTRY, None),
-            actions.Click(widgets[2], GUIActionTypes.CLICK, None),
-            actions.Click(widgets[3], GUIActionTypes.CHECK, None),
-            actions.Click(widgets[3], GUIActionTypes.UNCHECK, None)
+            actions.TextEntry(widgets[0], GUIActionType.TEXT_ENTRY, "Hello World!"),
+            actions.TextEntry(widgets[1], GUIActionType.TEXT_ENTRY, None),
+            actions.Click(widgets[2], GUIActionType.CLICK, None),
+            actions.Click(widgets[3], GUIActionType.CHECK, None),
+            actions.Click(widgets[3], GUIActionType.UNCHECK, None)
         ]
 
         hashes = []
@@ -86,11 +86,11 @@ class HashingTests(unittest.TestCase):
         ]
 
         possible_actions = [
-            actions.TextEntry(widgets[0], GUIActionTypes.TEXT_ENTRY, "Hello World!"),
-            actions.TextEntry(widgets[1], GUIActionTypes.TEXT_ENTRY, None),
-            actions.Click(widgets[2], GUIActionTypes.CLICK, None),
-            actions.Click(widgets[3], GUIActionTypes.CHECK, None),
-            actions.Click(widgets[3], GUIActionTypes.UNCHECK, None)
+            actions.TextEntry(widgets[0], GUIActionType.TEXT_ENTRY, "Hello World!"),
+            actions.TextEntry(widgets[1], GUIActionType.TEXT_ENTRY, None),
+            actions.Click(widgets[2], GUIActionType.CLICK, None),
+            actions.Click(widgets[3], GUIActionType.CHECK, None),
+            actions.Click(widgets[3], GUIActionType.UNCHECK, None)
         ]
 
         hashes = []
@@ -111,7 +111,7 @@ class HashingTests(unittest.TestCase):
             "state": "enabled"
         }
         event = {
-            "actions": [actions.Click(target, GUIActionTypes.CLICK, None)],
+            "actions": [actions.Click(target, GUIActionType.CLICK, None)],
             "precondition": {
                 "activityName": "launchActivity",
                 "stateId": "abcdef"
@@ -134,7 +134,7 @@ class HashingTests(unittest.TestCase):
             "state": "enabled"
         }
         event = {
-            "actions": [actions.Click(target, GUIActionTypes.CLICK, None)],
+            "actions": [actions.Click(target, GUIActionType.CLICK, None)],
             "precondition": {
                 "activityName": "launchActivity",
                 "stateId": "abcdef"
@@ -157,7 +157,7 @@ class HashingTests(unittest.TestCase):
             "state": "enabled"
         }
         event = {
-            "actions": [actions.Click(target, GUIActionTypes.CLICK, None)],
+            "actions": [actions.Click(target, GUIActionType.CLICK, None)],
             "precondition": {
                 "activityName": "launchActivity",
                 "stateId": "abcdef"
@@ -182,7 +182,7 @@ class HashingTests(unittest.TestCase):
             "type": "TextView",
             "state": "enabled"
         }
-        action_1 = actions.Click(target_1, GUIActionTypes.CLICK, None)
+        action_1 = actions.Click(target_1, GUIActionType.CLICK, None)
         event_1 = {
             "actions": [action_1],
             "precondition": {
@@ -198,7 +198,7 @@ class HashingTests(unittest.TestCase):
             "type": "TextView",
             "state": "enabled"
         }
-        action_2 = actions.Click(target_2, GUIActionTypes.CLICK, None)
+        action_2 = actions.Click(target_2, GUIActionType.CLICK, None)
         event_2 = {
             "precondition": {
                 "activityName": "launchActivity",
@@ -223,7 +223,7 @@ class HashingTests(unittest.TestCase):
             "type": "EditText",
             "state": "enabled"
         }
-        action_1 = actions.Click(target_1, GUIActionTypes.CLICK, "Wunderland")
+        action_1 = actions.Click(target_1, GUIActionType.CLICK, "Wunderland")
         event_1 = {
             "actions": [action_1],
             "precondition": {
@@ -239,7 +239,7 @@ class HashingTests(unittest.TestCase):
             "type": "EditText",
             "state": "enabled"
         }
-        action_2 = actions.Click(target_2, GUIActionTypes.CLICK, "Jekyll")
+        action_2 = actions.Click(target_2, GUIActionType.CLICK, "Jekyll")
         event_2 = {
             "actions": [action_2],
             "precondition": {
@@ -264,7 +264,7 @@ class HashingTests(unittest.TestCase):
             "type": "TextView",
             "state": "enabled"
         }
-        enabled_action = actions.Click(enabled_target, GUIActionTypes.CLICK, None)
+        enabled_action = actions.Click(enabled_target, GUIActionType.CLICK, None)
         enabled_event = {
             "actions": [enabled_action],
             "precondition": {
@@ -280,7 +280,7 @@ class HashingTests(unittest.TestCase):
             "type": "TextView",
             "state": "disabled"
         }
-        disabled_action = actions.Click(disabled_target, GUIActionTypes.CLICK, None)
+        disabled_action = actions.Click(disabled_target, GUIActionType.CLICK, None)
         disabled_event = {
             "precondition": {
                 "activityName": "launchActivity",
@@ -305,7 +305,7 @@ class HashingTests(unittest.TestCase):
             "type": "TextView",
             "state": "enabled"
         }
-        action_1 = actions.Click(target_1, GUIActionTypes.CLICK, None)
+        action_1 = actions.Click(target_1, GUIActionType.CLICK, None)
         event_1 = {
             "actions": [action_1],
             "precondition": {
@@ -321,7 +321,7 @@ class HashingTests(unittest.TestCase):
             "type": "TextView",
             "state": "disabled"
         }
-        action_2 = actions.Click(target_2, GUIActionTypes.CLICK, None)
+        action_2 = actions.Click(target_2, GUIActionType.CLICK, None)
         event_2 = {
             "precondition": {
                 "activityName": "launchActivity",
@@ -346,7 +346,7 @@ class HashingTests(unittest.TestCase):
             "type": "TextView",
             "state": "enabled"
         }
-        action_1 = actions.Click(target_1, GUIActionTypes.CLICK, None)
+        action_1 = actions.Click(target_1, GUIActionType.CLICK, None)
         event_1 = {
             "actions": [action_1],
             "precondition": {
@@ -362,7 +362,7 @@ class HashingTests(unittest.TestCase):
             "type": "TextView",
             "state": "disabled"
         }
-        action_2 = actions.Click(target_2, GUIActionTypes.CLICK, None)
+        action_2 = actions.Click(target_2, GUIActionType.CLICK, None)
         event_2 = {
             "precondition": {
                 "activityName": "launchActivity",

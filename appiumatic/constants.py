@@ -1,7 +1,7 @@
 PLATFORM_TOOLS_DIR = "platform-tools"
 
 
-class Scripts:
+class Script:
     ADB_RESET = "appiumatic/scripts/adb_reset.sh"
     CHECK_BOOT_ANIM = "appiumatic/scripts/check_boot_anim.sh"
     BOOT_STANDARD_EMU = "appiumatic/scripts/boot_standard_emulator.sh"
@@ -11,7 +11,7 @@ class Scripts:
     START_APPIUM = "appiumatic/scripts/start_appium.sh"
 
 
-class GUIActionTypes:
+class GUIActionType:
     CLICK = "click"
     LONG_CLICK = "long-click"
     CHECK = "check"
@@ -27,7 +27,7 @@ class GUIActionTypes:
     LAUNCH = "launch"
 
 
-class SystemActionTypes:
+class SystemActionType:
     LAUNCH = "launch"
     RUN_IN_BACKGROUND = "run-in-background"
 

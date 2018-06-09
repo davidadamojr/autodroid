@@ -42,7 +42,7 @@ class ExecutionTests(unittest.TestCase):
         enter_key_target = abstraction.create_enter_target()
         enter_event = {
             "precondition": precondition,
-            "actions": [abstraction.create_action(GUIActionTypes.ENTER_KEY, enter_key_target)]
+            "actions": [abstraction.create_action(GUIActionType.ENTER_KEY, enter_key_target)]
         }
         self.navigate_to_note_creation()
 
@@ -64,7 +64,7 @@ class ExecutionTests(unittest.TestCase):
                                                       "Tomdroid's First Note", "TextView", TargetState.ENABLED)
         long_click_event = {
             "precondition": precondition,
-            "actions": [abstraction.create_action(GUIActionTypes.LONG_CLICK, long_click_target)]
+            "actions": [abstraction.create_action(GUIActionType.LONG_CLICK, long_click_target)]
         }
 
         # Act
@@ -77,7 +77,7 @@ class ExecutionTests(unittest.TestCase):
                                                     TargetState.ENABLED)
         swipe_up_event = {
             "precondition": precondition,
-            "actions": [abstraction.create_action(GUIActionTypes.SWIPE_UP, swipe_up_target)]
+            "actions": [abstraction.create_action(GUIActionType.SWIPE_UP, swipe_up_target)]
         }
         self.driver.find_element_by_id("android:id/button3").click()
 
@@ -91,7 +91,7 @@ class ExecutionTests(unittest.TestCase):
                                                     TargetState.ENABLED)
         swipe_down_event = {
             "precondition": precondition,
-            "actions": [abstraction.create_action(GUIActionTypes.SWIPE_DOWN, swipe_down_target)]
+            "actions": [abstraction.create_action(GUIActionType.SWIPE_DOWN, swipe_down_target)]
         }
         self.driver.find_element_by_id("android:id/button3").click()
 
@@ -105,7 +105,7 @@ class ExecutionTests(unittest.TestCase):
                                                        TargetState.ENABLED)
         swipe_right_event = {
             "precondition": precondition,
-            "actions": [abstraction.create_action(GUIActionTypes.SWIPE_RIGHT, swipe_right_target)]
+            "actions": [abstraction.create_action(GUIActionType.SWIPE_RIGHT, swipe_right_target)]
         }
         self.driver.find_element_by_id("android:id/button3").click()
 
@@ -119,7 +119,7 @@ class ExecutionTests(unittest.TestCase):
                                                       TargetState.ENABLED)
         swipe_left_event = {
             "precondition": precondition,
-            "actions": [abstraction.create_action(GUIActionTypes.SWIPE_LEFT, swipe_left_target)]
+            "actions": [abstraction.create_action(GUIActionType.SWIPE_LEFT, swipe_left_target)]
         }
         self.driver.find_element_by_id("android:id/button3").click()
 
@@ -133,7 +133,7 @@ class ExecutionTests(unittest.TestCase):
                                                  TargetState.ENABLED)
         click_event = {
             "precondition": precondition,
-            "actions": [abstraction.create_action(GUIActionTypes.CLICK, click_target)]
+            "actions": [abstraction.create_action(GUIActionType.CLICK, click_target)]
         }
         self.driver.find_element_by_id("android:id/button3").click()
 
@@ -145,10 +145,10 @@ class ExecutionTests(unittest.TestCase):
         precondition = abstraction.create_state("contactsActivity", "abcdef")
         text_field_target = abstraction.create_target(SelectorType.ID, "org.tomdroid:id/title", "", "EditText",
                                                       TargetState.ENABLED)
-        text_entry_action = abstraction.create_action(GUIActionTypes.TEXT_ENTRY, text_field_target)
+        text_entry_action = abstraction.create_action(GUIActionType.TEXT_ENTRY, text_field_target)
         text_entry_action.value = "[random string]"
 
-        enter_key_action = abstraction.create_action(GUIActionTypes.ENTER_KEY, abstraction.create_enter_target())
+        enter_key_action = abstraction.create_action(GUIActionType.ENTER_KEY, abstraction.create_enter_target())
         text_entry_event = {
             "precondition": precondition,
             "actions": [text_entry_action, enter_key_action]
@@ -171,13 +171,13 @@ class ExecutionTests(unittest.TestCase):
         non_text_target = abstraction.create_target(SelectorType.ID, "org.tomdroid:id/edit_note_save", "Save",
                                                     "TextView", TargetState.ENABLED)
 
-        text_entry_action_1 = abstraction.create_action(GUIActionTypes.TEXT_ENTRY, text_field_target_1)
+        text_entry_action_1 = abstraction.create_action(GUIActionType.TEXT_ENTRY, text_field_target_1)
         text_entry_action_1.value = "[random string]"
 
-        text_entry_action_2 = abstraction.create_action(GUIActionTypes.TEXT_ENTRY, text_field_target_2)
+        text_entry_action_2 = abstraction.create_action(GUIActionType.TEXT_ENTRY, text_field_target_2)
         text_entry_action_2.value = "[random string]"
 
-        non_text_action = abstraction.create_action(GUIActionTypes.CLICK, non_text_target)
+        non_text_action = abstraction.create_action(GUIActionType.CLICK, non_text_target)
 
         multiple_text_entry_event = {
             "precondition": precondition,

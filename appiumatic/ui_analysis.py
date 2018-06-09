@@ -27,7 +27,7 @@ def classify_actions(possible_actions):
     text_entry_actions = []
     non_text_entry_actions = []
     for action in possible_actions:
-        if action.action_type == GUIActionTypes.TEXT_ENTRY:
+        if action.action_type == GUIActionType.TEXT_ENTRY:
             text_entry_actions.append(action)
         else:
             non_text_entry_actions.append(action)
@@ -49,15 +49,15 @@ def get_possible_actions(page_source):
 
 def _get_actionable_widgets(page_source):
     actionable_widgets = {
-        GUIActionTypes.CLICK: [],
-        GUIActionTypes.LONG_CLICK: [],
-        GUIActionTypes.CHECK: [],
-        GUIActionTypes.UNCHECK: [],
-        GUIActionTypes.SWIPE_UP: [],
-        GUIActionTypes.SWIPE_DOWN: [],
-        GUIActionTypes.SWIPE_RIGHT: [],
-        GUIActionTypes.SWIPE_LEFT: [],
-        GUIActionTypes.TEXT_ENTRY: []
+        GUIActionType.CLICK: [],
+        GUIActionType.LONG_CLICK: [],
+        GUIActionType.CHECK: [],
+        GUIActionType.UNCHECK: [],
+        GUIActionType.SWIPE_UP: [],
+        GUIActionType.SWIPE_DOWN: [],
+        GUIActionType.SWIPE_RIGHT: [],
+        GUIActionType.SWIPE_LEFT: [],
+        GUIActionType.TEXT_ENTRY: []
     }
 
     xml_element = etree.fromstring(page_source.encode())
@@ -68,22 +68,22 @@ def _get_actionable_widgets(page_source):
         element_is_enabled = element_attributes.get("enabled", "") == "true"
         actionable_widget = abstraction.create_ui_widget(xml_tree, element)
         if element_is_text_field and element_is_enabled:
-            actionable_widgets[GUIActionTypes.TEXT_ENTRY].append(actionable_widget)
+            actionable_widgets[GUIActionType.TEXT_ENTRY].append(actionable_widget)
         else:
             if _element_is_clickable(element):
-                actionable_widgets[GUIActionTypes.CLICK].append(actionable_widget)
+                actionable_widgets[GUIActionType.CLICK].append(actionable_widget)
             if _element_is_long_clickable(element):
-                actionable_widgets[GUIActionTypes.LONG_CLICK].append(actionable_widget)
+                actionable_widgets[GUIActionType.LONG_CLICK].append(actionable_widget)
             if _element_is_checkable(element):
                 if _element_is_checked(element):
-                    actionable_widgets[GUIActionTypes.UNCHECK].append(actionable_widget)
+                    actionable_widgets[GUIActionType.UNCHECK].append(actionable_widget)
                 else:
-                    actionable_widgets[GUIActionTypes.CHECK].append(actionable_widget)
+                    actionable_widgets[GUIActionType.CHECK].append(actionable_widget)
             if _element_is_scrollable(element):
-                actionable_widgets[GUIActionTypes.SWIPE_UP].append(actionable_widget)
-                actionable_widgets[GUIActionTypes.SWIPE_DOWN].append(actionable_widget)
-                actionable_widgets[GUIActionTypes.SWIPE_RIGHT].append(actionable_widget)
-                actionable_widgets[GUIActionTypes.SWIPE_LEFT].append(actionable_widget)
+                actionable_widgets[GUIActionType.SWIPE_UP].append(actionable_widget)
+                actionable_widgets[GUIActionType.SWIPE_DOWN].append(actionable_widget)
+                actionable_widgets[GUIActionType.SWIPE_RIGHT].append(actionable_widget)
+                actionable_widgets[GUIActionType.SWIPE_LEFT].append(actionable_widget)
 
     logger.debug("Found actionable widgets: {}".format(actionable_widgets))
     return actionable_widgets

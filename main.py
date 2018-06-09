@@ -6,6 +6,7 @@ from framework.database import Database
 from framework.generation import Generator
 from framework import initialization
 from appiumatic.exceptions import InvalidParameter
+from appiumatic.execution import create_executor
 
 logger = logging.getLogger(__name__)
 
@@ -53,7 +54,7 @@ def main():
         }
         generator = Generator(database, configuration)
         generator.construct_test_suite(setup, event_selection_strategy, termination_criterion, completion_criterion,
-                                       teardown)
+                                       teardown, create_executor)
     except IOError as io_error:
         logger.fatal(io_error)
     except ConnectionRefusedError as conn_refused:

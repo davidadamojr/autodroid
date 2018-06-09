@@ -32,7 +32,7 @@ def create_enter_target():
 
 def create_launch_event():
     target = create_target(SelectorType.SYSTEM, "app", "launch", TargetType.APP, TargetState.ENABLED)
-    action = create_action(SystemActionTypes.LAUNCH, target)
+    action = create_action(SystemActionType.LAUNCH, target)
     precondition = create_state(None, None)
     partial_event = create_partial_event(precondition, [action])
 
@@ -81,7 +81,7 @@ def create_events_for_single_text_field(current_state, text_entry_action, non_te
 
 def pair_text_entry_with_enter_key(current_state, text_entry_action):
     enter_target = create_enter_target()
-    enter_key_action = create_action(GUIActionTypes.ENTER_KEY, enter_target)
+    enter_key_action = create_action(GUIActionType.ENTER_KEY, enter_target)
 
     text_entry_enter_key_event = create_partial_event(current_state, [text_entry_action, enter_key_action])
 
@@ -126,7 +126,7 @@ def create_single_action_events(current_state, non_text_entry_actions):
 
 def does_action_pair_with_text_entry(non_text_entry_action):
     invalid_targets = {"spinner", "checkbox", "edittext", "radiobutton", "togglebutton"}
-    return non_text_entry_action.action_type == GUIActionTypes.CLICK and \
+    return non_text_entry_action.action_type == GUIActionType.CLICK and \
         non_text_entry_action.target["type"].lower() not in invalid_targets
 
 
@@ -141,42 +141,42 @@ def create_partial_events(current_state, possible_actions):
 
 def create_back_event(precondition):
     target = create_target("key_code", KeyCode.BACK, "back", TargetType.NAV, TargetState.ENABLED)
-    action = create_action(GUIActionTypes.BACK_NAV, target)
+    action = create_action(GUIActionType.BACK_NAV, target)
     back_event = create_partial_event(precondition, [action])
     return back_event
 
 
 def create_home_event(precondition):
     target = create_target("key_code", KeyCode.HOME, "home", TargetType.NAV, TargetState.ENABLED)
-    action = create_action(GUIActionTypes.HOME_NAV, target)
+    action = create_action(GUIActionType.HOME_NAV, target)
     home_event = create_partial_event(precondition, [action])
     return home_event
 
 
 def create_background_event(precondition):
     target = create_target(SelectorType.SYSTEM, "app", "run in background", TargetType.APP, TargetState.ENABLED)
-    action = create_action(SystemActionTypes.RUN_IN_BACKGROUND, target)
+    action = create_action(SystemActionType.RUN_IN_BACKGROUND, target)
     background_event = create_partial_event(precondition, [action])
     return background_event
 
 
 def create_action(action_type, widget):
     action_types = {
-        GUIActionTypes.CLICK: actions.Click,
-        GUIActionTypes.LONG_CLICK: actions.LongClick,
-        GUIActionTypes.BACK_NAV: actions.Back,
-        GUIActionTypes.HOME_NAV: actions.Home,
-        GUIActionTypes.LAUNCH: actions.LaunchApp,
-        GUIActionTypes.CHECK: actions.Click,
-        GUIActionTypes.UNCHECK: actions.Click,
-        GUIActionTypes.ENTER_KEY: actions.ReturnKey,
-        GUIActionTypes.SWIPE_DOWN: actions.SwipeDown,
-        GUIActionTypes.SWIPE_LEFT: actions.SwipeLeft,
-        GUIActionTypes.SWIPE_RIGHT: actions.SwipeRight,
-        GUIActionTypes.SWIPE_UP: actions.SwipeUp,
-        GUIActionTypes.TEXT_ENTRY: actions.TextEntry,
-        SystemActionTypes.RUN_IN_BACKGROUND: actions.RunInBackground,
-        SystemActionTypes.LAUNCH: actions.LaunchApp
+        GUIActionType.CLICK: actions.Click,
+        GUIActionType.LONG_CLICK: actions.LongClick,
+        GUIActionType.BACK_NAV: actions.Back,
+        GUIActionType.HOME_NAV: actions.Home,
+        GUIActionType.LAUNCH: actions.LaunchApp,
+        GUIActionType.CHECK: actions.Click,
+        GUIActionType.UNCHECK: actions.Click,
+        GUIActionType.ENTER_KEY: actions.ReturnKey,
+        GUIActionType.SWIPE_DOWN: actions.SwipeDown,
+        GUIActionType.SWIPE_LEFT: actions.SwipeLeft,
+        GUIActionType.SWIPE_RIGHT: actions.SwipeRight,
+        GUIActionType.SWIPE_UP: actions.SwipeUp,
+        GUIActionType.TEXT_ENTRY: actions.TextEntry,
+        SystemActionType.RUN_IN_BACKGROUND: actions.RunInBackground,
+        SystemActionType.LAUNCH: actions.LaunchApp
     }
     action_class = action_types[action_type]
     action = action_class(widget, action_type, None)

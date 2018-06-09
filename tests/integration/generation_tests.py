@@ -11,7 +11,7 @@ from framework.generation import Generator
 from framework.database import Database
 from appiumatic import abstraction
 from appiumatic import hashing
-from appiumatic.constants import GUIActionTypes
+from appiumatic.constants import GUIActionType
 
 
 def remove_output_files(output_path):
@@ -110,7 +110,7 @@ class GenerationTests(unittest.TestCase):
             "type": "TextView",
             "state": "enabled"
         }
-        action_1 = actions.Click(target_1, GUIActionTypes.CLICK, None)
+        action_1 = actions.Click(target_1, GUIActionType.CLICK, None)
         event1 = {
             "actions": [action_1],
             "precondition": {
@@ -126,7 +126,7 @@ class GenerationTests(unittest.TestCase):
             "type": "Button",
             "state": "enabled"
         }
-        action_2 = actions.Click(target_2, GUIActionTypes.CLICK, None)
+        action_2 = actions.Click(target_2, GUIActionType.CLICK, None)
         event2 = {
             "actions": [action_2],
             "precondition": {
@@ -142,7 +142,7 @@ class GenerationTests(unittest.TestCase):
             "type": "EditText",
             "state": "disabled"
         }
-        action_3 = actions.Click(target_3, GUIActionTypes.CLICK, None)
+        action_3 = actions.Click(target_3, GUIActionType.CLICK, None)
         event3 = {
             "actions": [action_3],
             "precondition": {

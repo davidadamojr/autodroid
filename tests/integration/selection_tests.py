@@ -4,7 +4,7 @@ import os
 from framework.database import Database
 from framework.strategies.selection import min_frequency_random, min_frequency_deterministic
 from appiumatic import abstraction, hashing, actions
-from appiumatic.constants import GUIActionTypes
+from appiumatic.constants import GUIActionType
 
 
 def setup_events():
@@ -16,7 +16,7 @@ def setup_events():
         "description": "OK",
         "state": "enabled"
     }
-    action_1 = actions.Click(target_1, GUIActionTypes.CLICK, None)
+    action_1 = actions.Click(target_1, GUIActionType.CLICK, None)
 
     target_2 = {
         "selector": "id",
@@ -25,7 +25,7 @@ def setup_events():
         "description": "Cancel",
         "state": "enabled"
     }
-    action_2 = actions.Click(target_2, GUIActionTypes.CLICK, None)
+    action_2 = actions.Click(target_2, GUIActionType.CLICK, None)
 
     target_3 = {
         "selector": "id",
@@ -34,7 +34,7 @@ def setup_events():
         "description": "Gender",
         "state": "enabled"
     }
-    action_3 = actions.Click(target_3, GUIActionTypes.CLICK, None)
+    action_3 = actions.Click(target_3, GUIActionType.CLICK, None)
 
     event_1 = {
         "precondition": current_state,
@@ -125,8 +125,8 @@ class SelectionTests(unittest.TestCase):
         selected_event = min_frequency_deterministic(self.database, self.available_events, test_suite_id=test_suite_id)
 
         # Assert
-        expected_selected_event = self.available_events[0]
-        self.assertEqual(selected_event, expected_selected_event)
+        expected_events = [self.available_events[0], self.available_events[2]]
+        self.assertIn(selected_event, expected_events)
 
     def tearDown(self):
         self.database.close()

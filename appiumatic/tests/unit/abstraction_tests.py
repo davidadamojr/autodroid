@@ -16,7 +16,7 @@ class AbstractionTests(unittest.TestCase):
             "type": TargetType.APP,
             "state": TargetState.ENABLED
         }
-        action_type = GUIActionTypes.LAUNCH
+        action_type = GUIActionType.LAUNCH
         action = actions.LaunchApp(action_target, action_type, None)
         expected_event = {
             "actions": [action],
@@ -28,7 +28,7 @@ class AbstractionTests(unittest.TestCase):
         self.assertEqual(launch_event, expected_event)
 
     def test_create_action(self):
-        action_type = GUIActionTypes.CLICK
+        action_type = GUIActionType.CLICK
         widget = {
             "selector": "id",
             "selectorValue": "widget_id",
@@ -144,7 +144,7 @@ class AbstractionTests(unittest.TestCase):
             "type": "TextView",
             "state": "enabled"
         }
-        action_type = GUIActionTypes.CLICK
+        action_type = GUIActionType.CLICK
         action = actions.Click(action_target, action_type, None)
         partial_event = {
             "actions": [action],
@@ -207,7 +207,7 @@ class AbstractionTests(unittest.TestCase):
             "description": "back",
             "state": "enabled"
         }
-        action_type = GUIActionTypes.BACK_NAV
+        action_type = GUIActionType.BACK_NAV
         action = actions.Back(action_target, action_type, None)
         expected_event = {
             "precondition": precondition,
@@ -226,7 +226,7 @@ class AbstractionTests(unittest.TestCase):
             "description": "home",
             "state": TargetState.ENABLED
         }
-        action_type = GUIActionTypes.HOME_NAV
+        action_type = GUIActionType.HOME_NAV
         action = actions.Home(action_target, action_type, None)
         expected_event = {
             "precondition": precondition,
@@ -245,7 +245,7 @@ class AbstractionTests(unittest.TestCase):
             "description": "Delete",
             "state": TargetState.ENABLED
         }
-        action_type = GUIActionTypes.CLICK
+        action_type = GUIActionType.CLICK
         action = actions.Click(action_target, action_type, None)
         gui_actions = [action]
 
@@ -268,7 +268,7 @@ class AbstractionTests(unittest.TestCase):
             "description": "Delete",
             "state": "enabled"
         }
-        non_text_entry_action = actions.TextEntry(target, GUIActionTypes.CLICK, None)
+        non_text_entry_action = actions.TextEntry(target, GUIActionType.CLICK, None)
 
         # Act
         action_pairs_with_text_entry = abstraction.does_action_pair_with_text_entry(non_text_entry_action)
@@ -285,7 +285,7 @@ class AbstractionTests(unittest.TestCase):
             "description": "Gender",
             "state": "enabled"
         }
-        non_pair_action = actions.Click(target, GUIActionTypes.CLICK, None)
+        non_pair_action = actions.Click(target, GUIActionType.CLICK, None)
 
         # Act
         action_pairs_with_text_entry = abstraction.does_action_pair_with_text_entry(non_pair_action)
@@ -303,7 +303,7 @@ class AbstractionTests(unittest.TestCase):
             "description": "First Name",
             "state": "enabled"
         }
-        text_entry_action = actions.TextEntry(target, GUIActionTypes.TEXT_ENTRY, None)
+        text_entry_action = actions.TextEntry(target, GUIActionType.TEXT_ENTRY, None)
 
         # Act
         text_entry_enter_key_event = abstraction.pair_text_entry_with_enter_key(current_state, text_entry_action)
@@ -328,7 +328,7 @@ class AbstractionTests(unittest.TestCase):
             "description": "First Name",
             "state": "enabled"
         }
-        text_entry_action = actions.TextEntry(target, GUIActionTypes.TEXT_ENTRY, None)
+        text_entry_action = actions.TextEntry(target, GUIActionType.TEXT_ENTRY, None)
 
         target_1 = {
             "selector": "id",
@@ -337,7 +337,7 @@ class AbstractionTests(unittest.TestCase):
             "description": "OK",
             "state": "enabled"
         }
-        action_1 = actions.Click(target_1, GUIActionTypes.CLICK, None)
+        action_1 = actions.Click(target_1, GUIActionType.CLICK, None)
 
         target_2 = {
             "selector": "id",
@@ -346,7 +346,7 @@ class AbstractionTests(unittest.TestCase):
             "description": "Cancel",
             "state": "enabled"
         }
-        action_2 = actions.Click(target_2, GUIActionTypes.CLICK, None)
+        action_2 = actions.Click(target_2, GUIActionType.CLICK, None)
 
         target_3 = {
             "selector": "id",
@@ -355,7 +355,7 @@ class AbstractionTests(unittest.TestCase):
             "description": "Gender",
             "state": "enabled"
         }
-        action_3 = actions.Click(target_3, GUIActionTypes.CLICK, None)
+        action_3 = actions.Click(target_3, GUIActionType.CLICK, None)
 
         non_text_entry_actions = [action_1, action_2, action_3]
 
@@ -386,7 +386,7 @@ class AbstractionTests(unittest.TestCase):
             "description": "First Name",
             "state": "enabled"
         }
-        text_entry_action = actions.TextEntry(target, GUIActionTypes.TEXT_ENTRY, None)
+        text_entry_action = actions.TextEntry(target, GUIActionType.TEXT_ENTRY, None)
 
         target_1 = {
             "selector": "id",
@@ -395,7 +395,7 @@ class AbstractionTests(unittest.TestCase):
             "description": "OK",
             "state": "enabled"
         }
-        action_1 = actions.Click(target_1, GUIActionTypes.CLICK, None)
+        action_1 = actions.Click(target_1, GUIActionType.CLICK, None)
 
         target_2 = {
             "selector": "id",
@@ -404,7 +404,7 @@ class AbstractionTests(unittest.TestCase):
             "description": "Cancel",
             "state": "enabled"
         }
-        action_2 = actions.Click(target_2, GUIActionTypes.CLICK, None)
+        action_2 = actions.Click(target_2, GUIActionType.CLICK, None)
 
         target_3 = {
             "selector": "id",
@@ -413,7 +413,7 @@ class AbstractionTests(unittest.TestCase):
             "description": "Gender",
             "state": "enabled"
         }
-        action_3 = actions.Click(target_3, GUIActionTypes.CLICK, None)
+        action_3 = actions.Click(target_3, GUIActionType.CLICK, None)
 
         non_text_entry_actions = [action_1, action_2, action_3]
 
@@ -450,7 +450,7 @@ class AbstractionTests(unittest.TestCase):
             "description": "First Name",
             "state": "enabled"
         }
-        text_entry_action_1 = actions.TextEntry(text_entry_target_1, GUIActionTypes.TEXT_ENTRY, None)
+        text_entry_action_1 = actions.TextEntry(text_entry_target_1, GUIActionType.TEXT_ENTRY, None)
 
         text_entry_target_2 = {
             "selector": "id",
@@ -459,7 +459,7 @@ class AbstractionTests(unittest.TestCase):
             "description": "Last Name",
             "state": "enabled"
         }
-        text_entry_action_2 = actions.TextEntry(text_entry_target_2, GUIActionTypes.TEXT_ENTRY, None)
+        text_entry_action_2 = actions.TextEntry(text_entry_target_2, GUIActionType.TEXT_ENTRY, None)
         text_entry_actions = [text_entry_action_1, text_entry_action_2]
 
         non_text_entry_target_1 = {
@@ -469,7 +469,7 @@ class AbstractionTests(unittest.TestCase):
             "description": "OK",
             "state": "enabled"
         }
-        non_text_entry_action_1 = actions.Click(non_text_entry_target_1, GUIActionTypes.CLICK, None)
+        non_text_entry_action_1 = actions.Click(non_text_entry_target_1, GUIActionType.CLICK, None)
 
         non_text_entry_target_2 = {
             "selector": "id",
@@ -478,7 +478,7 @@ class AbstractionTests(unittest.TestCase):
             "description": "Cancel",
             "state": "enabled"
         }
-        non_text_entry_action_2 = actions.Click(non_text_entry_target_2, GUIActionTypes.CLICK, None)
+        non_text_entry_action_2 = actions.Click(non_text_entry_target_2, GUIActionType.CLICK, None)
 
         non_text_entry_target_3 = {
             "selector": "id",
@@ -487,7 +487,7 @@ class AbstractionTests(unittest.TestCase):
             "description": "Gender",
             "state": "enabled"
         }
-        non_text_entry_action_3 = actions.Click(non_text_entry_target_3, GUIActionTypes.CLICK, None)
+        non_text_entry_action_3 = actions.Click(non_text_entry_target_3, GUIActionType.CLICK, None)
 
         non_text_entry_actions = [non_text_entry_action_1, non_text_entry_action_2, non_text_entry_action_3]
 
@@ -522,7 +522,7 @@ class AbstractionTests(unittest.TestCase):
             "description": "OK",
             "state": "enabled"
         }
-        action_1 = actions.Click(target_1, GUIActionTypes.CLICK, None)
+        action_1 = actions.Click(target_1, GUIActionType.CLICK, None)
 
         target_2 = {
             "selector": "id",
@@ -531,7 +531,7 @@ class AbstractionTests(unittest.TestCase):
             "description": "Cancel",
             "state": "enabled"
         }
-        action_2 = actions.Click(target_2, GUIActionTypes.CLICK, None)
+        action_2 = actions.Click(target_2, GUIActionType.CLICK, None)
 
         target_3 = {
             "selector": "id",
@@ -540,7 +540,7 @@ class AbstractionTests(unittest.TestCase):
             "description": "Gender",
             "state": "enabled"
         }
-        action_3 = actions.Click(target_3, GUIActionTypes.CLICK, None)
+        action_3 = actions.Click(target_3, GUIActionType.CLICK, None)
 
         non_text_entry_actions = [action_1, action_2, action_3]
 
@@ -574,7 +574,7 @@ class AbstractionTests(unittest.TestCase):
             "description": "First Name",
             "state": "enabled"
         }
-        text_entry_action_1 = actions.TextEntry(text_entry_target_1, GUIActionTypes.TEXT_ENTRY, None)
+        text_entry_action_1 = actions.TextEntry(text_entry_target_1, GUIActionType.TEXT_ENTRY, None)
         text_entry_actions = [text_entry_action_1]
 
         non_text_entry_target_1 = {
@@ -584,7 +584,7 @@ class AbstractionTests(unittest.TestCase):
             "description": "OK",
             "state": "enabled"
         }
-        non_text_entry_action_1 = actions.Click(non_text_entry_target_1, GUIActionTypes.CLICK, None)
+        non_text_entry_action_1 = actions.Click(non_text_entry_target_1, GUIActionType.CLICK, None)
 
         non_text_entry_target_2 = {
             "selector": "id",
@@ -593,7 +593,7 @@ class AbstractionTests(unittest.TestCase):
             "description": "Cancel",
             "state": "enabled"
         }
-        non_text_entry_action_2 = actions.Click(non_text_entry_target_2, GUIActionTypes.CLICK, None)
+        non_text_entry_action_2 = actions.Click(non_text_entry_target_2, GUIActionType.CLICK, None)
 
         non_text_entry_target_3 = {
             "selector": "id",
@@ -602,7 +602,7 @@ class AbstractionTests(unittest.TestCase):
             "description": "Gender",
             "state": "enabled"
         }
-        non_text_entry_action_3 = actions.Click(non_text_entry_target_3, GUIActionTypes.CLICK, None)
+        non_text_entry_action_3 = actions.Click(non_text_entry_target_3, GUIActionType.CLICK, None)
         non_text_entry_actions = [non_text_entry_action_1, non_text_entry_action_2, non_text_entry_action_3]
 
         # Act
@@ -652,7 +652,7 @@ class AbstractionTests(unittest.TestCase):
             "description": "First Name",
             "state": "enabled"
         }
-        text_entry_action_1 = actions.TextEntry(text_entry_target_1, GUIActionTypes.TEXT_ENTRY, None)
+        text_entry_action_1 = actions.TextEntry(text_entry_target_1, GUIActionType.TEXT_ENTRY, None)
 
         text_entry_target_2 = {
             "selector": "id",
@@ -661,7 +661,7 @@ class AbstractionTests(unittest.TestCase):
             "description": "Last Name",
             "state": "enabled"
         }
-        text_entry_action_2 = actions.TextEntry(text_entry_target_2, GUIActionTypes.TEXT_ENTRY, None)
+        text_entry_action_2 = actions.TextEntry(text_entry_target_2, GUIActionType.TEXT_ENTRY, None)
 
         text_entry_actions = [text_entry_action_1, text_entry_action_2]
 
@@ -672,7 +672,7 @@ class AbstractionTests(unittest.TestCase):
             "description": "OK",
             "state": "enabled"
         }
-        non_text_entry_action_1 = actions.Click(non_text_entry_target_1, GUIActionTypes.CLICK, None)
+        non_text_entry_action_1 = actions.Click(non_text_entry_target_1, GUIActionType.CLICK, None)
 
         non_text_entry_target_2 = {
             "selector": "id",
@@ -681,7 +681,7 @@ class AbstractionTests(unittest.TestCase):
             "description": "Cancel",
             "state": "enabled"
         }
-        non_text_entry_action_2 = actions.Click(non_text_entry_target_2, GUIActionTypes.CLICK, None)
+        non_text_entry_action_2 = actions.Click(non_text_entry_target_2, GUIActionType.CLICK, None)
 
         non_text_entry_target_3 = {
             "selector": "id",
@@ -690,7 +690,7 @@ class AbstractionTests(unittest.TestCase):
             "description": "Gender",
             "state": "enabled"
         }
-        non_text_entry_action_3 = actions.Click(non_text_entry_target_3, GUIActionTypes.CLICK, None)
+        non_text_entry_action_3 = actions.Click(non_text_entry_target_3, GUIActionType.CLICK, None)
         non_text_entry_actions = [non_text_entry_action_1, non_text_entry_action_2, non_text_entry_action_3]
 
         # Act
@@ -723,7 +723,7 @@ class AbstractionTests(unittest.TestCase):
     def test_can_make_event_serializable_when_single_action(self):
         # Arrange
         target = abstraction.create_target("id", "element_id", "description", "button", "enabled")
-        action_1 = actions.Click(target, GUIActionTypes.CLICK, None)
+        action_1 = actions.Click(target, GUIActionType.CLICK, None)
         precondition = {
             "activityName": "activity_1",
             "stateId": "state_id_1"

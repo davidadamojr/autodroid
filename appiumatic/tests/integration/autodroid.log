@@ -1,174 +1,28 @@
-2018-05-16 19:29:23,968 - selenium.webdriver.remote.remote_connection - DEBUG - POST http://127.0.0.1:4723/wd/hub/session {"desiredCapabilities": {"platformName": "Android", "newCommandTimeout": 3600, "app": "/home/davidadamojr/git/autodroid/apps/org.tomdroid-0.7.5.apk", "deviceName": "Android"}, "capabilities": {"firstMatch": [{}], "alwaysMatch": {"platformName": "Android"}}}
-2018-05-16 19:29:33,413 - selenium.webdriver.remote.remote_connection - DEBUG - Finished Request
-2018-05-16 19:29:33,413 - selenium.webdriver.remote.remote_connection - DEBUG - POST http://127.0.0.1:4723/wd/hub/session/259d96f0-f320-442e-b5c3-9331b9e40e7c/element {"value": "android:id/button3", "using": "id", "sessionId": "259d96f0-f320-442e-b5c3-9331b9e40e7c"}
-2018-05-16 19:29:33,838 - selenium.webdriver.remote.remote_connection - DEBUG - Finished Request
-2018-05-16 19:29:33,838 - selenium.webdriver.remote.remote_connection - DEBUG - POST http://127.0.0.1:4723/wd/hub/session/259d96f0-f320-442e-b5c3-9331b9e40e7c/element/1/click {"id": "1", "sessionId": "259d96f0-f320-442e-b5c3-9331b9e40e7c"}
-2018-05-16 19:29:34,484 - selenium.webdriver.remote.remote_connection - DEBUG - Finished Request
-2018-05-16 19:29:34,485 - selenium.webdriver.remote.remote_connection - DEBUG - POST http://127.0.0.1:4723/wd/hub/session/259d96f0-f320-442e-b5c3-9331b9e40e7c/element {"value": "org.tomdroid:id/note_title", "using": "id", "sessionId": "259d96f0-f320-442e-b5c3-9331b9e40e7c"}
-2018-05-16 19:29:35,005 - selenium.webdriver.remote.remote_connection - DEBUG - Finished Request
-2018-05-16 19:29:35,006 - selenium.webdriver.remote.remote_connection - DEBUG - POST http://127.0.0.1:4723/wd/hub/session/259d96f0-f320-442e-b5c3-9331b9e40e7c/element/2/click {"id": "2", "sessionId": "259d96f0-f320-442e-b5c3-9331b9e40e7c"}
-2018-05-16 19:29:35,345 - selenium.webdriver.remote.remote_connection - DEBUG - Finished Request
-2018-05-16 19:29:37,347 - selenium.webdriver.remote.remote_connection - DEBUG - DELETE http://127.0.0.1:4723/wd/hub/session/259d96f0-f320-442e-b5c3-9331b9e40e7c {"sessionId": "259d96f0-f320-442e-b5c3-9331b9e40e7c"}
-2018-05-16 19:29:39,234 - selenium.webdriver.remote.remote_connection - DEBUG - Finished Request
-2018-05-16 19:29:39,237 - selenium.webdriver.remote.remote_connection - DEBUG - POST http://127.0.0.1:4723/wd/hub/session {"desiredCapabilities": {"platformName": "Android", "newCommandTimeout": 3600, "app": "/home/davidadamojr/git/autodroid/apps/org.tomdroid-0.7.5.apk", "deviceName": "Android"}, "capabilities": {"firstMatch": [{}], "alwaysMatch": {"platformName": "Android"}}}
-2018-05-16 19:29:44,317 - selenium.webdriver.remote.remote_connection - DEBUG - Finished Request
-2018-05-16 19:29:44,317 - selenium.webdriver.remote.remote_connection - DEBUG - POST http://127.0.0.1:4723/wd/hub/session/ff48eeca-d389-4b05-9cc8-93e7f3136bbd/element {"value": "android:id/button3", "using": "id", "sessionId": "ff48eeca-d389-4b05-9cc8-93e7f3136bbd"}
-2018-05-16 19:29:44,850 - selenium.webdriver.remote.remote_connection - DEBUG - Finished Request
-2018-05-16 19:29:44,851 - selenium.webdriver.remote.remote_connection - DEBUG - POST http://127.0.0.1:4723/wd/hub/session/ff48eeca-d389-4b05-9cc8-93e7f3136bbd/element/1/click {"id": "1", "sessionId": "ff48eeca-d389-4b05-9cc8-93e7f3136bbd"}
-2018-05-16 19:29:45,512 - selenium.webdriver.remote.remote_connection - DEBUG - Finished Request
-2018-05-16 19:29:45,513 - selenium.webdriver.remote.remote_connection - DEBUG - POST http://127.0.0.1:4723/wd/hub/session/ff48eeca-d389-4b05-9cc8-93e7f3136bbd/element {"value": "org.tomdroid:id/note_title", "using": "id", "sessionId": "ff48eeca-d389-4b05-9cc8-93e7f3136bbd"}
-2018-05-16 19:29:46,018 - selenium.webdriver.remote.remote_connection - DEBUG - Finished Request
-2018-05-16 19:29:46,019 - execution - INFO - Executing long-click event.
-2018-05-16 19:29:46,019 - selenium.webdriver.remote.remote_connection - DEBUG - POST http://127.0.0.1:4723/wd/hub/session/ff48eeca-d389-4b05-9cc8-93e7f3136bbd/touch/perform {"sessionId": "ff48eeca-d389-4b05-9cc8-93e7f3136bbd", "actions": [{"options": {"y": null, "x": null, "element": "2", "duration": 1000}, "action": "longPress"}]}
-2018-05-16 19:29:47,077 - selenium.webdriver.remote.remote_connection - DEBUG - Finished Request
-2018-05-16 19:29:49,078 - selenium.webdriver.remote.remote_connection - DEBUG - DELETE http://127.0.0.1:4723/wd/hub/session/ff48eeca-d389-4b05-9cc8-93e7f3136bbd {"sessionId": "ff48eeca-d389-4b05-9cc8-93e7f3136bbd"}
-2018-05-16 19:29:50,970 - selenium.webdriver.remote.remote_connection - DEBUG - Finished Request
-2018-05-16 19:29:50,972 - selenium.webdriver.remote.remote_connection - DEBUG - POST http://127.0.0.1:4723/wd/hub/session {"desiredCapabilities": {"platformName": "Android", "newCommandTimeout": 3600, "app": "/home/davidadamojr/git/autodroid/apps/org.tomdroid-0.7.5.apk", "deviceName": "Android"}, "capabilities": {"firstMatch": [{}], "alwaysMatch": {"platformName": "Android"}}}
-2018-05-16 19:29:56,016 - selenium.webdriver.remote.remote_connection - DEBUG - Finished Request
-2018-05-16 19:29:56,017 - execution - INFO - Pressing BACK navigation button.
-2018-05-16 19:29:56,017 - selenium.webdriver.remote.remote_connection - DEBUG - POST http://127.0.0.1:4723/wd/hub/session/39ad54dd-1189-4b01-9113-2eaa6e8dc68c/appium/device/press_keycode {"sessionId": "39ad54dd-1189-4b01-9113-2eaa6e8dc68c", "keycode": 4}
-2018-05-16 19:29:56,562 - selenium.webdriver.remote.remote_connection - DEBUG - Finished Request
-2018-05-16 19:29:58,565 - selenium.webdriver.remote.remote_connection - DEBUG - DELETE http://127.0.0.1:4723/wd/hub/session/39ad54dd-1189-4b01-9113-2eaa6e8dc68c {"sessionId": "39ad54dd-1189-4b01-9113-2eaa6e8dc68c"}
-2018-05-16 19:30:00,476 - selenium.webdriver.remote.remote_connection - DEBUG - Finished Request
-2018-05-16 19:30:00,479 - selenium.webdriver.remote.remote_connection - DEBUG - POST http://127.0.0.1:4723/wd/hub/session {"desiredCapabilities": {"platformName": "Android", "newCommandTimeout": 3600, "app": "/home/davidadamojr/git/autodroid/apps/org.tomdroid-0.7.5.apk", "deviceName": "Android"}, "capabilities": {"firstMatch": [{}], "alwaysMatch": {"platformName": "Android"}}}
-2018-05-16 19:30:05,750 - selenium.webdriver.remote.remote_connection - DEBUG - Finished Request
-2018-05-16 19:30:05,750 - execution - INFO - Pressing HOME navigation button.
-2018-05-16 19:30:05,750 - selenium.webdriver.remote.remote_connection - DEBUG - POST http://127.0.0.1:4723/wd/hub/session/76174609-7cb8-4aa7-911b-c6903dd94343/appium/device/press_keycode {"sessionId": "76174609-7cb8-4aa7-911b-c6903dd94343", "keycode": 3}
-2018-05-16 19:30:06,377 - selenium.webdriver.remote.remote_connection - DEBUG - Finished Request
-2018-05-16 19:30:08,380 - selenium.webdriver.remote.remote_connection - DEBUG - DELETE http://127.0.0.1:4723/wd/hub/session/76174609-7cb8-4aa7-911b-c6903dd94343 {"sessionId": "76174609-7cb8-4aa7-911b-c6903dd94343"}
-2018-05-16 19:30:10,216 - selenium.webdriver.remote.remote_connection - DEBUG - Finished Request
-2018-05-16 19:30:10,218 - selenium.webdriver.remote.remote_connection - DEBUG - POST http://127.0.0.1:4723/wd/hub/session {"desiredCapabilities": {"platformName": "Android", "newCommandTimeout": 3600, "app": "/home/davidadamojr/git/autodroid/apps/org.tomdroid-0.7.5.apk", "deviceName": "Android"}, "capabilities": {"firstMatch": [{}], "alwaysMatch": {"platformName": "Android"}}}
-2018-05-16 19:30:15,518 - selenium.webdriver.remote.remote_connection - DEBUG - Finished Request
-2018-05-16 19:30:15,519 - selenium.webdriver.remote.remote_connection - DEBUG - POST http://127.0.0.1:4723/wd/hub/session/4858c2fc-56b4-476e-8923-c9b7ef63fa22/element {"value": "android:id/button3", "using": "id", "sessionId": "4858c2fc-56b4-476e-8923-c9b7ef63fa22"}
-2018-05-16 19:30:15,949 - selenium.webdriver.remote.remote_connection - DEBUG - Finished Request
-2018-05-16 19:30:15,950 - selenium.webdriver.remote.remote_connection - DEBUG - POST http://127.0.0.1:4723/wd/hub/session/4858c2fc-56b4-476e-8923-c9b7ef63fa22/element/1/click {"id": "1", "sessionId": "4858c2fc-56b4-476e-8923-c9b7ef63fa22"}
-2018-05-16 19:30:16,616 - selenium.webdriver.remote.remote_connection - DEBUG - Finished Request
-2018-05-16 19:30:16,617 - selenium.webdriver.remote.remote_connection - DEBUG - POST http://127.0.0.1:4723/wd/hub/session/4858c2fc-56b4-476e-8923-c9b7ef63fa22/element {"value": "org.tomdroid:id/menuNew", "using": "id", "sessionId": "4858c2fc-56b4-476e-8923-c9b7ef63fa22"}
-2018-05-16 19:30:17,127 - selenium.webdriver.remote.remote_connection - DEBUG - Finished Request
-2018-05-16 19:30:17,128 - selenium.webdriver.remote.remote_connection - DEBUG - POST http://127.0.0.1:4723/wd/hub/session/4858c2fc-56b4-476e-8923-c9b7ef63fa22/element/2/click {"id": "2", "sessionId": "4858c2fc-56b4-476e-8923-c9b7ef63fa22"}
-2018-05-16 19:30:17,279 - selenium.webdriver.remote.remote_connection - DEBUG - Finished Request
-2018-05-16 19:30:17,280 - execution - INFO - Pressing RETURN key.
-2018-05-16 19:30:17,280 - selenium.webdriver.remote.remote_connection - DEBUG - POST http://127.0.0.1:4723/wd/hub/session/4858c2fc-56b4-476e-8923-c9b7ef63fa22/appium/device/press_keycode {"sessionId": "4858c2fc-56b4-476e-8923-c9b7ef63fa22", "keycode": 66}
-2018-05-16 19:30:17,992 - selenium.webdriver.remote.remote_connection - DEBUG - Finished Request
-2018-05-16 19:30:19,995 - selenium.webdriver.remote.remote_connection - DEBUG - DELETE http://127.0.0.1:4723/wd/hub/session/4858c2fc-56b4-476e-8923-c9b7ef63fa22 {"sessionId": "4858c2fc-56b4-476e-8923-c9b7ef63fa22"}
-2018-05-16 19:30:21,913 - selenium.webdriver.remote.remote_connection - DEBUG - Finished Request
-2018-05-16 19:30:21,916 - selenium.webdriver.remote.remote_connection - DEBUG - POST http://127.0.0.1:4723/wd/hub/session {"desiredCapabilities": {"platformName": "Android", "newCommandTimeout": 3600, "app": "/home/davidadamojr/git/autodroid/apps/org.tomdroid-0.7.5.apk", "deviceName": "Android"}, "capabilities": {"firstMatch": [{}], "alwaysMatch": {"platformName": "Android"}}}
-2018-05-16 19:30:27,127 - selenium.webdriver.remote.remote_connection - DEBUG - Finished Request
-2018-05-16 19:30:27,127 - selenium.webdriver.remote.remote_connection - DEBUG - POST http://127.0.0.1:4723/wd/hub/session/cd56c383-2f75-43d9-a3a1-d5e46eb66d8f/element {"value": "android:id/button3", "using": "id", "sessionId": "cd56c383-2f75-43d9-a3a1-d5e46eb66d8f"}
-2018-05-16 19:30:27,563 - selenium.webdriver.remote.remote_connection - DEBUG - Finished Request
-2018-05-16 19:30:27,564 - selenium.webdriver.remote.remote_connection - DEBUG - POST http://127.0.0.1:4723/wd/hub/session/cd56c383-2f75-43d9-a3a1-d5e46eb66d8f/element/1/click {"id": "1", "sessionId": "cd56c383-2f75-43d9-a3a1-d5e46eb66d8f"}
-2018-05-16 19:30:27,684 - selenium.webdriver.remote.remote_connection - DEBUG - Finished Request
-2018-05-16 19:30:27,684 - execution - INFO - Running app in background for 1 second.
-2018-05-16 19:30:27,684 - selenium.webdriver.remote.remote_connection - DEBUG - POST http://127.0.0.1:4723/wd/hub/session/cd56c383-2f75-43d9-a3a1-d5e46eb66d8f/appium/app/background {"sessionId": "cd56c383-2f75-43d9-a3a1-d5e46eb66d8f", "seconds": 1}
-2018-05-16 19:30:29,413 - selenium.webdriver.remote.remote_connection - DEBUG - Finished Request
-2018-05-16 19:30:31,415 - selenium.webdriver.remote.remote_connection - DEBUG - DELETE http://127.0.0.1:4723/wd/hub/session/cd56c383-2f75-43d9-a3a1-d5e46eb66d8f {"sessionId": "cd56c383-2f75-43d9-a3a1-d5e46eb66d8f"}
-2018-05-16 19:30:33,376 - selenium.webdriver.remote.remote_connection - DEBUG - Finished Request
-2018-05-16 19:30:33,377 - selenium.webdriver.remote.remote_connection - DEBUG - POST http://127.0.0.1:4723/wd/hub/session {"desiredCapabilities": {"platformName": "Android", "newCommandTimeout": 3600, "app": "/home/davidadamojr/git/autodroid/apps/org.tomdroid-0.7.5.apk", "deviceName": "Android"}, "capabilities": {"firstMatch": [{}], "alwaysMatch": {"platformName": "Android"}}}
-2018-05-16 19:30:38,473 - selenium.webdriver.remote.remote_connection - DEBUG - Finished Request
-2018-05-16 19:30:38,474 - selenium.webdriver.remote.remote_connection - DEBUG - POST http://127.0.0.1:4723/wd/hub/session/90604d15-c79d-406b-b4a2-3f77637c77d7/element {"value": "android:id/button3", "using": "id", "sessionId": "90604d15-c79d-406b-b4a2-3f77637c77d7"}
-2018-05-16 19:30:38,997 - selenium.webdriver.remote.remote_connection - DEBUG - Finished Request
-2018-05-16 19:30:38,998 - selenium.webdriver.remote.remote_connection - DEBUG - POST http://127.0.0.1:4723/wd/hub/session/90604d15-c79d-406b-b4a2-3f77637c77d7/element/1/click {"id": "1", "sessionId": "90604d15-c79d-406b-b4a2-3f77637c77d7"}
-2018-05-16 19:30:39,634 - selenium.webdriver.remote.remote_connection - DEBUG - Finished Request
-2018-05-16 19:30:39,635 - selenium.webdriver.remote.remote_connection - DEBUG - POST http://127.0.0.1:4723/wd/hub/session/90604d15-c79d-406b-b4a2-3f77637c77d7/element {"value": "org.tomdroid:id/note_title", "using": "id", "sessionId": "90604d15-c79d-406b-b4a2-3f77637c77d7"}
-2018-05-16 19:30:40,157 - selenium.webdriver.remote.remote_connection - DEBUG - Finished Request
-2018-05-16 19:30:40,157 - execution - INFO - Executing swipe down event.
-2018-05-16 19:30:40,158 - selenium.webdriver.remote.remote_connection - DEBUG - GET http://127.0.0.1:4723/wd/hub/session/90604d15-c79d-406b-b4a2-3f77637c77d7/window/current/size {"sessionId": "90604d15-c79d-406b-b4a2-3f77637c77d7", "windowHandle": "current"}
-2018-05-16 19:30:40,183 - selenium.webdriver.remote.remote_connection - DEBUG - Finished Request
-2018-05-16 19:30:40,184 - selenium.webdriver.remote.remote_connection - DEBUG - POST http://127.0.0.1:4723/wd/hub/session/90604d15-c79d-406b-b4a2-3f77637c77d7/touch/perform {"sessionId": "90604d15-c79d-406b-b4a2-3f77637c77d7", "actions": [{"options": {"y": 355, "x": 540}, "action": "press"}, {"options": {"ms": 200}, "action": "wait"}, {"options": {"y": 1420, "x": 540}, "action": "moveTo"}, {"options": {}, "action": "release"}]}
-2018-05-16 19:30:40,299 - selenium.webdriver.remote.remote_connection - DEBUG - Finished Request
-2018-05-16 19:30:42,301 - selenium.webdriver.remote.remote_connection - DEBUG - DELETE http://127.0.0.1:4723/wd/hub/session/90604d15-c79d-406b-b4a2-3f77637c77d7 {"sessionId": "90604d15-c79d-406b-b4a2-3f77637c77d7"}
-2018-05-16 19:30:44,214 - selenium.webdriver.remote.remote_connection - DEBUG - Finished Request
-2018-05-16 19:30:44,217 - selenium.webdriver.remote.remote_connection - DEBUG - POST http://127.0.0.1:4723/wd/hub/session {"desiredCapabilities": {"platformName": "Android", "newCommandTimeout": 3600, "app": "/home/davidadamojr/git/autodroid/apps/org.tomdroid-0.7.5.apk", "deviceName": "Android"}, "capabilities": {"firstMatch": [{}], "alwaysMatch": {"platformName": "Android"}}}
-2018-05-16 19:30:49,533 - selenium.webdriver.remote.remote_connection - DEBUG - Finished Request
-2018-05-16 19:30:49,534 - selenium.webdriver.remote.remote_connection - DEBUG - POST http://127.0.0.1:4723/wd/hub/session/75be6573-b059-4782-b4fe-5e94e06e3a2a/element {"value": "android:id/button3", "using": "id", "sessionId": "75be6573-b059-4782-b4fe-5e94e06e3a2a"}
-2018-05-16 19:30:49,963 - selenium.webdriver.remote.remote_connection - DEBUG - Finished Request
-2018-05-16 19:30:49,963 - selenium.webdriver.remote.remote_connection - DEBUG - POST http://127.0.0.1:4723/wd/hub/session/75be6573-b059-4782-b4fe-5e94e06e3a2a/element/1/click {"id": "1", "sessionId": "75be6573-b059-4782-b4fe-5e94e06e3a2a"}
-2018-05-16 19:30:50,344 - selenium.webdriver.remote.remote_connection - DEBUG - Finished Request
-2018-05-16 19:30:50,344 - selenium.webdriver.remote.remote_connection - DEBUG - POST http://127.0.0.1:4723/wd/hub/session/75be6573-b059-4782-b4fe-5e94e06e3a2a/element {"value": "org.tomdroid:id/note_title", "using": "id", "sessionId": "75be6573-b059-4782-b4fe-5e94e06e3a2a"}
-2018-05-16 19:30:50,851 - selenium.webdriver.remote.remote_connection - DEBUG - Finished Request
-2018-05-16 19:30:50,852 - execution - INFO - Executing swipe left event.
-2018-05-16 19:30:50,852 - selenium.webdriver.remote.remote_connection - DEBUG - GET http://127.0.0.1:4723/wd/hub/session/75be6573-b059-4782-b4fe-5e94e06e3a2a/window/current/size {"sessionId": "75be6573-b059-4782-b4fe-5e94e06e3a2a", "windowHandle": "current"}
-2018-05-16 19:30:50,871 - selenium.webdriver.remote.remote_connection - DEBUG - Finished Request
-2018-05-16 19:30:50,872 - selenium.webdriver.remote.remote_connection - DEBUG - POST http://127.0.0.1:4723/wd/hub/session/75be6573-b059-4782-b4fe-5e94e06e3a2a/touch/perform {"sessionId": "75be6573-b059-4782-b4fe-5e94e06e3a2a", "actions": [{"options": {"y": 888, "x": 864}, "action": "press"}, {"options": {"ms": 200}, "action": "wait"}, {"options": {"y": 888, "x": 216}, "action": "moveTo"}, {"options": {}, "action": "release"}]}
-2018-05-16 19:30:50,965 - selenium.webdriver.remote.remote_connection - DEBUG - Finished Request
-2018-05-16 19:30:52,967 - selenium.webdriver.remote.remote_connection - DEBUG - DELETE http://127.0.0.1:4723/wd/hub/session/75be6573-b059-4782-b4fe-5e94e06e3a2a {"sessionId": "75be6573-b059-4782-b4fe-5e94e06e3a2a"}
-2018-05-16 19:30:54,927 - selenium.webdriver.remote.remote_connection - DEBUG - Finished Request
-2018-05-16 19:30:54,928 - selenium.webdriver.remote.remote_connection - DEBUG - POST http://127.0.0.1:4723/wd/hub/session {"desiredCapabilities": {"platformName": "Android", "newCommandTimeout": 3600, "app": "/home/davidadamojr/git/autodroid/apps/org.tomdroid-0.7.5.apk", "deviceName": "Android"}, "capabilities": {"firstMatch": [{}], "alwaysMatch": {"platformName": "Android"}}}
-2018-05-16 19:31:00,062 - selenium.webdriver.remote.remote_connection - DEBUG - Finished Request
-2018-05-16 19:31:00,063 - selenium.webdriver.remote.remote_connection - DEBUG - POST http://127.0.0.1:4723/wd/hub/session/4559e9aa-d5a6-49c8-bdd8-8eff764e35fc/element {"value": "android:id/button3", "using": "id", "sessionId": "4559e9aa-d5a6-49c8-bdd8-8eff764e35fc"}
-2018-05-16 19:31:00,481 - selenium.webdriver.remote.remote_connection - DEBUG - Finished Request
-2018-05-16 19:31:00,482 - selenium.webdriver.remote.remote_connection - DEBUG - POST http://127.0.0.1:4723/wd/hub/session/4559e9aa-d5a6-49c8-bdd8-8eff764e35fc/element/1/click {"id": "1", "sessionId": "4559e9aa-d5a6-49c8-bdd8-8eff764e35fc"}
-2018-05-16 19:31:00,863 - selenium.webdriver.remote.remote_connection - DEBUG - Finished Request
-2018-05-16 19:31:00,863 - selenium.webdriver.remote.remote_connection - DEBUG - POST http://127.0.0.1:4723/wd/hub/session/4559e9aa-d5a6-49c8-bdd8-8eff764e35fc/element {"value": "org.tomdroid:id/note_title", "using": "id", "sessionId": "4559e9aa-d5a6-49c8-bdd8-8eff764e35fc"}
-2018-05-16 19:31:01,362 - selenium.webdriver.remote.remote_connection - DEBUG - Finished Request
-2018-05-16 19:31:01,363 - execution - INFO - Executing swipe right event.
-2018-05-16 19:31:01,363 - selenium.webdriver.remote.remote_connection - DEBUG - GET http://127.0.0.1:4723/wd/hub/session/4559e9aa-d5a6-49c8-bdd8-8eff764e35fc/window/current/size {"sessionId": "4559e9aa-d5a6-49c8-bdd8-8eff764e35fc", "windowHandle": "current"}
-2018-05-16 19:31:01,377 - selenium.webdriver.remote.remote_connection - DEBUG - Finished Request
-2018-05-16 19:31:01,377 - selenium.webdriver.remote.remote_connection - DEBUG - POST http://127.0.0.1:4723/wd/hub/session/4559e9aa-d5a6-49c8-bdd8-8eff764e35fc/touch/perform {"sessionId": "4559e9aa-d5a6-49c8-bdd8-8eff764e35fc", "actions": [{"options": {"y": 888, "x": 216}, "action": "press"}, {"options": {"ms": 200}, "action": "wait"}, {"options": {"y": 888, "x": 864}, "action": "moveTo"}, {"options": {}, "action": "release"}]}
-2018-05-16 19:31:01,481 - selenium.webdriver.remote.remote_connection - DEBUG - Finished Request
-2018-05-16 19:31:03,484 - selenium.webdriver.remote.remote_connection - DEBUG - DELETE http://127.0.0.1:4723/wd/hub/session/4559e9aa-d5a6-49c8-bdd8-8eff764e35fc {"sessionId": "4559e9aa-d5a6-49c8-bdd8-8eff764e35fc"}
-2018-05-16 19:31:05,402 - selenium.webdriver.remote.remote_connection - DEBUG - Finished Request
-2018-05-16 19:31:05,404 - selenium.webdriver.remote.remote_connection - DEBUG - POST http://127.0.0.1:4723/wd/hub/session {"desiredCapabilities": {"platformName": "Android", "newCommandTimeout": 3600, "app": "/home/davidadamojr/git/autodroid/apps/org.tomdroid-0.7.5.apk", "deviceName": "Android"}, "capabilities": {"firstMatch": [{}], "alwaysMatch": {"platformName": "Android"}}}
-2018-05-16 19:31:10,508 - selenium.webdriver.remote.remote_connection - DEBUG - Finished Request
-2018-05-16 19:31:10,508 - selenium.webdriver.remote.remote_connection - DEBUG - POST http://127.0.0.1:4723/wd/hub/session/f561fa76-3406-4cd5-9880-785e4bd673f8/element {"value": "android:id/button3", "using": "id", "sessionId": "f561fa76-3406-4cd5-9880-785e4bd673f8"}
-2018-05-16 19:31:11,039 - selenium.webdriver.remote.remote_connection - DEBUG - Finished Request
-2018-05-16 19:31:11,039 - selenium.webdriver.remote.remote_connection - DEBUG - POST http://127.0.0.1:4723/wd/hub/session/f561fa76-3406-4cd5-9880-785e4bd673f8/element/1/click {"id": "1", "sessionId": "f561fa76-3406-4cd5-9880-785e4bd673f8"}
-2018-05-16 19:31:11,700 - selenium.webdriver.remote.remote_connection - DEBUG - Finished Request
-2018-05-16 19:31:11,700 - selenium.webdriver.remote.remote_connection - DEBUG - POST http://127.0.0.1:4723/wd/hub/session/f561fa76-3406-4cd5-9880-785e4bd673f8/element {"value": "org.tomdroid:id/note_title", "using": "id", "sessionId": "f561fa76-3406-4cd5-9880-785e4bd673f8"}
-2018-05-16 19:31:12,210 - selenium.webdriver.remote.remote_connection - DEBUG - Finished Request
-2018-05-16 19:31:12,211 - execution - INFO - Executing swipe up event.
-2018-05-16 19:31:12,211 - selenium.webdriver.remote.remote_connection - DEBUG - GET http://127.0.0.1:4723/wd/hub/session/f561fa76-3406-4cd5-9880-785e4bd673f8/window/current/size {"sessionId": "f561fa76-3406-4cd5-9880-785e4bd673f8", "windowHandle": "current"}
-2018-05-16 19:31:12,228 - selenium.webdriver.remote.remote_connection - DEBUG - Finished Request
-2018-05-16 19:31:12,229 - selenium.webdriver.remote.remote_connection - DEBUG - POST http://127.0.0.1:4723/wd/hub/session/f561fa76-3406-4cd5-9880-785e4bd673f8/touch/perform {"sessionId": "f561fa76-3406-4cd5-9880-785e4bd673f8", "actions": [{"options": {"y": 1420, "x": 540}, "action": "press"}, {"options": {"ms": 200}, "action": "wait"}, {"options": {"y": 355, "x": 540}, "action": "moveTo"}, {"options": {}, "action": "release"}]}
-2018-05-16 19:31:12,332 - selenium.webdriver.remote.remote_connection - DEBUG - Finished Request
-2018-05-16 19:31:14,333 - selenium.webdriver.remote.remote_connection - DEBUG - DELETE http://127.0.0.1:4723/wd/hub/session/f561fa76-3406-4cd5-9880-785e4bd673f8 {"sessionId": "f561fa76-3406-4cd5-9880-785e4bd673f8"}
-2018-05-16 19:31:16,205 - selenium.webdriver.remote.remote_connection - DEBUG - Finished Request
-2018-05-16 19:31:16,208 - selenium.webdriver.remote.remote_connection - DEBUG - POST http://127.0.0.1:4723/wd/hub/session {"desiredCapabilities": {"platformName": "Android", "newCommandTimeout": 3600, "app": "/home/davidadamojr/git/autodroid/apps/org.tomdroid-0.7.5.apk", "deviceName": "Android"}, "capabilities": {"firstMatch": [{}], "alwaysMatch": {"platformName": "Android"}}}
-2018-05-16 19:31:21,540 - selenium.webdriver.remote.remote_connection - DEBUG - Finished Request
-2018-05-16 19:31:21,540 - selenium.webdriver.remote.remote_connection - DEBUG - POST http://127.0.0.1:4723/wd/hub/session/c0e2f6eb-047c-40fe-8a0a-fac4e7e01ee1/element {"value": "android:id/button3", "using": "id", "sessionId": "c0e2f6eb-047c-40fe-8a0a-fac4e7e01ee1"}
-2018-05-16 19:31:22,071 - selenium.webdriver.remote.remote_connection - DEBUG - Finished Request
-2018-05-16 19:31:22,072 - selenium.webdriver.remote.remote_connection - DEBUG - POST http://127.0.0.1:4723/wd/hub/session/c0e2f6eb-047c-40fe-8a0a-fac4e7e01ee1/element/1/click {"id": "1", "sessionId": "c0e2f6eb-047c-40fe-8a0a-fac4e7e01ee1"}
-2018-05-16 19:31:22,718 - selenium.webdriver.remote.remote_connection - DEBUG - Finished Request
-2018-05-16 19:31:22,718 - selenium.webdriver.remote.remote_connection - DEBUG - POST http://127.0.0.1:4723/wd/hub/session/c0e2f6eb-047c-40fe-8a0a-fac4e7e01ee1/element {"value": "org.tomdroid:id/menuNew", "using": "id", "sessionId": "c0e2f6eb-047c-40fe-8a0a-fac4e7e01ee1"}
-2018-05-16 19:31:23,229 - selenium.webdriver.remote.remote_connection - DEBUG - Finished Request
-2018-05-16 19:31:23,229 - selenium.webdriver.remote.remote_connection - DEBUG - POST http://127.0.0.1:4723/wd/hub/session/c0e2f6eb-047c-40fe-8a0a-fac4e7e01ee1/element/2/click {"id": "2", "sessionId": "c0e2f6eb-047c-40fe-8a0a-fac4e7e01ee1"}
-2018-05-16 19:31:23,360 - selenium.webdriver.remote.remote_connection - DEBUG - Finished Request
-2018-05-16 19:31:23,361 - execution - INFO - Filling in text field: org.tomdroid:id/title
-2018-05-16 19:31:23,361 - selenium.webdriver.remote.remote_connection - DEBUG - POST http://127.0.0.1:4723/wd/hub/session/c0e2f6eb-047c-40fe-8a0a-fac4e7e01ee1/element {"value": "org.tomdroid:id/title", "using": "id", "sessionId": "c0e2f6eb-047c-40fe-8a0a-fac4e7e01ee1"}
-2018-05-16 19:31:24,130 - selenium.webdriver.remote.remote_connection - DEBUG - Finished Request
-2018-05-16 19:31:24,131 - execution - INFO - Typing text: World
-2018-05-16 19:31:24,131 - selenium.webdriver.remote.remote_connection - DEBUG - POST http://127.0.0.1:4723/wd/hub/session/c0e2f6eb-047c-40fe-8a0a-fac4e7e01ee1/element/3/value {"id": "3", "value": ["W", "o", "r", "l", "d"], "sessionId": "c0e2f6eb-047c-40fe-8a0a-fac4e7e01ee1", "text": "World"}
-2018-05-16 19:31:29,856 - selenium.webdriver.remote.remote_connection - DEBUG - Finished Request
-2018-05-16 19:31:29,856 - execution - INFO - Filling in text field: org.tomdroid:id/content
-2018-05-16 19:31:29,856 - selenium.webdriver.remote.remote_connection - DEBUG - POST http://127.0.0.1:4723/wd/hub/session/c0e2f6eb-047c-40fe-8a0a-fac4e7e01ee1/element {"value": "org.tomdroid:id/content", "using": "id", "sessionId": "c0e2f6eb-047c-40fe-8a0a-fac4e7e01ee1"}
-2018-05-16 19:31:30,385 - selenium.webdriver.remote.remote_connection - DEBUG - Finished Request
-2018-05-16 19:31:30,385 - execution - INFO - Typing text: 12345
-2018-05-16 19:31:30,386 - selenium.webdriver.remote.remote_connection - DEBUG - POST http://127.0.0.1:4723/wd/hub/session/c0e2f6eb-047c-40fe-8a0a-fac4e7e01ee1/element/4/value {"id": "4", "value": ["1", "2", "3", "4", "5"], "sessionId": "c0e2f6eb-047c-40fe-8a0a-fac4e7e01ee1", "text": "12345"}
-2018-05-16 19:31:35,310 - selenium.webdriver.remote.remote_connection - DEBUG - Finished Request
-2018-05-16 19:31:35,311 - selenium.webdriver.remote.remote_connection - DEBUG - POST http://127.0.0.1:4723/wd/hub/session/c0e2f6eb-047c-40fe-8a0a-fac4e7e01ee1/element {"value": "org.tomdroid:id/edit_note_save", "using": "id", "sessionId": "c0e2f6eb-047c-40fe-8a0a-fac4e7e01ee1"}
-2018-05-16 19:31:35,825 - selenium.webdriver.remote.remote_connection - DEBUG - Finished Request
-2018-05-16 19:31:35,826 - selenium.webdriver.remote.remote_connection - DEBUG - POST http://127.0.0.1:4723/wd/hub/session/c0e2f6eb-047c-40fe-8a0a-fac4e7e01ee1/element/5/click {"id": "5", "sessionId": "c0e2f6eb-047c-40fe-8a0a-fac4e7e01ee1"}
-2018-05-16 19:31:35,992 - selenium.webdriver.remote.remote_connection - DEBUG - Finished Request
-2018-05-16 19:31:37,995 - selenium.webdriver.remote.remote_connection - DEBUG - DELETE http://127.0.0.1:4723/wd/hub/session/c0e2f6eb-047c-40fe-8a0a-fac4e7e01ee1 {"sessionId": "c0e2f6eb-047c-40fe-8a0a-fac4e7e01ee1"}
-2018-05-16 19:31:39,921 - selenium.webdriver.remote.remote_connection - DEBUG - Finished Request
-2018-05-16 19:31:39,924 - selenium.webdriver.remote.remote_connection - DEBUG - POST http://127.0.0.1:4723/wd/hub/session {"desiredCapabilities": {"platformName": "Android", "newCommandTimeout": 3600, "app": "/home/davidadamojr/git/autodroid/apps/org.tomdroid-0.7.5.apk", "deviceName": "Android"}, "capabilities": {"firstMatch": [{}], "alwaysMatch": {"platformName": "Android"}}}
-2018-05-16 19:31:45,236 - selenium.webdriver.remote.remote_connection - DEBUG - Finished Request
-2018-05-16 19:31:45,237 - selenium.webdriver.remote.remote_connection - DEBUG - POST http://127.0.0.1:4723/wd/hub/session/69f1f726-e6ba-411e-88fc-c398e4391123/element {"value": "android:id/button3", "using": "id", "sessionId": "69f1f726-e6ba-411e-88fc-c398e4391123"}
-2018-05-16 19:31:45,679 - selenium.webdriver.remote.remote_connection - DEBUG - Finished Request
-2018-05-16 19:31:45,680 - selenium.webdriver.remote.remote_connection - DEBUG - POST http://127.0.0.1:4723/wd/hub/session/69f1f726-e6ba-411e-88fc-c398e4391123/element/1/click {"id": "1", "sessionId": "69f1f726-e6ba-411e-88fc-c398e4391123"}
-2018-05-16 19:31:46,331 - selenium.webdriver.remote.remote_connection - DEBUG - Finished Request
-2018-05-16 19:31:46,331 - selenium.webdriver.remote.remote_connection - DEBUG - POST http://127.0.0.1:4723/wd/hub/session/69f1f726-e6ba-411e-88fc-c398e4391123/element {"value": "org.tomdroid:id/menuNew", "using": "id", "sessionId": "69f1f726-e6ba-411e-88fc-c398e4391123"}
-2018-05-16 19:31:46,840 - selenium.webdriver.remote.remote_connection - DEBUG - Finished Request
-2018-05-16 19:31:46,841 - selenium.webdriver.remote.remote_connection - DEBUG - POST http://127.0.0.1:4723/wd/hub/session/69f1f726-e6ba-411e-88fc-c398e4391123/element/2/click {"id": "2", "sessionId": "69f1f726-e6ba-411e-88fc-c398e4391123"}
-2018-05-16 19:31:46,995 - selenium.webdriver.remote.remote_connection - DEBUG - Finished Request
-2018-05-16 19:31:46,995 - execution - INFO - Filling in text field: org.tomdroid:id/title
-2018-05-16 19:31:46,996 - selenium.webdriver.remote.remote_connection - DEBUG - POST http://127.0.0.1:4723/wd/hub/session/69f1f726-e6ba-411e-88fc-c398e4391123/element {"value": "org.tomdroid:id/title", "using": "id", "sessionId": "69f1f726-e6ba-411e-88fc-c398e4391123"}
-2018-05-16 19:31:47,743 - selenium.webdriver.remote.remote_connection - DEBUG - Finished Request
-2018-05-16 19:31:47,744 - execution - INFO - Typing text: World
-2018-05-16 19:31:47,745 - selenium.webdriver.remote.remote_connection - DEBUG - POST http://127.0.0.1:4723/wd/hub/session/69f1f726-e6ba-411e-88fc-c398e4391123/element/3/value {"id": "3", "value": ["W", "o", "r", "l", "d"], "sessionId": "69f1f726-e6ba-411e-88fc-c398e4391123", "text": "World"}
-2018-05-16 19:31:52,938 - selenium.webdriver.remote.remote_connection - DEBUG - Finished Request
-2018-05-16 19:31:52,939 - execution - INFO - Pressing RETURN key.
-2018-05-16 19:31:52,939 - selenium.webdriver.remote.remote_connection - DEBUG - POST http://127.0.0.1:4723/wd/hub/session/69f1f726-e6ba-411e-88fc-c398e4391123/appium/device/press_keycode {"sessionId": "69f1f726-e6ba-411e-88fc-c398e4391123", "keycode": 66}
-2018-05-16 19:31:53,475 - selenium.webdriver.remote.remote_connection - DEBUG - Finished Request
-2018-05-16 19:31:55,477 - selenium.webdriver.remote.remote_connection - DEBUG - DELETE http://127.0.0.1:4723/wd/hub/session/69f1f726-e6ba-411e-88fc-c398e4391123 {"sessionId": "69f1f726-e6ba-411e-88fc-c398e4391123"}
-2018-05-16 19:31:57,424 - selenium.webdriver.remote.remote_connection - DEBUG - Finished Request
+2018-05-25 07:03:02,999 - selenium.webdriver.remote.remote_connection - DEBUG - POST http://127.0.0.1:4723/wd/hub/session {"capabilities": {"firstMatch": [{}], "alwaysMatch": {"platformName": "Android"}}, "desiredCapabilities": {"app": "/home/davidadamojr/git/autodroid/apps/org.tomdroid-0.7.5.apk", "newCommandTimeout": 3600, "deviceName": "Android", "platformName": "Android"}}
+2018-05-25 07:03:06,804 - selenium.webdriver.remote.remote_connection - DEBUG - Finished Request
+2018-05-25 07:03:06,805 - selenium.webdriver.remote.remote_connection - DEBUG - POST http://127.0.0.1:4723/wd/hub/session/71795d35-a982-446d-8045-c179157ad685/element {"using": "id", "value": "android:id/button3", "sessionId": "71795d35-a982-446d-8045-c179157ad685"}
+2018-05-25 07:03:07,092 - selenium.webdriver.remote.remote_connection - DEBUG - Finished Request
+2018-05-25 07:03:07,092 - selenium.webdriver.remote.remote_connection - DEBUG - POST http://127.0.0.1:4723/wd/hub/session/71795d35-a982-446d-8045-c179157ad685/element/1/click {"id": "1", "sessionId": "71795d35-a982-446d-8045-c179157ad685"}
+2018-05-25 07:03:07,292 - selenium.webdriver.remote.remote_connection - DEBUG - Finished Request
+2018-05-25 07:03:07,293 - selenium.webdriver.remote.remote_connection - DEBUG - POST http://127.0.0.1:4723/wd/hub/session/71795d35-a982-446d-8045-c179157ad685/element {"using": "id", "value": "org.tomdroid:id/menuNew", "sessionId": "71795d35-a982-446d-8045-c179157ad685"}
+2018-05-25 07:03:07,994 - selenium.webdriver.remote.remote_connection - DEBUG - Finished Request
+2018-05-25 07:03:07,995 - selenium.webdriver.remote.remote_connection - DEBUG - POST http://127.0.0.1:4723/wd/hub/session/71795d35-a982-446d-8045-c179157ad685/element/2/click {"id": "2", "sessionId": "71795d35-a982-446d-8045-c179157ad685"}
+2018-05-25 07:03:08,294 - selenium.webdriver.remote.remote_connection - DEBUG - Finished Request
+2018-05-25 07:03:08,294 - appiumatic.actions - INFO - Filling in text field: 
+2018-05-25 07:03:08,295 - appiumatic.actions - INFO - Typing text: Hello
+2018-05-25 07:03:08,295 - selenium.webdriver.remote.remote_connection - DEBUG - POST http://127.0.0.1:4723/wd/hub/session/71795d35-a982-446d-8045-c179157ad685/element {"using": "id", "value": "org.tomdroid:id/title", "sessionId": "71795d35-a982-446d-8045-c179157ad685"}
+2018-05-25 07:03:09,249 - selenium.webdriver.remote.remote_connection - DEBUG - Finished Request
+2018-05-25 07:03:09,249 - selenium.webdriver.remote.remote_connection - DEBUG - POST http://127.0.0.1:4723/wd/hub/session/71795d35-a982-446d-8045-c179157ad685/element/3/value {"text": "Hello", "value": ["H", "e", "l", "l", "o"], "id": "3", "sessionId": "71795d35-a982-446d-8045-c179157ad685"}
+2018-05-25 07:03:14,349 - selenium.webdriver.remote.remote_connection - DEBUG - Finished Request
+2018-05-25 07:03:14,349 - appiumatic.actions - INFO - Filling in text field: 
+2018-05-25 07:03:14,350 - appiumatic.actions - INFO - Typing text: World
+2018-05-25 07:03:14,350 - selenium.webdriver.remote.remote_connection - DEBUG - POST http://127.0.0.1:4723/wd/hub/session/71795d35-a982-446d-8045-c179157ad685/element {"using": "id", "value": "org.tomdroid:id/content", "sessionId": "71795d35-a982-446d-8045-c179157ad685"}
+2018-05-25 07:03:14,716 - selenium.webdriver.remote.remote_connection - DEBUG - Finished Request
+2018-05-25 07:03:14,716 - selenium.webdriver.remote.remote_connection - DEBUG - POST http://127.0.0.1:4723/wd/hub/session/71795d35-a982-446d-8045-c179157ad685/element/4/value {"text": "World", "value": ["W", "o", "r", "l", "d"], "id": "4", "sessionId": "71795d35-a982-446d-8045-c179157ad685"}
+2018-05-25 07:03:20,792 - selenium.webdriver.remote.remote_connection - DEBUG - Finished Request
+2018-05-25 07:03:20,793 - selenium.webdriver.remote.remote_connection - DEBUG - POST http://127.0.0.1:4723/wd/hub/session/71795d35-a982-446d-8045-c179157ad685/element {"using": "id", "value": "org.tomdroid:id/edit_note_save", "sessionId": "71795d35-a982-446d-8045-c179157ad685"}
+2018-05-25 07:03:21,211 - selenium.webdriver.remote.remote_connection - DEBUG - Finished Request
+2018-05-25 07:03:21,212 - selenium.webdriver.remote.remote_connection - DEBUG - POST http://127.0.0.1:4723/wd/hub/session/71795d35-a982-446d-8045-c179157ad685/element/5/click {"id": "5", "sessionId": "71795d35-a982-446d-8045-c179157ad685"}
+2018-05-25 07:03:21,697 - selenium.webdriver.remote.remote_connection - DEBUG - Finished Request
+2018-05-25 07:03:23,699 - selenium.webdriver.remote.remote_connection - DEBUG - DELETE http://127.0.0.1:4723/wd/hub/session/71795d35-a982-446d-8045-c179157ad685 {"sessionId": "71795d35-a982-446d-8045-c179157ad685"}
+2018-05-25 07:03:25,246 - selenium.webdriver.remote.remote_connection - DEBUG - Finished Request
