@@ -36,6 +36,26 @@ class DatabaseTests(unittest.TestCase):
         self.assertEqual(rows[0][0], test_suite_id)
         self.assertEqual(rows[0][1], creation_time)
 
+    def test_can_update_test_suite(self):
+        # Arrange
+        test_suite_id = uuid.uuid4().hex
+        creation_time = 5555
+        test_suite_id, creation_time = self.database.add_test_suite(test_suite_id, creation_time)
+        end_time = 6666
+        duration = end_time - creation_time
+
+        # Act
+        test_suite_id, end_time = self.database.update_test_suite(test_suite_id, end_time, duration)
+
+        # Assert
+        cursor = self.database.cursor()
+        cursor.execute("SELECT * FROM test_suites WHERE id=?", (test_suite_id, ))
+        rows = cursor.fetchall()
+        self.assertEqual(len(rows), 1)
+        self.assertEqual(rows[0][2], end_time)
+        self.assertEqual(rows[0][3], duration)
+
+
     def test_can_add_test_case(self):
         # Arrange
         test_case_hash = "test_case_hash"

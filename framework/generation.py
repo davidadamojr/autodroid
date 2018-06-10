@@ -205,9 +205,9 @@ class Generator:
             logger.debug("Beginning test case teardown.")
             teardown_strategy(test_case.driver, self.configuration["adb_path"])
 
-            test_suite_end_time = time.time()
-            test_suite_duration = int(test_suite_end_time - test_suite.creation_time)
-
+        test_suite_end_time = int(time.time())
+        test_suite_duration = test_suite_end_time - test_suite.creation_time
+        self.database.update_test_suite(test_suite.id, test_suite_end_time, test_suite_duration)
         print("Test suite generation took {} seconds.".format(test_suite_duration))
 
     def finalize_test_case(self, test_case, test_suite, path_to_test_cases, test_case_count):

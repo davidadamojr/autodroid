@@ -16,7 +16,7 @@ class Database:
 
     def create_tables(self):
         cursor = self.db_connection.cursor()
-        cursor.execute("CREATE TABLE IF NOT EXISTS test_suites (id text, creation_time integer)")
+        cursor.execute("CREATE TABLE IF NOT EXISTS test_suites (id text, creation_time integer, end_time integer, duration integer)")
         cursor.execute("CREATE INDEX IF NOT EXISTS idx_test_suite_id ON test_suites (id)")
         cursor.execute("CREATE TABLE IF NOT EXISTS stats (stat_key text, stat_value integer, test_suite_id text)")
         cursor.execute("CREATE INDEX IF NOT EXISTS idx_key_test_suite_id ON stats (stat_key, test_suite_id)")
@@ -30,7 +30,7 @@ class Database:
 
     def add_test_suite(self, test_suite_id, creation_time):
         cursor = self.db_connection.cursor()
-        cursor.execute("INSERT INTO test_suites VALUES (?, ?)", (test_suite_id, creation_time))
+        cursor.execute("INSERT INTO test_suites VALUES (?, ?, ?, ?)", (test_suite_id, creation_time, 0, 0))
         self.db_connection.commit()
 
         logger.info(
@@ -38,6 +38,14 @@ class Database:
         logger.info("Creating test suite with id {}".format(str(test_suite_id)))
 
         return test_suite_id, creation_time
+
+    def update_test_suite(self, test_suite_id, end_time, duration):
+        cursor = self.db_connection.cursor()
+        update_query = "UPDATE test_suites SET end_time=?, duration=? WHERE id=?"
+        cursor.execute(update_query, (end_time, duration, test_suite_id))
+        self.db_connection.commit()
+
+        return test_suite_id, end_time
 
     def add_test_case(self, test_case_hash, test_suite_id, creation_time, duration):
         cursor = self.db_connection.cursor()
