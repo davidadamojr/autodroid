@@ -3,7 +3,7 @@ import logging
 from framework.utils import selection
 from appiumatic.hashing import generate_event_hash
 
-# TODO: create eventselector class to maintain random chooser state
+# TODO: create event selector class to maintain random chooser state
 logger = logging.getLogger(__name__)
 
 

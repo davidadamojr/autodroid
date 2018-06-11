@@ -1,12 +1,21 @@
-import random
 import logging
 from appiumatic.hashing import generate_event_hash
+from collections import OrderedDict
 
 logger = logging.getLogger(__name__)
 
 
+def create_hash_to_events_map(events):
+    hash_to_events_map = OrderedDict()
+    for event in events:
+        event_hash = generate_event_hash(event)
+        hash_to_events_map[event_hash] = event
+
+    return hash_to_events_map
+
+
 def get_min_frequency_events(database, events, test_suite_id=None):
-    hash_to_events_map = {generate_event_hash(event): event for event in events}
+    hash_to_events_map = create_hash_to_events_map(events)
     event_hashes = hash_to_events_map.keys()
     event_frequencies = database.get_event_frequencies(event_hashes, test_suite_id)
 
@@ -28,7 +37,7 @@ def get_frequency_weights(event_frequencies):
     total_frequency = sum(event_frequencies.values())
     event_weights = {}
     for event_hash, event_frequency in event_frequencies.items():
-        event_weights[event_hash] = float(total_frequency) / event_frequency
+        event_weights[event_hash] = float(total_frequency) / (event_frequency + 1)
 
     return event_weights
 
@@ -38,8 +47,6 @@ def get_uniform_event_weights(event_hashes):
 
 
 def make_weighted_selection(hash_to_events_map, event_weights, goal_weight):
-    random.seed(a=42)
-
     sum_of_weights = 0.0
     for event_hash, weight in event_weights.items():
         event = hash_to_events_map[event_hash]
