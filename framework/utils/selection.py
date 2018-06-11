@@ -33,7 +33,7 @@ def get_frequency_weights(event_frequencies):
     return event_weights
 
 
-def get_uniform_weights(event_hashes):
+def get_uniform_event_weights(event_hashes):
     return {event_hash: 1 for event_hash in event_hashes}
 
 
