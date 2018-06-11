@@ -19,7 +19,7 @@ TEST_SUITES_GENERATED=0
 while [ $TEST_SUITES_GENERATED -lt $TEST_SUITES_TO_GENERATE ]
 do
     start_appium
-    sleep 3
+    sleep 20
     start_autodroid
     killall node
     ((TEST_SUITES_GENERATED++))

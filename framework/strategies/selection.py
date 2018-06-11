@@ -46,7 +46,7 @@ def frequency_weighted(database, events, test_suite_id=None):
 
     hash_to_events_map = {generate_event_hash(event): event for event in events}
     event_hashes = hash_to_events_map.keys()
-    event_frequencies = database.get_event_frequencies(database, event_hashes, test_suite_id)
+    event_frequencies = database.get_event_frequencies(event_hashes, test_suite_id)
 
     event_weights = selection.get_frequency_weights(event_frequencies)
     total_weight = sum(event_weights.values())
