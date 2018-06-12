@@ -1,0 +1,3 @@
+[submodule "appiumatic"]
+	path = appiumatic
+	url = https://github.com/davidadamojr/appiumatic
