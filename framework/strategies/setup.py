@@ -16,7 +16,8 @@ def _get_driver(apk_path):
         "newCommandTimeout": 3600,
         "autoGrantPermissions": True,
         "fullReset": True,
-        "disableWindowAnimation": True
+        "disableWindowAnimation": True,
+        "appWaitActivity": "*"
     }
 
     driver = webdriver.Remote("http://localhost:4723/wd/hub", desired_caps)
