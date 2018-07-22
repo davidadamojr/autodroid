@@ -35,13 +35,13 @@ def setup_strategy(strategy):
     raise InvalidParameter("Invalid specification '{}' for test case setup.")
 
 
-def completion_criterion(criterion, time_budget, test_suite_length):
+def completion_criterion(criterion, time_budget, suite_length):
     criterion = criterion.lower()
     if criterion == "time":
         completion_func = partial(completion.time_budget_exceeded, time_budget=time_budget)
         return completion_func
     elif criterion == "length":
-        return partial(completion.number_of_test_cases_reached, test_case_budget=test_suite_length)
+        return partial(completion.number_of_sequences_reached, test_case_budget=suite_length)
 
     raise InvalidParameter("Invalid specification '{}' for completion criterion.".format(criterion))
 

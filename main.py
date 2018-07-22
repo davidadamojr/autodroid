@@ -1,60 +1,24 @@
-import sqlite3
 import logging
-import sys
 import config
-from framework.database import Database
-from framework.generation import Generator
-from framework import initialization
+import factory
 from appiumatic.exceptions import InvalidParameter
-from appiumatic.execution import create_executor
+from appiumatic.paths import create_output_directories
 
 logger = logging.getLogger(__name__)
 
 
-def retrieve_text_values(strings_path):
-    with open(strings_path) as strings_file:
-        text_field_strings = strings_file.readlines()
-        text_field_strings = [text.replace("\n", "") for text in text_field_strings]
-
-    return text_field_strings
-
-
 def main():
+    database = factory.create_database()
+    test_suite_info = database.create_test_suite()
     try:
-        event_selection_strategy = initialization.event_selection_strategy(config.EVENT_SELECTION_STRATEGY)
-        termination_criterion = initialization.termination_criterion(config.TERMINATION_CRITERION,
-                                                                     config.TERMINATION_PROBABILITY,
-                                                                     config.TEST_CASE_LENGTH)
-        completion_criterion = initialization.completion_criterion(config.COMPLETION_CRITERION,
-                                                                   config.TIME_BUDGET,
-                                                                   config.TEST_SUITE_LENGTH)
-        setup = initialization.setup_strategy(config.TEST_SETUP)
-        teardown = initialization.tear_down_strategy(config.TEST_TEARDOWN)
+        output_paths = create_output_directories(config.APP_PACKAGE_NAME,
+                                                 config.OUTPUT_PATH,
+                                                 test_suite_info.creation_time)
+        text_values = factory.retrieve_text_values(config.STRINGS_PATH)
+        suite_generator = factory.create_suite_generator(database)
+        suite_generator.generate()
     except InvalidParameter as ip:
         logger.critical(ip)
-        sys.exit(1)
-
-    db_connection = sqlite3.connect("db/autodroid.db")
-    logger.debug("Connection to database successful.")
-    database = Database(db_connection)
-    database.create_tables()
-
-    try:
-        text_values = retrieve_text_values(config.STRINGS_PATH)
-        configuration = {
-            "apk_path": config.APK_PATH,
-            "apk_package_name": config.APP_PACKAGE_NAME,
-            "coverage_path": config.COVERAGE_FILE_PATH,
-            "event_interval": config.EVENT_INTERVAL,
-            "text_entry_values": text_values,
-            "adb_path": config.ADB_PATH,
-            "coverage_file_path": config.COVERAGE_FILE_PATH,
-            "coverage_broadcast": config.COVERAGE_BROADCAST,
-            "output_path": config.OUTPUT_PATH
-        }
-        generator = Generator(database, configuration)
-        generator.construct_test_suite(setup, event_selection_strategy, termination_criterion, completion_criterion,
-                                       teardown, create_executor)
     except IOError as io_error:
         logger.fatal(io_error)
     except ConnectionRefusedError as conn_refused:
@@ -62,7 +26,7 @@ def main():
     except Exception as e:
         logger.fatal("A fatal error occurred: {}".format(e))
 
-    db_connection.close()
+    database.close()
 
 
 main()

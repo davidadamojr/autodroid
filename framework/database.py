@@ -1,5 +1,7 @@
 import logging
-from collections import OrderedDict
+import time
+from uuid import uuid4
+from collections import OrderedDict, namedtuple
 
 logger = logging.getLogger(__name__)
 
@@ -20,15 +22,18 @@ class Database:
         cursor.execute("CREATE INDEX IF NOT EXISTS idx_test_suite_id ON test_suites (id)")
         cursor.execute("CREATE TABLE IF NOT EXISTS stats (stat_key text, stat_value integer, test_suite_id text)")
         cursor.execute("CREATE INDEX IF NOT EXISTS idx_key_test_suite_id ON stats (stat_key, test_suite_id)")
-        cursor.execute("CREATE TABLE IF NOT EXISTS test_cases (hash_key text, test_suite_id text, creation_time integer, duration integer)")
-        cursor.execute("CREATE INDEX IF NOT EXISTS idx_hash_key ON test_cases (hash_key)")
+        cursor.execute("CREATE TABLE IF NOT EXISTS sequences (hash_key text, test_suite_id text, creation_time integer, duration integer)")
+        cursor.execute("CREATE INDEX IF NOT EXISTS idx_hash_key ON sequences (hash_key)")
         cursor.execute("CREATE TABLE IF NOT EXISTS event_info (event_hash text, test_suite_id text, frequency integer, termination integer, reward real)")
         cursor.execute("CREATE INDEX IF NOT EXISTS idx_event_hash ON event_info (event_hash)")
         self.db_connection.commit()
 
         logger.info("Successfully created database tables.")
 
-    def add_test_suite(self, test_suite_id, creation_time):
+    def create_test_suite(self):
+        test_suite_id = uuid4().hex
+        creation_time = int(time.time())
+
         cursor = self.db_connection.cursor()
         cursor.execute("INSERT INTO test_suites VALUES (?, ?, ?, ?)", (test_suite_id, creation_time, 0, 0))
         self.db_connection.commit()
@@ -37,7 +42,8 @@ class Database:
             "Test generation started at {}.".format(str(creation_time)))  # TODO: change to human-readable time
         logger.info("Creating test suite with id {}".format(str(test_suite_id)))
 
-        return test_suite_id, creation_time
+        TestSuiteInfo = namedtuple("TestSuiteInfo", ["id", "creation_time"])
+        return TestSuiteInfo(test_suite_id, creation_time)
 
     def update_test_suite(self, test_suite_id, end_time, duration):
         cursor = self.db_connection.cursor()
@@ -49,14 +55,14 @@ class Database:
 
     def add_test_case(self, test_case_hash, test_suite_id, creation_time, duration):
         cursor = self.db_connection.cursor()
-        cursor.execute("INSERT INTO test_cases VALUES (?, ?, ?, ?)", (test_case_hash, test_suite_id, creation_time, duration))
+        cursor.execute("INSERT INTO sequences VALUES (?, ?, ?, ?)", (test_case_hash, test_suite_id, creation_time, duration))
         self.db_connection.commit()
 
         return test_case_hash
 
     def test_case_exists(self, test_suite_id, test_case_hash):
         cursor = self.db_connection.cursor()
-        cursor.execute("SELECT * FROM test_cases WHERE hash_key=? AND test_suite_id=?", (test_case_hash, test_suite_id))
+        cursor.execute("SELECT * FROM sequences WHERE hash_key=? AND test_suite_id=?", (test_case_hash, test_suite_id))
 
         if len(cursor.fetchall()) == 0:
             return False

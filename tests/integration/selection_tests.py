@@ -78,7 +78,7 @@ class SelectionTests(unittest.TestCase):
         self.database.update_event_frequency(test_suite_id, event_hash_3)
 
         # Act
-        selected_event = min_frequency_random(self.database, self.available_events, test_suite_id=test_suite_id)
+        selected_event = min_frequency_random(self.database, self.available_events, suite_id=test_suite_id)
 
         # Assert
         expected_selected_event = self.available_events[0]
@@ -92,7 +92,7 @@ class SelectionTests(unittest.TestCase):
         self.database.update_event_frequency(test_suite_id, event_hash_2)
 
         # Act
-        selected_event = min_frequency_random(self.database, self.available_events, test_suite_id=test_suite_id)
+        selected_event = min_frequency_random(self.database, self.available_events, suite_id=test_suite_id)
 
         # Assert
         expected_selected_events = [self.available_events[0], self.available_events[2]]
@@ -108,7 +108,7 @@ class SelectionTests(unittest.TestCase):
         self.database.update_event_frequency(test_suite_id, event_hash_3)
 
         # Act
-        selected_event = min_frequency_deterministic(self.database, self.available_events, test_suite_id=test_suite_id)
+        selected_event = min_frequency_deterministic(self.database, self.available_events, suite_id=test_suite_id)
 
         # Assert
         expected_selected_event = self.available_events[0]
@@ -122,7 +122,7 @@ class SelectionTests(unittest.TestCase):
         self.database.update_event_frequency(test_suite_id, event_hash_2)
 
         # Act
-        selected_event = min_frequency_deterministic(self.database, self.available_events, test_suite_id=test_suite_id)
+        selected_event = min_frequency_deterministic(self.database, self.available_events, suite_id=test_suite_id)
 
         # Assert
         expected_events = [self.available_events[0], self.available_events[2]]

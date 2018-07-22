@@ -67,7 +67,7 @@ class InitializationTests(unittest.TestCase):
         completion_criterion(criterion, time_budget, test_suite_length)
 
         # Assert
-        partial_mock.assert_called_with(completion.number_of_test_cases_reached, test_case_budget=test_suite_length)
+        partial_mock.assert_called_with(completion.number_of_sequences_reached, test_case_budget=test_suite_length)
 
     @patch("framework.initialization.partial")
     def test_can_initiate_probabilistic_termination_criterion(self, partial_mock):

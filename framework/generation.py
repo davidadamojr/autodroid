@@ -60,15 +60,6 @@ class Generator:
         self.database = database
         self.configuration = configuration
 
-    def initialize_test_suite(self):
-        test_suite_id = uuid4().hex
-        test_suite_creation_time = int(time.time())
-
-        self.database.add_test_suite(test_suite_id, test_suite_creation_time)
-
-        TestSuite = collections.namedtuple("TestSuite", ["id", "creation_time"])
-        return TestSuite(test_suite_id, test_suite_creation_time)
-
     def remove_termination_events(self, test_suite_id, events):
         non_termination_events = []
         for event in events:
@@ -175,8 +166,8 @@ class Generator:
 
     def construct_test_suite(self, setup_strategy, event_selection_strategy, termination_criterion, completion_criterion,
                              teardown_strategy, executor_factory):
-        test_suite = self.initialize_test_suite()
-        output_paths = self.create_output_directories(test_suite.creation_time)
+        test_suite_info = self.database.create_test_suite()
+        output_paths = self.create_output_directories(test_suite_info.creation_time)
 
         test_suite_duration = 0
         test_case_count = 0
@@ -187,7 +178,7 @@ class Generator:
                     "Generating test case {}. Start time is {}.".format(test_case_count + 1, test_case.start_time))
                 executor = executor_factory(test_case.driver, self.configuration["event_interval"],
                                             self.configuration["text_entry_values"])
-                final_state = self.generate_events(executor, test_case, test_suite, event_selection_strategy,
+                final_state = self.generate_events(executor, test_case, test_suite_info, event_selection_strategy,
                                                    termination_criterion)
             except WebDriverException as e:
                 print(e)
@@ -199,15 +190,15 @@ class Generator:
 
             self.get_coverage(output_paths.coverage, test_case_count)
             self.get_logs(output_paths.logs, test_case_count)
-            self.finalize_test_case(test_case, test_suite, output_paths.test_cases, test_case_count)
+            self.finalize_test_case(test_case, test_suite_info, output_paths.test_cases, test_case_count)
             test_case_count += 1
 
             logger.debug("Beginning test case teardown.")
             teardown_strategy(test_case.driver, self.configuration["adb_path"])
 
         test_suite_end_time = int(time.time())
-        test_suite_duration = test_suite_end_time - test_suite.creation_time
-        self.database.update_test_suite(test_suite.id, test_suite_end_time, test_suite_duration)
+        test_suite_duration = test_suite_end_time - test_suite_info.creation_time
+        self.database.update_test_suite(test_suite_info.id, test_suite_end_time, test_suite_duration)
         print("Test suite generation took {} seconds.".format(test_suite_duration))
 
     def finalize_test_case(self, test_case, test_suite, path_to_test_cases, test_case_count):

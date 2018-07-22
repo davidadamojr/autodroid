@@ -25,7 +25,7 @@ class DatabaseTests(unittest.TestCase):
         creation_time = time.time()
 
         # Act
-        test_suite_id, creation_time = self.database.add_test_suite(test_suite_id, creation_time)
+        test_suite_id, creation_time = self.database.create_test_suite(test_suite_id, creation_time)
 
         # Assert
         cursor = self.database.cursor()
@@ -40,7 +40,7 @@ class DatabaseTests(unittest.TestCase):
         # Arrange
         test_suite_id = uuid.uuid4().hex
         creation_time = 5555
-        test_suite_id, creation_time = self.database.add_test_suite(test_suite_id, creation_time)
+        test_suite_id, creation_time = self.database.create_test_suite(test_suite_id, creation_time)
         end_time = 6666
         duration = end_time - creation_time
 
