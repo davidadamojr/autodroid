@@ -19,18 +19,18 @@ def event_selection_strategy(strategy):
     raise InvalidParameter("Invalid specification '{}' for event selection strategy.".format(strategy))
 
 
-def tear_down_strategy(strategy):
+def tear_down_strategy(strategy, adb_path):
     strategy = strategy.lower()
     if strategy == "standard":
-        return teardown.standard
+        return partial(teardown.standard, adb_path=adb_path)
 
     raise InvalidParameter("Invalid specification '{}' for test case tear down.")
 
 
-def setup_strategy(strategy):
+def setup_strategy(strategy, apk_path, adb_path, device_id):
     strategy = strategy.lower()
     if strategy == "standard":
-        return setup.standard
+        return partial(setup.standard, apk_path=apk_path, adb_path=adb_path, device_id=device_id)
 
     raise InvalidParameter("Invalid specification '{}' for test case setup.")
 

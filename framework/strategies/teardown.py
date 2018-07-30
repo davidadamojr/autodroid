@@ -1,4 +1,4 @@
-from framework.utils.scripts import clear_logs
+from framework.utils.adb import clear_logs
 
 
 def standard(driver, adb_path):

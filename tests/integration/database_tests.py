@@ -25,7 +25,7 @@ class DatabaseTests(unittest.TestCase):
         creation_time = time.time()
 
         # Act
-        test_suite_id, creation_time = self.database.create_test_suite(test_suite_id, creation_time)
+        test_suite_id, creation_time = self.database.create_suite(test_suite_id, creation_time)
 
         # Assert
         cursor = self.database.cursor()
@@ -40,12 +40,12 @@ class DatabaseTests(unittest.TestCase):
         # Arrange
         test_suite_id = uuid.uuid4().hex
         creation_time = 5555
-        test_suite_id, creation_time = self.database.create_test_suite(test_suite_id, creation_time)
+        test_suite_id, creation_time = self.database.create_suite(test_suite_id, creation_time)
         end_time = 6666
         duration = end_time - creation_time
 
         # Act
-        test_suite_id, end_time = self.database.update_test_suite(test_suite_id, end_time, duration)
+        test_suite_id, end_time = self.database.update_suite(test_suite_id, end_time, duration)
 
         # Assert
         cursor = self.database.cursor()
@@ -64,7 +64,7 @@ class DatabaseTests(unittest.TestCase):
         duration = 10
 
         # Act
-        self.database.add_test_case(test_case_hash, test_suite_id, creation_time, duration)
+        self.database.add_sequence(test_case_hash, test_suite_id, creation_time, duration)
 
         # Assert
         cursor = self.database.cursor()
@@ -83,10 +83,10 @@ class DatabaseTests(unittest.TestCase):
         test_suite_id = "test_suite_id"
         creation_time = 1234567890
         duration = 10
-        self.database.add_test_case(test_case_hash, test_suite_id, creation_time, duration)
+        self.database.add_sequence(test_case_hash, test_suite_id, creation_time, duration)
 
         # Act
-        test_case_exists = self.database.test_case_exists(test_suite_id, test_case_hash)
+        test_case_exists = self.database.sequence_exists(test_suite_id, test_case_hash)
 
         # Assert
         self.assertTrue(test_case_exists)
@@ -97,10 +97,10 @@ class DatabaseTests(unittest.TestCase):
         test_suite_id = "test_suite_id"
         creation_time = 1234567890
         duration = 10
-        self.database.add_test_case(test_case_hash, test_suite_id, creation_time, duration)
+        self.database.add_sequence(test_case_hash, test_suite_id, creation_time, duration)
 
         # Act
-        test_case_exists = self.database.test_case_exists("fake_test_suite_id", "fake_test_case_hash")
+        test_case_exists = self.database.sequence_exists("fake_test_suite_id", "fake_test_case_hash")
 
         # Assert
         self.assertFalse(test_case_exists)

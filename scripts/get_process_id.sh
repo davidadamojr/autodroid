@@ -4,6 +4,7 @@
 
 ADB_PATH=$1
 PACKAGE_NAME=$2
-$ADB_PATH shell pidof -s $PACKAGE_NAME
+DEVICE_ID=$3
+$ADB_PATH -s $DEVICE_ID shell pidof -s $PACKAGE_NAME
 
 

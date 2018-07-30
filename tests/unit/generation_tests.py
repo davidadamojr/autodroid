@@ -22,7 +22,7 @@ class GenerationTests(unittest.TestCase):
         test_suite = generator.initialize_test_suite()
 
         # Assert
-        generator.database.create_test_suite.assert_called_with(mock_uuid4().hex, mock_time.time())
+        generator.database.create_suite.assert_called_with(mock_uuid4().hex, mock_time.time())
         self.assertEqual(test_suite.id, mock_uuid4().hex)
         self.assertEqual(test_suite.creation_time, mock_time.time())
 
