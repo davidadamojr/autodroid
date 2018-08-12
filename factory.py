@@ -8,6 +8,7 @@ from framework.database import Database
 from framework.exploration import Explorer
 from appiumatic.exploration.sequence import SequenceGenerator
 from appiumatic.execution import Executor
+from appiumatic.paths import create_output_directories
 
 logger = logging.getLogger(__name__)
 
@@ -25,8 +26,8 @@ def create_explorer(database, text_values):
     completion_criterion = initialization.completion_criterion(config.COMPLETION_CRITERION,
                                                                config.TIME_BUDGET,
                                                                config.TEST_SUITE_LENGTH)
-    AppInfo = namedtuple("AppInfo", ["apk_path", "package_name"])
-    app_info = AppInfo(config.APK_PATH, config.APP_PACKAGE_NAME)
+    AppInfo = namedtuple("AppInfo", ["apk_path", "package_name", "coverage_file_path"])
+    app_info = AppInfo(config.APK_PATH, config.APP_PACKAGE_NAME, config.COVERAGE_FILE_PATH)
 
     AdbInfo = namedtuple("AdbInfo", ["path", "device_id", "coverage_broadcast"])
     adb_info = AdbInfo(config.ADB_PATH, config.DEVICE_ID, config.COVERAGE_BROADCAST)
@@ -43,8 +44,7 @@ def create_sequence_generator(database, text_values):
                                                    config.APK_PATH,
                                                    config.ADB_PATH,
                                                    config.DEVICE_ID)
-    tear_down_strategy = initialization.tear_down_strategy(config.TEST_TEARDOWN,
-                                                           config.ADB_PATH)
+    tear_down_strategy = initialization.tear_down_strategy(config.TEST_TEARDOWN, config.ADB_PATH, config.DEVICE_ID)
     executor_factory = partial(create_executor,
                                event_interval=config.EVENT_INTERVAL,
                                text_values=text_values)
@@ -61,10 +61,14 @@ def create_executor(driver, event_interval, text_values):
     return Executor(driver, event_interval, text_values)
 
 
-def retrieve_text_values(strings_path):
-    with open(strings_path) as strings_file:
+def retrieve_text_values():
+    with open(config.STRINGS_PATH) as strings_file:
         text_field_strings = strings_file.readlines()
         text_field_strings = [text.replace("\n", "") for text in text_field_strings]
 
     return text_field_strings
+
+
+def create_directories(suite_creation_time):
+    return create_output_directories(config.APP_PACKAGE_NAME, config.OUTPUT_PATH, suite_creation_time)
 

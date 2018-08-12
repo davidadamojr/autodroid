@@ -10,7 +10,7 @@ EVENT_SELECTION_STRATEGY = "gaussian_random"
 TERMINATION_CRITERION = "Length"
 COMPLETION_CRITERION = "Length"
 TEST_TEARDOWN = "Standard"
-TEST_SUITE_LENGTH = 20  # only used if completion criterion is "Length"
+TEST_SUITE_LENGTH = 10  # only used if completion criterion is "Length"
 TIME_BUDGET = 1  # (in hours) only used if completion criterion is "Time"
 TERMINATION_PROBABILITY = 0.05  # only used when termination criterion is "probabilistic"
 TEST_CASE_LENGTH = 20  # only used if termination criterion is "length"
@@ -18,9 +18,9 @@ STRINGS_PATH = "strings.txt"
 COVERAGE_BROADCAST = "com.davidadamojr.tester.finishtesting"
 
 # AUT settings
-APK_PATH = "/home/davidadamojr/git/autodroid/apps/oi_shoppinglist_2_1_3.apk"
-APP_PACKAGE_NAME = "org.openintents.shopping"
-COVERAGE_FILE_PATH = "/mnt/sdcard/org.openintents.shopping"
+APK_PATH = "/home/davidadamojr/git/autodroid/apps/org.tomdroid-0.7.5.apk"
+APP_PACKAGE_NAME = "org.tomdroid"
+COVERAGE_FILE_PATH = "/mnt/sdcard/org.tomdroid"
 
 # Device settings
-DEVICE_ID = "emulator-"
+DEVICE_ID = "emulator-5554"

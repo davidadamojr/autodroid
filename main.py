@@ -1,8 +1,6 @@
 import logging
-import config
 import factory
 from appiumatic.exceptions import InvalidParameter
-from appiumatic.paths import create_output_directories
 
 logger = logging.getLogger(__name__)
 
@@ -11,10 +9,8 @@ def main():
     database = factory.create_database()
     suite_info = database.create_suite()
     try:
-        output_paths = create_output_directories(config.APP_PACKAGE_NAME,
-                                                 config.OUTPUT_PATH,
-                                                 suite_info.creation_time)
-        text_values = factory.retrieve_text_values(config.STRINGS_PATH)
+        output_paths = factory.create_directories(suite_info.creation_time)
+        text_values = factory.retrieve_text_values()
         explorer = factory.create_explorer(database, text_values)
         explorer.explore(suite_info, output_paths)
     except InvalidParameter as ip:

@@ -19,10 +19,10 @@ def event_selection_strategy(strategy):
     raise InvalidParameter("Invalid specification '{}' for event selection strategy.".format(strategy))
 
 
-def tear_down_strategy(strategy, adb_path):
+def tear_down_strategy(strategy, adb_path, device_id):
     strategy = strategy.lower()
     if strategy == "standard":
-        return partial(teardown.standard, adb_path=adb_path)
+        return partial(teardown.standard, adb_path=adb_path, device_id=device_id)
 
     raise InvalidParameter("Invalid specification '{}' for test case tear down.")
 
@@ -41,7 +41,7 @@ def completion_criterion(criterion, time_budget, suite_length):
         completion_func = partial(completion.time_budget_exceeded, time_budget=time_budget)
         return completion_func
     elif criterion == "length":
-        return partial(completion.number_of_sequences_reached, test_case_budget=suite_length)
+        return partial(completion.number_of_sequences_reached, sequence_budget=suite_length)
 
     raise InvalidParameter("Invalid specification '{}' for completion criterion.".format(criterion))
 
@@ -51,6 +51,6 @@ def termination_criterion(criterion, probability, length):
     if criterion == "probabilistic":
         return partial(termination.probabilistic, probability=probability)
     elif criterion == "length":
-        return partial(termination.length, test_case_length=length)
+        return partial(termination.length, sequence_length=length)
 
     raise InvalidParameter("Invalid specification '{}' for termination criterion.".format(criterion))
