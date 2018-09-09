@@ -13,8 +13,6 @@ def event_selection_strategy(strategy):
         return selection.min_frequency_deterministic
     elif strategy == "frequency_weighted":
         return selection.frequency_weighted
-    elif strategy == "gaussian_random":
-        return selection.gaussian_random
 
     raise InvalidParameter("Invalid specification '{}' for event selection strategy.".format(strategy))
 
@@ -38,10 +36,10 @@ def setup_strategy(strategy, apk_path, adb_path, device_id):
 def completion_criterion(criterion, time_budget, suite_length):
     criterion = criterion.lower()
     if criterion == "time":
-        completion_func = partial(completion.time_budget_exceeded, time_budget=time_budget)
+        completion_func = partial(completion.time_budget_exceeded, completion_value=time_budget)
         return completion_func
     elif criterion == "length":
-        return partial(completion.number_of_sequences_reached, sequence_budget=suite_length)
+        return partial(completion.number_of_sequences_reached, completion_value=suite_length)
 
     raise InvalidParameter("Invalid specification '{}' for completion criterion.".format(criterion))
 
@@ -49,8 +47,8 @@ def completion_criterion(criterion, time_budget, suite_length):
 def termination_criterion(criterion, probability, length):
     criterion = criterion.lower()
     if criterion == "probabilistic":
-        return partial(termination.probabilistic, probability=probability)
+        return partial(termination.probabilistic, terminal_value=probability)
     elif criterion == "length":
-        return partial(termination.length, sequence_length=length)
+        return partial(termination.length, terminal_value=length)
 
     raise InvalidParameter("Invalid specification '{}' for termination criterion.".format(criterion))

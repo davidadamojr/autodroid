@@ -2,7 +2,7 @@ import logging
 import time
 import os
 from selenium.common.exceptions import WebDriverException
-from hashing import generate_sequence_hash
+from appiumatic.hashing import generate_sequence_hash
 from framework.utils import adb
 
 logger = logging.getLogger(__name__)
@@ -11,18 +11,21 @@ logger = logging.getLogger(__name__)
 def get_logs(path_to_logs, sequence_count, app_process_id, adb_info):
     log_file_name = "log{}.txt".format(str(sequence_count).zfill(3))
     log_file_path = os.path.join(path_to_logs, log_file_name)
-    adb.get_logs(adb_info.path, log_file_path, app_process_id, adb_info.device_id)
+    adb.get_logs(adb_path=adb_info.path,
+                 log_file_path=log_file_path,
+                 process_id=app_process_id,
+                 device_id=adb_info.device_id)
 
 
 def get_coverage(path_to_coverage, sequence_count, device_coverage_path,  adb_info):
     coverage_file_path = os.path.join(device_coverage_path, "coverage.ec")
     coverage_file_name = "coverage{}.ec".format(str(sequence_count).zfill(3))
-    adb.get_coverage(adb_info.path,
-                     coverage_file_path,
-                     path_to_coverage,
-                     coverage_file_name,
-                     adb_info.coverage_broadcast,
-                     adb_info.device_id)
+    adb.get_coverage(adb_path=adb_info.path,
+                     device_path=coverage_file_path,
+                     coverage_path=path_to_coverage,
+                     coverage_name=coverage_file_name,
+                     broadcast=adb_info.coverage_broadcast,
+                     device_id=adb_info.device_id)
 
 
 class Explorer:
@@ -40,9 +43,9 @@ class Explorer:
             logger.debug("Path to APK is {}".format(self.app_info.apk_path))
             try:
                 sequence_info = self.sequence_generator.initialize()
-                app_process_id = adb.get_process_id(self.adb_info.path,
-                                                    self.app_info.package_name,
-                                                    self.adb_info.device_id)
+                app_process_id = adb.get_process_id(adb_path=self.adb_info.path,
+                                                    package_name=self.app_info.package_name,
+                                                    device_id=self.adb_info.device_id)
                 sequence_duration = self.sequence_generator.generate(sequence_info,
                                                                      self.app_info.package_name,
                                                                      suite_info.id)
@@ -50,21 +53,17 @@ class Explorer:
                 print(e)
                 continue  # start a new test case
 
-            self.database.add_sequence(generate_sequence_hash(sequence_info.events),
-                                       suite_info.id,
-                                       sequence_info.start_time,
-                                       sequence_duration)
-
             get_logs(output_paths.logs, sequence_count + 1, app_process_id, self.adb_info)
             get_coverage(output_paths.coverage, sequence_count + 1, self.app_info.coverage_file_path, self.adb_info)
 
-            self.sequence_generator.finalize(sequence_count + 1,
-                                             suite_info.id,
-                                             sequence_info,
-                                             output_paths,
-                                             self.adb_info)
+            self.sequence_generator.finalize(sequence_count=sequence_count + 1,
+                                             suite_id=suite_info.id,
+                                             sequence_info=sequence_info,
+                                             output_paths=output_paths)
 
             sequence_count += 1
+            suite_duration += sequence_duration
+            logger.debug("Suite has been running for {} seconds.".format(suite_duration))
 
         self.finalize_exploration(suite_info)
 

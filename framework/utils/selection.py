@@ -14,28 +14,22 @@ def create_hash_to_events_map(events):
     return hash_to_events_map
 
 
-def get_min_frequency_events(database, events, test_suite_id=None):
-    hash_to_events_map = create_hash_to_events_map(events)
-    event_hashes = hash_to_events_map.keys()
-    event_frequencies = database.get_event_frequencies(event_hashes, test_suite_id)
-
+def get_min_frequency_event_hashes(event_frequencies):
     min_frequency = float("inf")
-    min_frequency_events = []
-    for event_hash in event_frequencies:
-        event = hash_to_events_map[event_hash]
-        event_frequency = event_frequencies[event_hash]
+    min_frequency_event_hashes = []
+    for event_hash, event_frequency in event_frequencies.items():
         if event_frequency < min_frequency:
-            min_frequency_events = [event]
-            min_frequency = event_frequencies[event_hash]
+            min_frequency_event_hashes = [event_hash]
+            min_frequency = event_frequency
         elif event_frequency == min_frequency:
-            min_frequency_events.append(event)
+            min_frequency_event_hashes.append(event_hash)
 
-    return min_frequency_events
+    return min_frequency_event_hashes
 
 
 def get_frequency_weights(event_frequencies):
     total_frequency = sum(event_frequencies.values())
-    event_weights = {}
+    event_weights = OrderedDict()
     for event_hash, event_frequency in event_frequencies.items():
         event_weights[event_hash] = float(total_frequency) / (event_frequency + 1)
 
@@ -48,6 +42,7 @@ def get_uniform_event_weights(event_hashes):
 
 def make_weighted_selection(hash_to_events_map, event_weights, goal_weight):
     sum_of_weights = 0.0
+    event_hash = list(event_weights.keys())[0]
     for event_hash, weight in event_weights.items():
         event = hash_to_events_map[event_hash]
         sum_of_weights += weight

@@ -3,8 +3,9 @@ import types
 from framework.initialization import event_selection_strategy, tear_down_strategy, setup_strategy, completion_criterion, \
     termination_criterion
 from unittest.mock import patch
-from framework.strategies import completion
-from framework.strategies import termination
+from framework.strategies import completion, termination
+from framework.strategies import setup as setup_strategies
+from framework.strategies import teardown as teardown_strategies
 
 
 class InitializationTests(unittest.TestCase):
@@ -28,20 +29,30 @@ class InitializationTests(unittest.TestCase):
         self.assertIsInstance(strategy, types.FunctionType)
         self.assertEqual(strategy.__name__, "frequency_weighted")
 
-    def test_can_initiate_gaussian_random_strategy(self):
-        strategy = event_selection_strategy("gaussian_random")
-        self.assertIsInstance(strategy, types.FunctionType)
-        self.assertEqual(strategy.__name__, "gaussian_random")
+    @patch("framework.initialization.partial")
+    def test_can_initiate_standard_teardown_strategy(self, partial_mock):
+        # Arrange
+        adb_path = "adb_path"
+        device_id = "device_id"
 
-    def test_can_initiate_standard_teardown_strategy(self):
-        strategy = tear_down_strategy("standard")
-        self.assertIsInstance(strategy, types.FunctionType)
-        self.assertEqual(strategy.__name__, "standard")
+        # Act
+        tear_down_strategy("standard", adb_path=adb_path, device_id=device_id)
 
-    def test_can_initiate_standard_setup_strategy(self):
-        strategy = setup_strategy("standard")
-        self.assertIsInstance(strategy, types.FunctionType)
-        self.assertEqual(strategy.__name__, "standard")
+        # Assert
+        partial_mock.assert_called_with(teardown_strategies.standard, adb_path=adb_path, device_id=device_id)
+
+    @patch("framework.initialization.partial")
+    def test_can_initiate_standard_setup_strategy(self, partial_mock):
+        # Arrange
+        strategy = "standard"
+        apk_path = "apk_path"
+        adb_path = "adb_path"
+        device_id = "device_id"
+
+        # Act
+        setup_strategy(strategy, apk_path, adb_path, device_id)
+
+        partial_mock.assert_called_with(setup_strategies.standard, apk_path=apk_path, adb_path=adb_path, device_id=device_id)
 
     @patch("framework.initialization.partial")
     def test_can_initiate_time_based_completion_criterion(self, partial_mock):
@@ -54,7 +65,7 @@ class InitializationTests(unittest.TestCase):
         completion_criterion(criterion, time_budget, test_suite_length)
 
         # Assert
-        partial_mock.assert_called_with(completion.time_budget_exceeded, time_budget=time_budget)
+        partial_mock.assert_called_with(completion.time_budget_exceeded, completion_value=time_budget)
 
     @patch("framework.initialization.partial")
     def test_can_initiate_length_based_completion_criterion(self, partial_mock):
@@ -67,7 +78,7 @@ class InitializationTests(unittest.TestCase):
         completion_criterion(criterion, time_budget, test_suite_length)
 
         # Assert
-        partial_mock.assert_called_with(completion.number_of_sequences_reached, test_case_budget=test_suite_length)
+        partial_mock.assert_called_with(completion.number_of_sequences_reached, completion_value=test_suite_length)
 
     @patch("framework.initialization.partial")
     def test_can_initiate_probabilistic_termination_criterion(self, partial_mock):
@@ -80,7 +91,7 @@ class InitializationTests(unittest.TestCase):
         termination_criterion(criterion, probability, length)
 
         # Assert
-        partial_mock.assert_called_with(termination.probabilistic, probability=probability)
+        partial_mock.assert_called_with(termination.probabilistic, terminal_value=probability)
 
     @patch("framework.initialization.partial")
     def test_can_initiate_length_based_termination_criterion(self, partial_mock):
@@ -93,5 +104,5 @@ class InitializationTests(unittest.TestCase):
         termination_criterion(criterion, probability, length)
 
         # Assert
-        partial_mock.assert_called_with(termination.length, test_case_length=length)
+        partial_mock.assert_called_with(termination.length, terminal_value=length)
 

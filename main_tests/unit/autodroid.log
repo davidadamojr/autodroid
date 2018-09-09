@@ -1,0 +1,10 @@
+2018-09-05 17:36:36,999 - framework.strategies.selection - INFO - Making min_frequency_deterministic selection from {}
+2018-09-05 17:36:37,000 - framework.strategies.selection - INFO - Making min_frequency_deterministic selection from {}
+2018-09-05 17:36:37,001 - framework.strategies.selection - INFO - Making min_frequency_random selection from 3 available events.
+2018-09-05 17:36:37,002 - framework.strategies.selection - INFO - Making min_frequency_random selection from 3 available events.
+2018-09-05 17:36:37,003 - framework.strategies.selection - INFO - Making frequency_weighted selection from 3 available events.
+2018-09-05 17:36:37,003 - framework.utils.selection - DEBUG - Selected event with weight 2.0.
+2018-09-05 17:36:37,004 - framework.strategies.selection - INFO - Making frequency_weighted selection from 3 available events.
+2018-09-05 17:36:37,004 - framework.utils.selection - DEBUG - Selected event with weight 2.0.
+2018-09-05 17:36:37,005 - framework.strategies.selection - INFO - Making frequency_weighted selection from 3 available events.
+2018-09-05 17:36:37,006 - framework.utils.selection - DEBUG - Selected event with weight 2.0.

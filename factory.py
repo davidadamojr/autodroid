@@ -1,14 +1,16 @@
 import logging
 import sqlite3
+from collections import namedtuple
+from functools import partial
+
+from appiumatic.execution import Executor
+from appiumatic.exploration.sequence import SequenceGenerator
+from appiumatic.paths import create_output_directories
+from database import Database
+
 import config
 import framework.initialization as initialization
-from functools import partial
-from collections import namedtuple
-from framework.database import Database
 from framework.exploration import Explorer
-from appiumatic.exploration.sequence import SequenceGenerator
-from appiumatic.execution import Executor
-from appiumatic.paths import create_output_directories
 
 logger = logging.getLogger(__name__)
 
