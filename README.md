@@ -1,4 +1,4 @@
-# Autodroid - Automatic Exploration-Based Testing for Android Applications
+# Autodroid - Automatic Exploration of GUI-based Android Applications
 
 Only works on Linux systems.
 
