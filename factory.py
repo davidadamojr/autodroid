@@ -7,6 +7,7 @@ from appiumatic.execution import Executor
 from appiumatic.exploration.sequence import SequenceGenerator
 from appiumatic.paths import create_output_directories
 from database import Database
+from appiumatic.exploration.context import ContextSequence
 
 import config
 import framework.initialization as initialization
@@ -23,8 +24,9 @@ def create_database():
     return database
 
 
-def create_explorer(database, text_values):
-    sequence_generator = create_sequence_generator(database, text_values)
+def create_explorer(database, text_values, context_covering_array):
+    sequence_generator = create_sequence_generator(database, text_values, context_covering_array)
+    logger.debug("--------SEQUENCE GENERATOR CREATED----------")
     completion_criterion = initialization.completion_criterion(config.COMPLETION_CRITERION,
                                                                config.TIME_BUDGET,
                                                                config.TEST_SUITE_LENGTH)
@@ -37,15 +39,19 @@ def create_explorer(database, text_values):
     return Explorer(database, sequence_generator, completion_criterion, adb_info, app_info)
 
 
-def create_sequence_generator(database, text_values):
+def create_sequence_generator(database, text_values, context_covering_array):
     termination_criterion = initialization.termination_criterion(config.TERMINATION_CRITERION,
                                                                  config.TERMINATION_PROBABILITY,
                                                                  config.TEST_CASE_LENGTH)
     event_selection_strategy = initialization.event_selection_strategy(config.EVENT_SELECTION_STRATEGY)
+
+    context_sequence = ContextSequence(context_covering_array, config.COVERING_ARRAY_INDEX)
+
     setup_strategy = initialization.setup_strategy(config.TEST_SETUP,
                                                    config.APK_PATH,
                                                    config.ADB_PATH,
-                                                   config.DEVICE_ID)
+                                                   config.DEVICE_ID,
+                                                   context_sequence)
     tear_down_strategy = initialization.tear_down_strategy(config.TEST_TEARDOWN, config.ADB_PATH, config.DEVICE_ID)
     executor_factory = partial(create_executor,
                                event_interval=config.EVENT_INTERVAL,
@@ -55,7 +61,9 @@ def create_sequence_generator(database, text_values):
                                            event_selection_strategy,
                                            setup_strategy,
                                            tear_down_strategy,
-                                           executor_factory)
+                                           executor_factory,
+                                           context_sequence)
+
     return sequence_generator
 
 
@@ -73,4 +81,3 @@ def retrieve_text_values():
 
 def create_directories(suite_creation_time):
     return create_output_directories(config.APP_PACKAGE_NAME, config.OUTPUT_PATH, suite_creation_time)
-

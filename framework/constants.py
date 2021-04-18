@@ -8,4 +8,5 @@ class Script:
     GET_PROCESS_ID = os.path.join(TOOL_PATH, "scripts", "get_process_id.sh")
     GET_COVERAGE = os.path.join(TOOL_PATH, "scripts", "retrieve_coverage.sh")
     GET_LOGS = os.path.join(TOOL_PATH, "scripts", "retrieve_logs.sh")
+    CHANGE_CONTEXT = os.path.join(TOOL_PATH, "scripts", "change_context.sh")
 

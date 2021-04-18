@@ -16,6 +16,8 @@ TERMINATION_PROBABILITY = 0.05  # only used when termination criterion is "proba
 TEST_CASE_LENGTH = 20  # only used if termination criterion is "length"
 STRINGS_PATH = "strings.txt"
 COVERAGE_BROADCAST = "com.davidadamojr.tester.finishtesting"
+TEST_SETUP = "iterative_start" # random_start or iterative_start
+COVERING_ARRAY_INDEX = 0
 
 # AUT settings
 APK_PATH = "/home/davidadamojr/git/autodroid/apps/org.tomdroid-0.7.5.apk"

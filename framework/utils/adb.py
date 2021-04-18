@@ -37,3 +37,28 @@ def get_logs(adb_path, log_file_path, process_id, device_id):
     get_logs_cmd = "{} {} {} {} {}".format(Script.GET_LOGS, adb_path, log_file_path, process_id, device_id)
     subprocess.call(get_logs_cmd, shell=True)
     logger.info("Successfully retrieved log file: {}".format(log_file_path))
+    
+# Added by Shraddha Piparia for Context actions
+def change_context(adb_path, ch_orientation, ch_power, ch_internet, ch_battery):
+    change_context_cmd = "{} {} {} {} {}".format(Script.CHANGE_CONTEXT, adb_path, ch_orientation, ch_power, ch_internet, ch_battery)
+    subprocess.call(change_context_cmd, shell=True)
+    printval = ""
+    if ch_orientation == 0:
+        printval += " Potrait mode, "
+    if ch_orientation == 1:
+        printval += " Lanscape mode, "
+    if ch_power == 0:
+        printval += " Power OFF, "
+    if ch_power == 1:
+        printval += " Power ON, "
+    if ch_internet == 0:
+        printval += " Internet OFF, "
+    if ch_internet == 1:
+        printval += " Internet ON, "
+    if ch_battery == 0:
+        printval += " Battery LOW "
+    if ch_battery == 1:
+        printval += " Battery OKAY "
+    if ch_battery == 2:
+        printval += " Battery HIGH "
+    logger.info("Successfully changed context {}".format(printval))
